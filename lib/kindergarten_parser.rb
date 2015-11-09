@@ -9,9 +9,10 @@ class KindergartenParser
 
     CSV.open(file_name, headers: true, header_converters: :symbol).each do |line|
       # binding.pry
+      year = line[:timeframe].to_i
 
       data[line[:location]] ||= {}
-      data[line[:location]][line[:timeframe]] = line[:data]
+      data[line[:location]][year] = line[:data].to_f
 
     end
 
