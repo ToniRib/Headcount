@@ -93,4 +93,22 @@ class KindergartenParserTest < Minitest::Test
     assert_equal 'N/A', kinder.convert_to_float('#DIV/0!')
   end
 
+  def test_can_find_data_by_location_and_year_expect_na
+    kinder = KindergartenParser.new
+    data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
+
+    expected = 'N/A'
+
+    assert_equal expected, data['ACADEMY 20'][2006]
+  end
+
+  def test_can_find_data_by_location_and_year_expect_na_with_div_zero
+    kinder = KindergartenParser.new
+    data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
+
+    expected = 'N/A'
+
+    assert_equal expected, data['ADAMS COUNTY 14'][2005]
+  end
+
 end
