@@ -18,6 +18,18 @@ class DistrictRepository
     data
   end
 
+  def find_by_name(district_name)
+    if district_exists?(district_name)
+      @districts[district_name]
+    else
+      "District #{district_name} does not exist in database"
+    end
+  end
+
+  def district_exists?(district_name)
+    @districts.keys.include?(district_name)
+  end
+
 end
 
 
