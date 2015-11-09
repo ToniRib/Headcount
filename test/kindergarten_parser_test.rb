@@ -34,7 +34,6 @@ class KindergartenParserTest < Minitest::Test
     assert_equal expected, data['Colorado'][2004]
   end
 
-
   def test_can_find_data_by_location_and_year_try_two
     kinder = KindergartenParser.new
     data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
@@ -69,5 +68,29 @@ class KindergartenParserTest < Minitest::Test
     refute kinder.float?('#DIV/0!')
   end
 
+  def test_converts_zero_string_to_float
+    kinder = KindergartenParser.new
+    assert_equal 0.0, kinder.convert_to_float('0')
+  end
+
+  def test_converts_one_string_to_float
+    kinder = KindergartenParser.new
+    assert_equal 1.0, kinder.convert_to_float('1')
+  end
+
+  def test_converts_decimal_string_to_float
+    kinder = KindergartenParser.new
+    assert_equal 0.465, kinder.convert_to_float('0.465')
+  end
+
+  def test_converts_na_to_na
+    kinder = KindergartenParser.new
+    assert_equal 'N/A', kinder.convert_to_float('N/A')
+  end
+
+  def test_converts_div_by_zero_to_na
+    kinder = KindergartenParser.new
+    assert_equal 'N/A', kinder.convert_to_float('#DIV/0!')
+  end
 
 end

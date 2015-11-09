@@ -12,7 +12,7 @@ class KindergartenParser
       year = line[:timeframe].to_i
 
       data[line[:location]] ||= {}
-      data[line[:location]][year] = line[:data].to_f
+      data[line[:location]][year] = convert_to_float(line[:data])
 
     end
 
@@ -24,4 +24,7 @@ class KindergartenParser
     str.chars[0].to_i.to_s == str.chars[0]
   end
 
+  def convert_to_float(str)
+    float?(str) ? str.to_f : 'N/A'
+  end
 end
