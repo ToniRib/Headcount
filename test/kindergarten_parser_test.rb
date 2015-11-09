@@ -44,5 +44,30 @@ class KindergartenParserTest < Minitest::Test
     assert_equal expected, data['ADAMS COUNTY 14'][2007]
   end
 
+  def test_recognizes_zero_as_a_number
+    kinder = KindergartenParser.new
+    assert kinder.float?('0')
+  end
+
+  def test_recognizes_one_as_a_number
+    kinder = KindergartenParser.new
+    assert kinder.float?('1')
+  end
+
+  def test_recognizes_float_as_a_number
+    kinder = KindergartenParser.new
+    assert kinder.float?('0.465')
+  end
+
+  def test_rejects_na_as_a_number
+    kinder = KindergartenParser.new
+    refute kinder.float?('N/A')
+  end
+
+  def test_rejects_div_zero_as_a_number
+    kinder = KindergartenParser.new
+    refute kinder.float?('#DIV/0!')
+  end
+
 
 end

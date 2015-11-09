@@ -20,4 +20,8 @@ class KindergartenParser
 
   end
 
+  def float?(str)
+    str.chars[0].to_i.to_s == str.chars[0]
+  end
+
 end
