@@ -1,11 +1,12 @@
 require_relative 'kindergarten_parser'
+require_relative 'district'
 
 class DistrictRepository
 
   def load_data(parser_to_file)
     data = KindergartenParser.new.parse(parser_to_file[:kindergarten])
   end
-  
+
 end
 
 
