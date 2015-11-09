@@ -21,4 +21,17 @@ class DistrictRepositoryTest < Minitest::Test
     assert_equal 'N/A', data['ADAMS COUNTY 14'][2005]
   end
 
+  def test_load_data_creates_district_objects
+    dr = DistrictRepository.new
+    data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+
+    assert_equal 3, dr.districts.count
+
+    dr.districts.each do |name, value|
+      assert value.is_a?(District)
+    end
+
+    expected_keys = ['Colorado', 'ACADEMY 20', 'ADAMS COUNTY 14']
+    assert_equal expected_keys, dr.districts.keys
+  end
 end

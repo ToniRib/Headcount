@@ -2,9 +2,20 @@ require_relative 'kindergarten_parser'
 require_relative 'district'
 
 class DistrictRepository
+  attr_reader :districts
+
+  def initialize
+    @districts = {}
+  end
 
   def load_data(parser_to_file)
     data = KindergartenParser.new.parse(parser_to_file[:kindergarten])
+    data.keys.each do |district_name|
+      @districts[district_name] = District.new(name: district_name)
+      # @districts[district_name].load_kinder_data(data[district_name])
+      # @districts[district_name].enrollments.kindergarten = data[district_name]
+    end
+    data
   end
 
 end
