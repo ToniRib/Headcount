@@ -11,25 +11,28 @@ class EnrollmentRepository
 
   def load_data(options)
     data = get_data(options)
-    transpose_data(data)
-    # district_names = get_names(data)
-    binding.pry
+    data = transpose_data(data)
 
     data.each_pair do |district_name, district_data|
-      enroll_options = { :name => district_name.upcase,
-                         district_data}
-      @enrollments[district_name.upcase] = Enrollment.new(enroll_options)
+      enrollment_options = { name: district_name.upcase }.merge(district_data)
+      @enrollments[district_name.upcase] = Enrollment.new(enrollment_options)
     end
   end
 
   def get_data(options)
-    { :kindergarten => get_year_percent_data(options[:enrollment][:kindergarten]),
-      :highschool => get_year_percent_data(options[:enrollment][:high_school_graduation]) }
+    { :kindergarten_participation => get_year_percent_data(options[:enrollment][:kindergarten]),
+      :high_school_graduation => get_year_percent_data(options[:enrollment][:high_school_graduation]) }
   end
-  #
-  # def get_names(hash)
-  #
-  # end
+
+  def transpose_data(data)
+    data_transpose = Hash.new{ |h, k| h[k] = {} }
+
+    data.each_pair do |type, district|
+      district.to_h.each_pair{ |name, d| data_transpose[name][type] = d }
+    end
+
+    data_transpose
+  end
 
   def get_year_percent_data(file)
     return nil if file.nil?
