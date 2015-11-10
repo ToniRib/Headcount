@@ -54,9 +54,7 @@ class DistrictRepositoryTest < Minitest::Test
     dr = DistrictRepository.new
     data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
 
-    expected = "District XYZ does not exist in database"
-
-    assert_equal expected, dr.find_by_name("XYZ")
+    refute dr.find_by_name("XYZ")
   end
 
   def test_returns_true_if_district_exists

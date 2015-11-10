@@ -18,11 +18,7 @@ class DistrictRepository
   end
 
   def find_by_name(district_name)
-    if district_exists?(district_name)
-      @districts[district_name.upcase]
-    else
-      "District #{district_name} does not exist in database"
-    end
+    @districts[district_name.upcase] if district_exists?(district_name) 
   end
 
   def district_exists?(district_name)
@@ -34,6 +30,19 @@ end
 
 if __FILE__ == $0
   dr = DistrictRepository.new
-  dr.load_data(:kindergarten => "./data/Kindergartners in full-day program.csv")
+  dr.load_data({
+    :enrollment => {
+      :kindergarten => "./data/Kindergartners in full-day program.csv"
+    }
+  })
   district = dr.find_by_name("ACADEMY 20")
 end
+
+# The DistrictRepository is responsible for holding and searching our District instances. It offers the following methods:
+#
+# find_by_name - returns either nil or an instance of District having done a case insensitive search
+# find_all_matching - returns either [] or one or more matches which contain the supplied name fragment, case insensitive
+# There is no one data file that contains just the districts. The data must be extracted from one of the other files. Let's use Kindergartners in full-day program.csv so the instance is created and used like this:
+#
+
+# # => <District>
