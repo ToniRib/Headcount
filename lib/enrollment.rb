@@ -43,12 +43,3 @@ class Enrollment
   end
 
 end
-
-# year as an integer for any year reported in the data
-# A call to this method with any unknown year should return nil.
-#
-# The method returns a truncated three-digit floating point number representing a percentage.
-#
-# Example:
-#
-# enrollment.kindergarten_participation_in_year(2010) # => 0.391
