@@ -1,6 +1,4 @@
 module DataFormattable
-
-
   def float?(str)
     str.chars[0].to_i.to_s == str.chars[0]
   end
@@ -20,5 +18,4 @@ module DataFormattable
   def is_na?(value)
     value == 'N/A'
   end
-
 end

@@ -12,18 +12,17 @@ class DistrictRepository
   end
 
   def load_data(options)
-    data = KindergartenParser.new.parse(options[:enrollment][:kindergarten])
+    # data = KindergartenParser.new.parse(options[:enrollment][:kindergarten])
+    # later iterations must change this.
+
     @enrollment_repo.load_data(options)
-    data.keys.each do |district_name|
+
+    @enrollment_repo.enrollments.keys.each do |district_name|
       @districts[district_name.upcase] = District.new(name: district_name)
-      @districts[district_name.upcase].enrollment = @enrollment_repo.enrollments[district_name.upcase]
+      enrollment = @enrollment_repo.enrollments[district_name.upcase]
+      @districts[district_name.upcase].enrollment = enrollment
     end
   end
-
-  # def make_district(district_name)
-  #
-  #
-  # end
 
   def find_by_name(district_name)
     @districts[district_name.upcase] if district_exists?(district_name)
