@@ -1,5 +1,6 @@
 require_relative 'kindergarten_parser'
 require_relative 'district'
+require 'pry'
 
 class DistrictRepository
   attr_reader :districts
@@ -8,8 +9,9 @@ class DistrictRepository
     @districts = {}
   end
 
-  def load_data(parser_to_file)
-    data = KindergartenParser.new.parse(parser_to_file[:kindergarten])
+  def load_data(options)
+    # binding.pry
+    data = KindergartenParser.new.parse(options[:enrollment][:kindergarten])
     data.keys.each do |district_name|
       @districts[district_name.upcase] = District.new(name: district_name)
       # @districts[district_name].load_kinder_data(data[district_name])
@@ -38,6 +40,7 @@ if __FILE__ == $0
       :kindergarten => "./data/Kindergartners in full-day program.csv"
     }
   })
+  # binding.pry
   district = dr.find_by_name("ACADEMY 20")
 end
 
