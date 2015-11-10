@@ -11,23 +11,22 @@ class DistrictRepository
   def load_data(parser_to_file)
     data = KindergartenParser.new.parse(parser_to_file[:kindergarten])
     data.keys.each do |district_name|
-      @districts[district_name] = District.new(name: district_name)
+      @districts[district_name.upcase] = District.new(name: district_name)
       # @districts[district_name].load_kinder_data(data[district_name])
       # @districts[district_name].enrollments.kindergarten = data[district_name]
     end
-    data
   end
 
   def find_by_name(district_name)
     if district_exists?(district_name)
-      @districts[district_name]
+      @districts[district_name.upcase]
     else
       "District #{district_name} does not exist in database"
     end
   end
 
   def district_exists?(district_name)
-    @districts.keys.include?(district_name)
+    @districts.keys.include?(district_name.upcase)
   end
 
 end
