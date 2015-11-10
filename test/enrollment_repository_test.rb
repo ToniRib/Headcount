@@ -60,4 +60,16 @@ class EnrollmentRepositoryTest < Minitest::Test
     refute er.district_exists?('XYZ')
   end
 
+  def test_loaded_enrollment_objects_have_expected_names
+    er = kindergarten_test
+
+    assert_equal 'COLORADO', er.enrollments['COLORADO'].name
+  end
+
+  def test_loaded_enrollment_objects_have_expected_data
+    er = kindergarten_test
+    data = er.enrollments['COLORADO'].kindergarten_participation_in_year(2004)
+    assert_equal 0.240 , data
+  end
+
 end
