@@ -10,7 +10,12 @@ class Enrollment
 
   def kindergarten_participation
     @data[:kindergarten_participation]
-  end 
+  end
+
+  def average(category)
+    # will need to update in later iteration
+    @data[category]
+  end
 
   def kindergarten_participation_by_year
     kindergarten_participation.each do |year, value|
