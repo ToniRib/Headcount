@@ -33,8 +33,16 @@ class Enrollment
   end
 
   def kindergarten_participation_by_year
-    kindergarten_participation.each do |year, value|
-      kindergarten_participation[year] = truncate_value(value)
+    percentage_by_year(:kindergarten_participation)
+  end
+
+  def graduation_rate_by_year
+    percentage_by_year(:high_school_graduation)
+  end
+
+  def percentage_by_year(type)
+    @data[type].each do |year, value|
+      @data[type][year] = truncate_value(value)
     end
   end
 
@@ -42,11 +50,19 @@ class Enrollment
     @data.merge(data_hash) if name == data_hash[:name]
   end
 
-  def kindergarten_participation_in_year(year)
-    truncate_value(kindergarten_participation[year]) if year_exists?(year)
+  def graduation_rate_in_year(year)
+    if year_exists?(:high_school_graduation, year)
+      truncate_value(high_school_graduation[year])
+    end
   end
 
-  def year_exists?(year)
-    kindergarten_participation[year]
+  def kindergarten_participation_in_year(year)
+    if year_exists?(:kindergarten_participation, year)
+      truncate_value(kindergarten_participation[year])
+    end
+  end
+
+  def year_exists?(type, year)
+    @data[type][year]
   end
 end
