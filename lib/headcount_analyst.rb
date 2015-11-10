@@ -19,6 +19,8 @@ class HeadcountAnalyst
     first_district_enrollment.truncate_value(average1 / average2)
   end
 
+
+
 end
 
 

@@ -43,7 +43,17 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal 0.837, var
   end
 
+  def test_calculates_kindergarten_participation_district_against_district
+    ha = kindergarten_test
+    var = ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'ADAMS COUNTY 14')
+    assert_equal 0.620, var
+  end
 
+  def test_calculates_kindergarten_participation_district_against_district_reverse
+    ha = kindergarten_test
+    var = ha.kindergarten_participation_rate_variation('ADAMS COUNTY 14', :against => 'ACADEMY 20')
+    assert_equal 1.612, var
+  end
 
   # def test_calculates_average_of_kindergarten_participation_by_district
   #   ha = kindergarten_test

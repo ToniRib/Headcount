@@ -7,7 +7,6 @@ class KindergartenParser
 
     CSV.open(file_name, headers: true, header_converters: :symbol).each do |line|
       year = line[:timeframe].to_i
-
       data[line[:location]] ||= {}
       data[line[:location]][year] = convert_to_float(line[:data])
     end

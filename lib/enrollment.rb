@@ -14,7 +14,7 @@ class Enrollment
 
   def average(category)
     denom = count_non_na(category)
-    denom != 0 ? truncate_value(total(category)/denom) : nil
+    denom != 0 ? total(category)/denom : nil
   end
 
   def total(category)
@@ -22,7 +22,7 @@ class Enrollment
   end
 
   def count_non_na(category)
-    @data[category].values.reject { |val| val == "N/A"}.length
+    @data[category].values.reject { |val| val == "N/A" }.length
   end
 
   def kindergarten_participation_by_year

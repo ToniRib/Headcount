@@ -103,7 +103,7 @@ class EnrollmentTest < Minitest::Test
   def test_averages_participation_all_values
     e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.890}})
 
-    assert_equal 0.545, e.average(:kindergarten_participation)
+    assert_equal 0.5450200000000001, e.average(:kindergarten_participation)
   end
 
   def test_average_returns_nil_if_all_na

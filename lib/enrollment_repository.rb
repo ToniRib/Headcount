@@ -12,7 +12,8 @@ class EnrollmentRepository
   def load_data(options)
     data = KindergartenParser.new.parse(options[:enrollment][:kindergarten])
     data.keys.each do |district_name|
-      enroll_options = { :name => district_name.upcase, :kindergarten_participation => data[district_name] }
+      enroll_options = {      :name => district_name.upcase,
+        :kindergarten_participation => data[district_name] }
       @enrollments[district_name.upcase] = Enrollment.new(enroll_options)
     end
   end
