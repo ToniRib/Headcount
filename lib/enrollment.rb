@@ -1,11 +1,3 @@
-
-
-
-# An Enrollment instance holds the enrollment data for a single district. We create an instance like this:
-#
-# e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677})
-# An instance of this class offers the following methods:
-
 class Enrollment
 
   def initialize(data_hash)
@@ -42,4 +34,21 @@ class Enrollment
     @data.merge(data_hash) if name == data_hash[:name]
   end
 
+  def kindergarten_participation_in_year(year)
+    truncate_value(kindergarten_participation[year]) if year_exists?(year)
+  end
+
+  def year_exists?(year)
+    kindergarten_participation[year]
+  end
+
 end
+
+# year as an integer for any year reported in the data
+# A call to this method with any unknown year should return nil.
+#
+# The method returns a truncated three-digit floating point number representing a percentage.
+#
+# Example:
+#
+# enrollment.kindergarten_participation_in_year(2010) # => 0.391

@@ -76,5 +76,27 @@ class EnrollmentTest < Minitest::Test
     assert_equal 'N/A', e.truncate_value('N/A')
   end
 
+  def test_returns_participation_for_specific_year
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A'}})
 
+    assert_equal 0.391, e.kindergarten_participation_in_year(2010)
+  end
+
+  def test_returns_participation_for_a_different_year
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A'}})
+
+    assert_equal 0.353, e.kindergarten_participation_in_year(2011)
+  end
+
+  def test_returns_participation_as_na_if_data_is_na_for_year
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A'}})
+
+    assert_equal 'N/A', e.kindergarten_participation_in_year(2012)
+  end
+
+  def test_returns_participation_as_nil_if_year_does_not_exist
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A'}})
+
+    assert_equal nil, e.kindergarten_participation_in_year(2020)
+  end
 end
