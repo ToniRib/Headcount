@@ -99,4 +99,54 @@ class EnrollmentTest < Minitest::Test
 
     assert_equal nil, e.kindergarten_participation_in_year(2020)
   end
+
+  def test_averages_participation_all_values
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.890}})
+
+    assert_equal 0.545, e.average(:kindergarten_participation)
+  end
+
+  def test_average_returns_nil_if_all_na
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => "N/A", 2011 => "N/A", 2012 => "N/A"}})
+    assert_equal nil, e.average(:kindergarten_participation)
+  end
+
+  def test_returns_total_participation
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.890}})
+
+    assert_equal 1.6350600000000002, e.total(:kindergarten_participation)
+  end
+
+  def test_returns_total_participation_with_some_nas
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => "N/A"}})
+
+    assert_equal 0.7450600000000001, e.total(:kindergarten_participation)
+  end
+
+  def test_returns_zero_participation_if_all_na
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => "N/A", 2011 => "N/A", 2012 => "N/A"}})
+
+    assert_equal 0, e.total(:kindergarten_participation)
+  end
+
+  def test_returns_total_years_if_none_na
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.890}})
+
+    assert_equal 3, e.count_non_na(:kindergarten_participation)
+  end
+
+  def test_returns_total_non_na_years
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => "N/A"}})
+
+    assert_equal 2, e.count_non_na(:kindergarten_participation)
+  end
+
+
+  def test_returns_zero_years_if_all_na
+    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => "N/A", 2011 => "N/A", 2012 => "N/A"}})
+
+    assert_equal 0, e.count_non_na(:kindergarten_participation)
+  end
+
+
 end

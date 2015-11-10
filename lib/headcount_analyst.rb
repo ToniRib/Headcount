@@ -7,21 +7,14 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_rate_variation(district_name, options)
-    average1 = @district_repository.find_by_name(district_name).enrollment.average(:kindergarten_participation)
-    average2 = @district_repository.find_by_name(options[:against]).enrollment.average(:kindergarten_participation)
-    average1 / average2
+    first_district_enrollment = @district_repository.find_by_name(district_name).enrollment
+    second_district_enrollment = @district_repository.find_by_name(options[:against]).enrollment
+
+    average1 = first_district_enrollment.average(:kindergarten_participation)
+    average2 = second_district_enrollment.average(:kindergarten_participation)
+    first_district_enrollment.truncate_value(average1 / average2)
   end
 
-  # def average(district_name, sub_repo, data) #one data per file
-  #
-  #   district = district_repository.find_by_name(district_name)
-  #   case sub_repo
-  #   when :enrollment
-  #
-  #   end
-  #
-  #
-  # end
 end
 
 

@@ -12,12 +12,11 @@ class DistrictRepository
   end
 
   def load_data(options)
-    # binding.pry
     data = KindergartenParser.new.parse(options[:enrollment][:kindergarten])
     @enrollment_repo.load_data(options)
     data.keys.each do |district_name|
       @districts[district_name.upcase] = District.new(name: district_name)
-      @districts[district_name.upcase].enrollment = @enrollment_repo.enrollments[district_name]
+      @districts[district_name.upcase].enrollment = @enrollment_repo.enrollments[district_name.upcase]
     end
   end
 
