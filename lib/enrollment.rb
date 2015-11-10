@@ -18,15 +18,11 @@ class Enrollment
   end
 
   def total(category)
-    @data[category].reduce(0) do |acc,pair|
-      acc + pair[1].to_f
-    end
+    @data[category].reduce(0) { |acc,pair| acc + pair[1].to_f }
   end
 
   def count_non_na(category)
-    (@data[category].values.reject do |val|
-      val == "N/A"
-    end).length
+    @data[category].values.reject { |val| val == "N/A"}.length
   end
 
   def kindergarten_participation_by_year
