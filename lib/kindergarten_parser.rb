@@ -1,23 +1,20 @@
 require 'csv'
 require 'pry'
+require 'data_formattable'
 
 class KindergartenParser
+  include DataFormattable
+
   def parse(file_name)
     data = {}
+    parse_options = { headers: true, header_converters: :symbol }
 
-    CSV.open(file_name, headers: true, header_converters: :symbol).each do |line|
+    CSV.open(file_name, parse_options).each do |line|
       year = line[:timeframe].to_i
       data[line[:location]] ||= {}
       data[line[:location]][year] = convert_to_float(line[:data])
     end
+
     data
-  end
-
-  def float?(str)
-    str.chars[0].to_i.to_s == str.chars[0]
-  end
-
-  def convert_to_float(str)
-    float?(str) ? str.to_f : 'N/A'
   end
 end

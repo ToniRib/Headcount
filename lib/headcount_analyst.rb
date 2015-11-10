@@ -1,6 +1,7 @@
 class HeadcountAnalyst
-
   attr_reader :district_repository
+
+  include DataFormattable
 
   def initialize(dr)
     @district_repository = dr
@@ -10,39 +11,30 @@ class HeadcountAnalyst
     @district_repository.find_by_name(district_name).enrollment
   end
 
-  def kindergarten_participation_rate_variation(district_name, options)
-    first_district_enrollment = find_enrollment_by_name(district_name)
-    second_district_enrollment = find_enrollment_by_name(options[:against])
+  def kindergarten_participation_rate_variation(district_name, vs)
+    district_enrollment1 = find_enrollment_by_name(district_name)
+    district_enrollment2 = find_enrollment_by_name(vs[:against])
 
-    average1 = first_district_enrollment.average(:kindergarten_participation)
-    average2 = second_district_enrollment.average(:kindergarten_participation)
-    first_district_enrollment.truncate_value(average1 / average2)
+    average1 = district_enrollment1.average(:kindergarten_participation)
+    average2 = district_enrollment2.average(:kindergarten_participation)
+    calculate_ratio(average1, average2)
   end
 
-  def kindergarten_participation_rate_variation_trend(district_name,options)
+  def kindergarten_participation_rate_variation_trend(district_name,vs)
     variation = {}
 
-    first_district_enrollment = find_enrollment_by_name(district_name)
-    second_district_enrollment = find_enrollment_by_name(options[:against])
+    kp_dist1 = find_enrollment_by_name(district_name).kindergarten_participation
+    kp_dist2 = find_enrollment_by_name(vs[:against]).kindergarten_participation
 
-    first_district_enrollment.kindergarten_participation.each do |year,data|
-      variation[year] = first_district_enrollment.truncate_value(calculate_variation(data,second_district_enrollment.kindergarten_participation[year]))
+    kp_dist1.each do |year,data|
+      variation[year] = calculate_ratio(data,kp_dist2[year])
     end
 
     variation
-
   end
 
-  def calculate_variation(data1, data2)
-    return 'N/A' if data1 == 'N/A' || data2 == 'N/A'
-    data1 / data2
+  def calculate_ratio(data1, data2)
+    return 'N/A' if is_na?(data1) || is_na?(data2)
+    truncate_value(data1 / data2)
   end
-
 end
-
-
-# ha.kindergarten_participation_rate_variation('ACADEMY 20', :against => 'COLORADO') # => 0.766
-
-
-# ha.ticipation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO')
- # => {2009 => 0.766, 2010 => 0.566, 2011 => 0.46 }
