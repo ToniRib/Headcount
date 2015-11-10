@@ -10,7 +10,7 @@ class Enrollment
 
   def kindergarten_participation
     @data[:kindergarten_participation]
-  end
+  end 
 
   def kindergarten_participation_by_year
     kindergarten_participation.each do |year, value|

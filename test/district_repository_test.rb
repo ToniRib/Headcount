@@ -89,4 +89,32 @@ class DistrictRepositoryTest < Minitest::Test
     assert_equal 'ACADEMY 20', districts[0].name
     assert_equal 'ADAMS COUNTY 14', districts[1].name
   end
+
+  def test_loading_data_creates_enrollment_repo_with_data
+    dr = kindergarten_test
+
+    assert_equal 3, dr.enrollment_repo.enrollments.count
+
+    dr.enrollment_repo.enrollments.each do |name, value|
+      assert value.is_a?(Enrollment)
+    end
+
+    expected_keys = ['COLORADO', 'ACADEMY 20', 'ADAMS COUNTY 14']
+    assert_equal expected_keys, dr.enrollment_repo.enrollments.keys
+  end
+
+  def test_districts_get_enrollments_after_loading
+    dr = kindergarten_test
+
+    district = dr.find_by_name("ACADEMY 20")
+
+    assert_equal "ACADEMY 20", district.enrollment.name
+
+    kp2010 = district.enrollment.kindergarten_participation_in_year(2010)
+
+    assert_equal 0.436, kp2010
+
+  end
+
+
 end
