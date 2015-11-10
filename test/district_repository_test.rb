@@ -24,7 +24,7 @@ class DistrictRepositoryTest < Minitest::Test
 
   def test_load_data_creates_district_objects
     dr = DistrictRepository.new
-    data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
 
     assert_equal 3, dr.districts.count
 
@@ -38,36 +38,53 @@ class DistrictRepositoryTest < Minitest::Test
 
   def test_can_find_by_district_name
     dr = DistrictRepository.new
-    data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
 
     assert_equal "ACADEMY 20", dr.find_by_name("ACADEMY 20").name
   end
 
   def test_can_find_by_other_district_name
     dr = DistrictRepository.new
-    data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
 
     assert_equal "COLORADO", dr.find_by_name("Colorado").name
   end
 
   def test_gives_error_if_district_does_not_exist
     dr = DistrictRepository.new
-    data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
 
     refute dr.find_by_name("XYZ")
   end
 
   def test_returns_true_if_district_exists
     dr = DistrictRepository.new
-    data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
 
     assert dr.district_exists?('Colorado')
   end
 
   def test_returns_false_if_district_does_not_exist
     dr = DistrictRepository.new
-    data = dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
 
     refute dr.district_exists?('XYZ')
+  end
+
+  def test_returns_empty_array_if_no_districts_include_fragment
+    dr = DistrictRepository.new
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+
+    assert_equal [], dr.find_all_matching('frank')
+  end
+
+  def test_returns_district_objects_containing_fragment
+    dr = DistrictRepository.new
+    dr.load_data(:kindergarten => "./test/fixtures/kindergarten_tester.csv")
+
+    districts = dr.find_all_matching('a')
+
+    assert_equal 'ACADEMY 20', districts[0].name
+    assert_equal 'ADAMS COUNTY 14', districts[1].name
   end
 end

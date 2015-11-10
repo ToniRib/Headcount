@@ -18,13 +18,16 @@ class DistrictRepository
   end
 
   def find_by_name(district_name)
-    @districts[district_name.upcase] if district_exists?(district_name) 
+    @districts[district_name.upcase] if district_exists?(district_name)
   end
 
   def district_exists?(district_name)
     @districts.keys.include?(district_name.upcase)
   end
 
+  def find_all_matching(str)
+    @districts.select { |name, value| name.start_with?(str.upcase) }.values
+  end
 end
 
 
