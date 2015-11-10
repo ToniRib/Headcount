@@ -21,6 +21,11 @@ class DistrictRepository
     end
   end
 
+  # def make_district(district_name)
+  #
+  #
+  # end
+
   def find_by_name(district_name)
     @districts[district_name.upcase] if district_exists?(district_name)
   end

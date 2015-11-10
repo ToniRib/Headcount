@@ -113,8 +113,5 @@ class DistrictRepositoryTest < Minitest::Test
     kp2010 = district.enrollment.kindergarten_participation_in_year(2010)
 
     assert_equal 0.436, kp2010
-
   end
-
-
 end
