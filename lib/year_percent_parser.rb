@@ -1,8 +1,8 @@
 require 'csv'
 require 'pry'
-require 'data_formattable'
+require_relative 'data_formattable'
 
-class KindergartenParser
+class YearPercentParser
   include DataFormattable
 
   def parse(file_name)

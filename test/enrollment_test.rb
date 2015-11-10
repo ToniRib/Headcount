@@ -7,7 +7,8 @@ class EnrollmentTest < Minitest::Test
   end
 
   def test_can_initialize_a_new_enrollment_with_data
-    e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}})
+    e = Enrollment.new({:name => "ACADEMY 20",
+                        :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}})
 
     expected_hash = {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}
 
@@ -148,5 +149,15 @@ class EnrollmentTest < Minitest::Test
     assert_equal 0, e.count_non_na(:kindergarten_participation)
   end
 
+  def test_can_initialize_a_new_enrollment_with_highschool_grad_only_data
+    e = Enrollment.new({:name => "ACADEMY 20",
+                        :high_school_graduation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}})
+
+    expected_hash = {2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677}
+
+    assert_equal "ACADEMY 20", e.name
+    assert_equal expected_hash, e.high_school_graduation
+    assert_nil e.kindergarten_participation
+  end
 
 end

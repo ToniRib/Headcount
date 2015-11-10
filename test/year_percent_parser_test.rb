@@ -1,14 +1,14 @@
 require 'minitest'
-require 'kindergarten_parser'
+require 'year_percent_parser'
 
-class KindergartenParserTest < Minitest::Test
+class YearPercentParserTest < Minitest::Test
 
   def test_class_exists
-    assert KindergartenParser
+    assert YearPercentParser
   end
 
   def test_breaks_data_by_district
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
 
     expected = ['Colorado', 'ACADEMY 20', 'ADAMS COUNTY 14']
@@ -17,7 +17,7 @@ class KindergartenParserTest < Minitest::Test
   end
 
   def test_breaks_data_by_year_for_each_district
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
 
     expected = [2004, 2005, 2006, 2007, 2008, 2009, 2010]
@@ -26,7 +26,7 @@ class KindergartenParserTest < Minitest::Test
   end
 
   def test_can_find_data_by_location_and_year
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
 
     expected = 0.24014
@@ -35,7 +35,7 @@ class KindergartenParserTest < Minitest::Test
   end
 
   def test_can_find_data_by_location_and_year_try_two
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
 
     expected = 0.30643
@@ -44,57 +44,57 @@ class KindergartenParserTest < Minitest::Test
   end
 
   def test_recognizes_zero_as_a_number
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert kinder.float?('0')
   end
 
   def test_recognizes_one_as_a_number
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert kinder.float?('1')
   end
 
   def test_recognizes_float_as_a_number
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert kinder.float?('0.465')
   end
 
   def test_rejects_na_as_a_number
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     refute kinder.float?('N/A')
   end
 
   def test_rejects_div_zero_as_a_number
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     refute kinder.float?('#DIV/0!')
   end
 
   def test_converts_zero_string_to_float
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert_equal 0.0, kinder.convert_to_float('0')
   end
 
   def test_converts_one_string_to_float
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert_equal 1.0, kinder.convert_to_float('1')
   end
 
   def test_converts_decimal_string_to_float
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert_equal 0.465, kinder.convert_to_float('0.465')
   end
 
   def test_converts_na_to_na
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert_equal 'N/A', kinder.convert_to_float('N/A')
   end
 
   def test_converts_div_by_zero_to_na
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     assert_equal 'N/A', kinder.convert_to_float('#DIV/0!')
   end
 
   def test_can_find_data_by_location_and_year_expect_na
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
 
     expected = 'N/A'
@@ -103,7 +103,7 @@ class KindergartenParserTest < Minitest::Test
   end
 
   def test_can_find_data_by_location_and_year_expect_na_with_div_zero
-    kinder = KindergartenParser.new
+    kinder = YearPercentParser.new
     data = kinder.parse('./test/fixtures/kindergarten_tester.csv')
 
     expected = 'N/A'

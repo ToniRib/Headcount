@@ -1,3 +1,5 @@
+require_relative 'data_formattable'
+
 class Enrollment
   include DataFormattable
 
@@ -11,6 +13,10 @@ class Enrollment
 
   def kindergarten_participation
     @data[:kindergarten_participation]
+  end
+
+  def high_school_graduation
+    @data[:high_school_graduation]
   end
 
   def average(category)
