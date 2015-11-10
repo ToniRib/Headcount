@@ -55,6 +55,15 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal 1.612, var
   end
 
+  def test_calculates_kindergarten_participation_rate_variation
+    ha = kindergarten_test
+    var = ha.kindergarten_participation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO')
+    expected = {2007=>0.992, 2006=>"N/A", 2005=>0.96, 2004=>1.257,
+                2008=>0.717, 2009=>0.652, 2010=>0.681}
+
+    assert_equal expected, var
+  end
+
   # def test_calculates_average_of_kindergarten_participation_by_district
   #   ha = kindergarten_test
   #
