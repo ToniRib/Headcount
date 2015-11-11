@@ -66,4 +66,67 @@ class KindergartenParticipationTest < Minitest::Test
 
     assert_nil k.participation_in_year('2015')
   end
+
+  def test_counts_non_nas_in_data
+    data = { 2007 => 0.513, 2008 => 0.475, 2009 => 'N/A' }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 2, k.count_non_na
+  end
+
+  def test_counts_non_nas_in_data_no_nas
+    data = { 2007 => 0.513, 2008 => 0.475, 2009 => 0.345 }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 3, k.count_non_na
+  end
+
+  def test_counts_non_nas_in_data_all_nas
+    data = { 2007 => 'N/A', 2008 => 'N/A', 2009 => 'N/A' }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 0, k.count_non_na
+  end
+
+  def test_totals_data_no_nas
+    data = { 2007 => 0.513, 2008 => 0.475, 2009 => 0.345 }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 1.333, k.total
+  end
+
+  def test_totals_data_with_nas
+    data = { 2007 => 0.513, 2008 => 'N/A', 2009 => 0.345 }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 1.333-0.475, k.total
+  end
+
+  def test_totals_data_with_all_nas
+    data = { 2007 => 'N/A', 2008 => 'N/A', 2009 => 'N/A' }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 0, k.total
+  end
+
+  def test_averages_no_nas
+    data = { 2007 => 0.513, 2008 => 0.475, 2009 => 0.345 }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 1.333/3, k.average
+  end
+
+  def test_averages_with_nas
+    data = { 2007 => 0.513, 2008 => 'N/A', 2009 => 0.345 }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal (1.333-0.475)/2, k.average
+  end
+
+  def test_averages_with_all_nas
+    data = { 2007 => 'N/A', 2008 => 'N/A', 2009 => 'N/A' }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 'N/A', k.average
+  end
 end
