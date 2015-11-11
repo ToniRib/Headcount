@@ -41,8 +41,8 @@ class HeadcountAnalyst
   def kindergarten_participation_rate_variation_trend(district_name, vs)
     variation = {}
 
-    kp_dist1 = find_enrollment_by_name(district_name).kindergarten_participation
-    kp_dist2 = find_enrollment_by_name(vs[:against]).kindergarten_participation
+    kp_dist1 = find_enrollment_by_name(district_name).kp.data
+    kp_dist2 = find_enrollment_by_name(vs[:against]).kp.data
 
     kp_dist1.each do |year, data|
       variation[year] = calculate_ratio(data, kp_dist2[year])

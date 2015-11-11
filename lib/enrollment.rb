@@ -15,14 +15,6 @@ class Enrollment
     @data[:name]
   end
 
-  def type_formatter
-
-  end
-
-  def kindergarten_participation
-    @data[:kindergarten_participation]
-  end
-
   def high_school_graduation
     @data[:high_school_graduation]
   end
@@ -42,7 +34,10 @@ class Enrollment
 
   def kindergarten_participation_by_year
     kp.participation_by_year
-    # percentage_by_year(:kindergarten_participation)
+  end
+
+  def kindergarten_participation_in_year(year)
+    kp.participation_in_year(year)
   end
 
   def graduation_rate_by_year
@@ -55,22 +50,11 @@ class Enrollment
       @data[type][year] = truncate_value(value)
     end
   end
-  #
-  # def add_data(data_hash)
-  #   @data.merge(data_hash) if name == data_hash[:name]
-  # end
 
   def graduation_rate_in_year(year)
     if year_exists?(:high_school_graduation, year)
       truncate_value(high_school_graduation[year])
     end
-  end
-
-  def kindergarten_participation_in_year(year)
-    kp.participation_in_year(year)
-    # if year_exists?(:kindergarten_participation, year)
-    #   truncate_value(kindergarten_participation[year])
-    # end
   end
 
   def year_exists?(type, year)
