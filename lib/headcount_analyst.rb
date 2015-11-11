@@ -52,18 +52,33 @@ class HeadcountAnalyst
       truncate_value(data1 / data2)
   end
 
+  def in_correlation_range?(value)
+    (0.6..1.5).cover?(value)
+  end
+
+  def kgp_correlates_with_hgr_district(district_name)
+    x = kindergarten_participation_against_high_school_graduation(district_name)
+    in_correlation_range?(x)
+  end
+
+  
+
+  def kgp_correlates_with_hgr_range(district_names)
+    correlated = 0
+    correlated += district_names.reduce(0) do |acc, district_name|
+      acc + bool_to_binary[kgp_correlates_with_hgr_district(district_name)]
+    end
+     0.7 < correlated.to_f / district_names.length
+  end
 
   def kindergarten_participation_correlates_with_high_school_graduation(options)
     if options[:for] == "COLORADO"
-
-
+      district_names = @district_repository.districts.keys - ['COLORADO']
+      kgp_correlates_with_hgr_range(district_names)
+    elsif options[:across]
+      kgp_correlates_with_hgr_range(options[:across])
     else
-      x = kindergarten_participation_against_high_school_graduation(options[:for])
-      (0.6..1.5).cover?(x)
+      kgp_correlates_with_hgr_district(options[:for])
     end
-
   end
-
-  # ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'ACADEMY 20')
-# => true
 end

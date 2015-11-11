@@ -18,4 +18,8 @@ module DataFormattable
   def is_na?(value)
     value == 'N/A'
   end
+
+  def bool_to_binary
+    {true => 1, false => 0}
+  end
 end

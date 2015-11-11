@@ -94,5 +94,35 @@ class HeadcountAnalystTest < Minitest::Test
     refute cor
   end
 
+  def test_participation_does_not_correlate_with_range
+    ha = load_district_repo
+    cor = ha.kgp_correlates_with_hgr_range(['ADAMS COUNTY 14', 'ACADEMY 20'])
+
+    refute cor
+  end
+
+  def test_participation_does_not_correlate_with_high_school_graduation_across
+    ha = load_district_repo
+    options = {across: ['ADAMS COUNTY 14', 'ACADEMY 20']}
+    cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
+
+    refute cor
+  end
+
+  def test_participation_correlates_with_high_school_graduation_across
+    ha = load_district_repo
+    options = {across: ['ACADEMY 20']}
+    cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
+
+    assert cor
+  end
+
+  def test_participation_correlates_with_high_school_graduation_colorado
+    ha = load_district_repo
+    options = {for: "COLORADO"}
+    cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
+
+    refute cor
+  end
 
 end
