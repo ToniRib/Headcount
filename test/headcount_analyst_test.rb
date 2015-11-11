@@ -159,4 +159,34 @@ class HeadcountAnalystTest < Minitest::Test
 
     assert_equal 'N/A', ha.calculate_ratio('N/A', 'N/A')
   end
+
+  def test_number_is_within_correlation_range
+    ha = load_district_repo
+
+    assert ha.in_correlation_range?(0.8)
+  end
+
+  def test_number_is_on_low_edge_of_correlation_range
+    ha = load_district_repo
+
+    assert ha.in_correlation_range?(0.6)
+  end
+
+  def test_number_is_on_high_edge_of_correlation_range
+    ha = load_district_repo
+
+    assert ha.in_correlation_range?(1.5)
+  end
+
+  def test_number_is_below_correlation_range
+    ha = load_district_repo
+
+    refute ha.in_correlation_range?(0.2)
+  end
+
+  def test_number_is_above_correlation_range
+    ha = load_district_repo
+
+    refute ha.in_correlation_range?(1.6)
+  end
 end
