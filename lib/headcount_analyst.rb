@@ -61,8 +61,6 @@ class HeadcountAnalyst
     in_correlation_range?(x)
   end
 
-  
-
   def kgp_correlates_with_hgr_range(district_names)
     correlated = 0
     correlated += district_names.reduce(0) do |acc, district_name|
