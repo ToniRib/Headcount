@@ -34,11 +34,12 @@ class Enrollment
   end
 
   def kindergarten_participation_by_year
-    # kinder.data
+    # kinder.participation_by_year
     percentage_by_year(:kindergarten_participation)
   end
 
   def graduation_rate_by_year
+    # highschool.participation_by_year
     percentage_by_year(:high_school_graduation)
   end
 

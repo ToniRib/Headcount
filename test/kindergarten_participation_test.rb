@@ -21,8 +21,26 @@ class KindergartenParticipationTest < Minitest::Test
     assert_nil k.data
   end
 
+  def test_returns_truncated_participation_percentages_for_all_years
+    data = { 2007 => 0.51378, 2008 => 0.47561, 2009 => 1 }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    expected = { 2007 => 0.513, 2008 => 0.475, 2009 => 1.000 }
+
+    assert_equal expected, k.participation_by_year
+  end
+
+  def test_returns_truncated_participation_with_na
+    data = { 2007 => 0.51378, 2008 => 0.47561, 2009 => 'N/A' }
+    k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
+
+    expected = { 2007 => 0.513, 2008 => 0.475, 2009 => 'N/A' }
+
+    assert_equal expected, k.participation_by_year
+  end
+
   def test_can_return_participation_for_one_year
-    data = { 2007 => 0.513, 2008 => 0.475 }
+    data = { 2007 => 0.5137, 2008 => 0.475 }
     k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
 
     assert_equal 0.513, k.participation_in_year(2007)
