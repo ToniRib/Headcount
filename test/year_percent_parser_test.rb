@@ -2,7 +2,6 @@ require 'minitest'
 require 'year_percent_parser'
 
 class YearPercentParserTest < Minitest::Test
-
   def test_class_exists
     assert YearPercentParser
   end
@@ -110,5 +109,4 @@ class YearPercentParserTest < Minitest::Test
 
     assert_equal expected, data['ADAMS COUNTY 14'][2005]
   end
-
 end

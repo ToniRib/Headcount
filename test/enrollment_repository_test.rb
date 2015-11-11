@@ -2,7 +2,6 @@ require 'minitest'
 require 'enrollment_repository'
 
 class EnrollmentRepositoryTest < Minitest::Test
-
   def load_enrollment_repo
     er = EnrollmentRepository.new
     er.load_data({

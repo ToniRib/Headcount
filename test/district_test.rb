@@ -7,14 +7,14 @@ class DistrictTest < Minitest::Test
   end
 
   def test_can_set_name_of_new_district
-    d = District.new(name: "HEY")
+    d = District.new(name: 'HEY')
 
-    assert_equal "HEY", d.name
+    assert_equal 'HEY', d.name
   end
 
   def test_can_set_name_of_other_new_district
-    d = District.new(name: "HELLO")
+    d = District.new(name: 'HELLO')
 
-    assert_equal "HELLO", d.name
+    assert_equal 'HELLO', d.name
   end
 end

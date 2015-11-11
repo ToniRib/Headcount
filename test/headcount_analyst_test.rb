@@ -6,8 +6,8 @@ class HeadcountAnalystTest < Minitest::Test
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
-        :kindergarten => "./test/fixtures/kindergarten_tester.csv",
-        :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
+        :kindergarten => './test/fixtures/kindergarten_tester.csv',
+        :high_school_graduation => './test/fixtures/highschool_grad_tester.csv'
       }
     })
     HeadcountAnalyst.new(dr)
@@ -19,9 +19,9 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_can_find_enrollment_object_by_district_name
     ha = load_district_repo
-    enrollment = ha.find_enrollment_by_name("ACADEMY 20")
+    enrollment = ha.find_enrollment_by_name('ACADEMY 20')
 
-    assert_equal "ACADEMY 20", enrollment.name
+    assert_equal 'ACADEMY 20', enrollment.name
     assert_equal 0.436, enrollment.kindergarten_participation_in_year(2010)
   end
 
@@ -64,8 +64,8 @@ class HeadcountAnalystTest < Minitest::Test
   def test_calculates_kindergarten_participation_rate_variation
     ha = load_district_repo
     var = ha.kindergarten_participation_rate_variation_trend('ACADEMY 20', :against => 'COLORADO')
-    expected = {2007=>0.992, 2006=>"N/A", 2005=>0.96, 2004=>1.257,
-                2008=>0.717, 2009=>0.652, 2010=>0.681}
+    expected = { 2007 => 0.992, 2006 => 'N/A', 2005 => 0.96, 2004 => 1.257,
+                 2008 => 0.717, 2009 => 0.652, 2010 => 0.681 }
 
     assert_equal expected, var
   end
@@ -103,7 +103,7 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_participation_does_not_correlate_with_high_school_graduation_across
     ha = load_district_repo
-    options = {across: ['ADAMS COUNTY 14', 'ACADEMY 20']}
+    options = { across: ['ADAMS COUNTY 14', 'ACADEMY 20'] }
     cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
 
     refute cor
@@ -111,7 +111,7 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_participation_correlates_with_high_school_graduation_across
     ha = load_district_repo
-    options = {across: ['ACADEMY 20']}
+    options = { across: ['ACADEMY 20'] }
     cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
 
     assert cor
@@ -119,10 +119,9 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_participation_correlates_with_high_school_graduation_colorado
     ha = load_district_repo
-    options = {for: "COLORADO"}
+    options = { for: 'COLORADO' }
     cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
 
     refute cor
   end
-
 end
