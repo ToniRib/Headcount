@@ -5,6 +5,7 @@ class Enrollment
 
   def initialize(data_hash)
     @data = data_hash
+    # @kinder = KindergartenParticipation.new
   end
 
   def name
