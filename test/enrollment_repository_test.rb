@@ -6,8 +6,8 @@ class EnrollmentRepositoryTest < Minitest::Test
     er = EnrollmentRepository.new
     er.load_data({
       :enrollment => {
-        :kindergarten => "./test/fixtures/kindergarten_tester.csv",
-        :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
+        :kindergarten => './test/fixtures/kindergarten_tester.csv',
+        :high_school_graduation => './test/fixtures/highschool_grad_tester.csv'
       }
     })
     er
@@ -33,19 +33,19 @@ class EnrollmentRepositoryTest < Minitest::Test
   def test_can_find_by_district_name
     er = load_enrollment_repo
 
-    assert_equal "ACADEMY 20", er.find_by_name("ACADEMY 20").name
+    assert_equal 'ACADEMY 20', er.find_by_name('ACADEMY 20').name
   end
 
   def test_can_find_by_other_district_name
     er = load_enrollment_repo
 
-    assert_equal "COLORADO", er.find_by_name("Colorado").name
+    assert_equal 'COLORADO', er.find_by_name('Colorado').name
   end
 
   def test_gives_error_if_district_does_not_exist
     er = load_enrollment_repo
 
-    refute er.find_by_name("XYZ")
+    refute er.find_by_name('XYZ')
   end
 
   def test_returns_true_if_district_exists
@@ -82,7 +82,7 @@ class EnrollmentRepositoryTest < Minitest::Test
     er = EnrollmentRepository.new
     er.load_data({
       :enrollment => {
-        :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
+        :high_school_graduation => './test/fixtures/highschool_grad_tester.csv'
       }
     })
 
