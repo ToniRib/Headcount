@@ -8,7 +8,11 @@ module DataFormattable
   end
 
   def truncate_value(value)
-    na?(value) ? value : truncate_to_three_decimals(value)
+    if na?(value) || value.nil?
+      value
+    else
+      truncate_to_three_decimals(value)
+    end
   end
 
   def truncate_to_three_decimals(value)

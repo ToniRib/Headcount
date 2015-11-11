@@ -34,6 +34,7 @@ class Enrollment
   end
 
   def kindergarten_participation_by_year
+    # kinder.data
     percentage_by_year(:kindergarten_participation)
   end
 
@@ -58,6 +59,7 @@ class Enrollment
   end
 
   def kindergarten_participation_in_year(year)
+    # kinder.participation_in_year(year)
     if year_exists?(:kindergarten_participation, year)
       truncate_value(kindergarten_participation[year])
     end
