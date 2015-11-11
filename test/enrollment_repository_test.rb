@@ -90,9 +90,7 @@ class EnrollmentRepositoryTest < Minitest::Test
     data = er.enrollments['ACADEMY 20'].graduation_rate_in_year(2011)
     assert_equal 0.895, data
     assert_nil er.enrollments['ACADEMY 20'].kindergarten_participation_in_year(2011)
-
   end
-
 
   def test_transpose_data_transposes_a_nested_hash
     e = EnrollmentRepository.new
@@ -115,7 +113,4 @@ class EnrollmentRepositoryTest < Minitest::Test
 
     assert_nil e.get_year_percent_data(nil)
   end
-
-
-
 end
