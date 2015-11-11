@@ -32,19 +32,18 @@ class DistrictRepository
   end
 
   def find_all_matching(str)
-    @districts.select { |name, value| name.start_with?(str.upcase) }.values
+    @districts.select { |name, _| name.start_with?(str.upcase) }.values
   end
 end
 
-
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   dr = DistrictRepository.new
   dr.load_data({
     :enrollment => {
-      :kindergarten => "./test/fixtures/kindergarten_tester.csv",
-      :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
+      :kindergarten => './test/fixtures/kindergarten_tester.csv',
+      :high_school_graduation => './test/fixtures/highschool_grad_tester.csv'
     }
   })
 
-  p district = dr.find_by_name("ACADEMY 20")
+  p dr.find_by_name('ACADEMY 20')
 end

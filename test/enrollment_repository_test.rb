@@ -107,9 +107,9 @@ class EnrollmentRepositoryTest < Minitest::Test
     assert_equal expected, e.transpose_data(h)
   end
 
-  def test_get_year_returns_nil_if_no_file
+  def test_year_percent_data_parsing_returns_nil_if_no_file
     e = EnrollmentRepository.new
 
-    assert_nil e.get_year_percent_data(nil)
+    assert_nil e.year_percent_data(nil)
   end
 end

@@ -8,18 +8,18 @@ module DataFormattable
   end
 
   def truncate_value(value)
-    is_na?(value) ? value : truncate_to_three_decimals(value)
+    na?(value) ? value : truncate_to_three_decimals(value)
   end
 
   def truncate_to_three_decimals(value)
     (value * 1000).floor / 1000.0
   end
 
-  def is_na?(value)
+  def na?(value)
     value == 'N/A'
   end
 
   def bool_to_binary
-    {true => 1, false => 0}
+    { true => 1, false => 0 }
   end
 end

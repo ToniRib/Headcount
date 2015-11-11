@@ -21,15 +21,15 @@ class Enrollment
 
   def average(category)
     denom = count_non_na(category)
-    denom != 0 ? total(category)/denom : nil
+    denom != 0 ? total(category) / denom : nil
   end
 
   def total(category)
-    @data[category].reduce(0) { |acc,pair| acc + pair[1].to_f }
+    @data[category].reduce(0) { |acc, pair| acc + pair[1].to_f }
   end
 
   def count_non_na(category)
-    @data[category].values.reject { |val| val == "N/A" }.length
+    @data[category].values.count { |val| val != "N/A" }
   end
 
   def kindergarten_participation_by_year

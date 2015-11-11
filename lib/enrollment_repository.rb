@@ -19,23 +19,34 @@ class EnrollmentRepository
     end
   end
 
-  def get_data(options)
-    { :kindergarten_participation => get_year_percent_data(options[:enrollment][:kindergarten]),
-      :high_school_graduation => get_year_percent_data(options[:enrollment][:high_school_graduation]) }
+  def get_data(opts)
+    {
+      kindergarten_participation: year_percent_data(kindergarten_file(opts)),
+      high_school_graduation: year_percent_data(high_school_grad_file(opts))
+    }
+  end
+
+  def kindergarten_file(options)
+    options[:enrollment][:kindergarten]
+  end
+
+  def high_school_grad_file(options)
+    options[:enrollment][:high_school_graduation]
   end
 
   def transpose_data(data)
-    data_transpose = Hash.new{ |h, k| h[k] = {} }
+    data_transpose = Hash.new { |h, k| h[k] = {} }
 
     data.each_pair do |type, district|
-      district.to_h.each_pair{ |name, d| data_transpose[name][type] = d }
+      district.to_h.each_pair { |name, d| data_transpose[name][type] = d }
     end
 
     data_transpose
   end
 
-  def get_year_percent_data(file)
+  def year_percent_data(file)
     return nil if file.nil?
+
     YearPercentParser.new.parse(file)
   end
 
@@ -48,20 +59,18 @@ class EnrollmentRepository
   end
 end
 
-
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   er = EnrollmentRepository.new
-  er.load_data({
-    :enrollment => {
-      :kindergarten => "./test/fixtures/kindergarten_tester.csv",
-      :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
-    }
-  })
-  # er.load_data({
-  #   :enrollment => {
-  #     :kindergarten => "./data/Kindergartners in full-day program.csv",
-  #     :high_school_graduation => "./data/High school graduation rates.csv"
+  er.load_data(:enrollment =>
+                { :kindergarten => './test/fixtures/kindergarten_tester.csv',
+                  :high_school_graduation => './test/fixtures/highschool_grad_tester.csv' })
+  # er.load_data(
+  #   {
+  #     :enrollment => {
+  #       :kindergarten => './data/Kindergartners in full-day program.csv',
+  #       :high_school_graduation => './data/High school graduation rates.csv'
+  #     }
   #   }
-  # })
-  enrollment = er.find_by_name("ACADEMY 20")
+  # )
+  p er.find_by_name('ACADEMY 20')
 end

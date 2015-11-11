@@ -44,18 +44,18 @@ class EnrollmentTest < Minitest::Test
     assert_equal expected_hash, e.kindergarten_participation_by_year
   end
 
-  def test_is_na_returns_true_if_na
+  def test_na_returns_true_if_na
     e = Enrollment.new(:name => 'ACADEMY 20',
                        :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
 
-    assert e.is_na?('N/A')
+    assert e.na?('N/A')
   end
 
-  def test_is_na_returns_false_if_not_na
+  def test_na_returns_false_if_not_na
     e = Enrollment.new(:name => 'ACADEMY 20',
                        :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
 
-    refute e.is_na?(0.345)
+    refute e.na?(0.345)
   end
 
   def test_truncates_decimal_to_three_places_without_rounding
@@ -100,7 +100,7 @@ class EnrollmentTest < Minitest::Test
     assert_equal 0.353, e.kindergarten_participation_in_year(2011)
   end
 
-  def test_returns_kindergarten_participation_as_na_if_data_is_na_for_year
+  def test_returns_kindergarten_participation_as_na_if_data_na_for_year
     e = Enrollment.new(:name => 'ACADEMY 20',
                        :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
 
@@ -228,7 +228,7 @@ class EnrollmentTest < Minitest::Test
     assert_equal 0.353, e.graduation_rate_in_year(2011)
   end
 
-  def test_returns_graduation_rate_as_na_if_data_is_na_for_year
+  def test_returns_graduation_rate_as_na_if_data_na_for_year
     e = Enrollment.new(:name => 'ACADEMY 20',
                        :high_school_graduation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
 
