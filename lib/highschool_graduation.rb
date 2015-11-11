@@ -1,3 +1,5 @@
+require_relative 'data_formattable'
+
 class HighschoolGraduation
   attr_reader :name, :data
 

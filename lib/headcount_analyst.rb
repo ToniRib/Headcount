@@ -1,3 +1,6 @@
+require_relative 'district_repository'
+require_relative 'data_formattable'
+
 class HeadcountAnalyst
   attr_reader :district_repository
 
@@ -21,19 +24,15 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_rate_variation(district_name, vs)
-    general_rate_variation(:kindergarten_participation, district_name, vs)
+    average1 = find_enrollment_by_name(district_name).kp.average
+    average2 = find_enrollment_by_name(vs[:against]).kp.average
+
+    calculate_ratio(average1, average2)
   end
 
   def highschool_graduation_rate_variation(district_name, vs)
-    general_rate_variation(:high_school_graduation, district_name, vs)
-  end
-
-  def general_rate_variation(type, district_name, vs)
-    district_enrollment1 = find_enrollment_by_name(district_name)
-    district_enrollment2 = find_enrollment_by_name(vs[:against])
-
-    average1 = district_enrollment1.average(type)
-    average2 = district_enrollment2.average(type)
+    average1 = find_enrollment_by_name(district_name).hs.average
+    average2 = find_enrollment_by_name(vs[:against]).hs.average
 
     calculate_ratio(average1, average2)
   end

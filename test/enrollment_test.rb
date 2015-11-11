@@ -114,62 +114,6 @@ class EnrollmentTest < Minitest::Test
     assert_nil e.kindergarten_participation_in_year(2020)
   end
 
-  # def test_averages_kindergarten_participation_across_all_years
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 0.890 })
-  #
-  #   assert_equal 0.5450200000000001, e.average(:kindergarten_participation)
-  # end
-  #
-  # def test_average_returns_na_if_all_values_are_na
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 'N/A', 2011 => 'N/A', 2012 => 'N/A' })
-  #
-  #   assert_equal 'N/A', e.average(:kindergarten_participation)
-  # end
-
-  # def test_returns_total_kindergarten_participation
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 0.890 })
-  #
-  #   assert_equal 1.6350600000000002, e.total(:kindergarten_participation)
-  # end
-  #
-  # def test_returns_total_kindergarten_participation_with_some_nas
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-  #
-  #   assert_equal 0.7450600000000001, e.total(:kindergarten_participation)
-  # end
-
-  # def test_returns_zero_kindergarten_participation_if_all_na
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 'N/A', 2011 => 'N/A', 2012 => 'N/A' })
-  #
-  #   assert_equal 0, e.total(:kindergarten_participation)
-  # end
-  #
-  # def test_returns_total_number_of_years_if_none_na
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 0.890 })
-  #
-  #   assert_equal 3, e.count_non_na(:kindergarten_participation)
-  # end
-  #
-  # def test_returns_total_number_of_non_na_years
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-  #
-  #   assert_equal 2, e.count_non_na(:kindergarten_participation)
-  # end
-  #
-  # def test_returns_zero_years_if_all_na
-  #   e = Enrollment.new(:name => 'ACADEMY 20',
-  #                      :kindergarten_participation => { 2010 => 'N/A', 2011 => 'N/A', 2012 => 'N/A' })
-  #
-  #   assert_equal 0, e.count_non_na(:kindergarten_participation)
-  # end
-
   def test_can_initialize_a_new_enrollment_with_highschool_grad_only_data
     e = Enrollment.new(:name => 'ACADEMY 20',
                        :high_school_graduation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677 })
