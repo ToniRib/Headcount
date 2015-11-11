@@ -7,7 +7,7 @@ class KindergartenParticipation
 
   def initialize(options)
     @name = options[:name]
-    @data = options[:data]
+    @data = options[:data] || @data = {}
   end
 
   def participation_in_year(year)

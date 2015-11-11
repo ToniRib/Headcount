@@ -17,8 +17,10 @@ class KindergartenParticipationTest < Minitest::Test
   def test_can_be_initialized_with_no_data
     k = KindergartenParticipation.new(name: 'ACADEMY 20', data: nil )
 
+    expected = {}
+
     assert_equal 'ACADEMY 20', k.name
-    assert_nil k.data
+    assert_equal expected, k.data
   end
 
   def test_returns_truncated_participation_percentages_for_all_years

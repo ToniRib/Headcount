@@ -1,15 +1,22 @@
 require_relative 'data_formattable'
 
 class Enrollment
+  attr_reader :kp
+
   include DataFormattable
 
   def initialize(data_hash)
     @data = data_hash
-    # @kinder = KindergartenParticipation.new
+    name = data_hash[:name]
+    @kp = KindergartenParticipation.new(name: name, data: data_hash[:kindergarten_participation])
   end
 
   def name
     @data[:name]
+  end
+
+  def type_formatter
+
   end
 
   def kindergarten_participation
@@ -34,8 +41,8 @@ class Enrollment
   end
 
   def kindergarten_participation_by_year
-    # kinder.participation_by_year
-    percentage_by_year(:kindergarten_participation)
+    kp.participation_by_year
+    # percentage_by_year(:kindergarten_participation)
   end
 
   def graduation_rate_by_year
@@ -60,10 +67,10 @@ class Enrollment
   end
 
   def kindergarten_participation_in_year(year)
-    # kinder.participation_in_year(year)
-    if year_exists?(:kindergarten_participation, year)
-      truncate_value(kindergarten_participation[year])
-    end
+    kp.participation_in_year(year)
+    # if year_exists?(:kindergarten_participation, year)
+    #   truncate_value(kindergarten_participation[year])
+    # end
   end
 
   def year_exists?(type, year)
