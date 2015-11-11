@@ -51,4 +51,19 @@ class HeadcountAnalyst
     return 'N/A' if is_na?(data1) || is_na?(data2)
       truncate_value(data1 / data2)
   end
+
+
+  def kindergarten_participation_correlates_with_high_school_graduation(options)
+    if options[:for] == "COLORADO"
+
+
+    else
+      x = kindergarten_participation_against_high_school_graduation(options[:for])
+      (0.6..1.5).cover?(x)
+    end
+
+  end
+
+  # ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'ACADEMY 20')
+# => true
 end

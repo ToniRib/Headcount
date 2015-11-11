@@ -76,11 +76,23 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal 0.700, var
   end
 
-  # def test_calculates_average_of_kindergarten_participation_by_district
-  #   ha = load_district_repo
-  #
-  #   ha.average('ACADEMY 20', :enrollment, :kindergarten_participation)
-  # end
+  def test_calculates_kindergarten_graudation_variance_for_different_district
+    ha = load_district_repo
+    var = ha.kindergarten_participation_against_high_school_graduation('ADAMS COUNTY 14')
+    assert_equal 1.656, var
+  end
+
+  def test_participation_correlates_with_hs_graduation
+    ha = load_district_repo
+    cor = ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'ACADEMY 20')
+    assert cor
+  end
+
+  def test_participation_does_not_correlate_with_hs_graduation
+    ha = load_district_repo
+    cor = ha.kindergarten_participation_correlates_with_high_school_graduation(for: 'ADAMS COUNTY 14')
+    refute cor
+  end
 
 
 end
