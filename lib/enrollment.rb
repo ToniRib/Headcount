@@ -1,7 +1,7 @@
 require_relative 'data_formattable'
 
 class Enrollment
-  attr_reader :kp
+  attr_reader :kp, :hs
 
   include DataFormattable
 
@@ -9,6 +9,7 @@ class Enrollment
     @data = data_hash
     name = data_hash[:name]
     @kp = KindergartenParticipation.new(name: name, data: data_hash[:kindergarten_participation])
+    @hs = HighschoolGraduation.new(name: name, data: data_hash[:high_school_graduation])
   end
 
   def name
@@ -18,7 +19,7 @@ class Enrollment
   def high_school_graduation
     @data[:high_school_graduation]
   end
-
+  
   def average(category)
     denom = count_non_na(category)
     denom != 0 ? total(category) / denom : 'N/A'
@@ -41,23 +42,10 @@ class Enrollment
   end
 
   def graduation_rate_by_year
-    # highschool.participation_by_year
-    percentage_by_year(:high_school_graduation)
-  end
-
-  def percentage_by_year(type)
-    @data[type].to_h.each do |year, value|
-      @data[type][year] = truncate_value(value)
-    end
+    hs.graduation_rate_by_year
   end
 
   def graduation_rate_in_year(year)
-    if year_exists?(:high_school_graduation, year)
-      truncate_value(high_school_graduation[year])
-    end
-  end
-
-  def year_exists?(type, year)
-    @data[type].to_h[year]
+    hs.graduation_rate_in_year(year)
   end
 end
