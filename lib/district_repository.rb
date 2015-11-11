@@ -41,9 +41,10 @@ if __FILE__ == $0
   dr = DistrictRepository.new
   dr.load_data({
     :enrollment => {
-      :kindergarten => "./data/Kindergartners in full-day program.csv"
+      :kindergarten => "./test/fixtures/kindergarten_tester.csv",
+      :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
     }
   })
 
-  district = dr.find_by_name("ACADEMY 20")
+  p district = dr.find_by_name("ACADEMY 20")
 end
