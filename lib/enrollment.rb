@@ -9,8 +9,16 @@ class Enrollment
 
   def initialize(data_hash)
     @name = data_hash[:name]
-    @kp = KindergartenParticipation.new(name: name, data: data_hash[:kindergarten_participation])
-    @hs = HighschoolGraduation.new(name: name, data: data_hash[:high_school_graduation])
+    @kp = KindergartenParticipation.new(kp_options(data_hash))
+    @hs = HighschoolGraduation.new(hs_options(data_hash))
+  end
+
+  def kp_options(data)
+    { name: name, data: data[:kindergarten_participation] }
+  end
+
+  def hs_options(data)
+    { name: name, data: data[:high_school_graduation] }
   end
 
   def kindergarten_participation_by_year
