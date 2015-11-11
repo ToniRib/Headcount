@@ -13,6 +13,17 @@ class HeadcountAnalystTest < Minitest::Test
     HeadcountAnalyst.new(dr)
   end
 
+  def load_long_district_repo
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => './test/fixtures/kindergarten_long_tester.csv',
+        :high_school_graduation => './test/fixtures/highschool_grad_long_tester.csv'
+      }
+    })
+    HeadcountAnalyst.new(dr)
+  end
+
   def test_class_exists
     assert HeadcountAnalyst
   end
@@ -102,8 +113,8 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_participation_does_not_correlate_with_high_school_graduation_across
-    ha = load_district_repo
-    options = { across: ['ADAMS COUNTY 14', 'ACADEMY 20'] }
+    ha = load_long_district_repo
+    options = { across: ['ADAMS COUNTY 14', 'ACADEMY 20', 'AGUILAR REORGANIZED 6', 'WESTMINSTER 50'] }
     cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
 
     refute cor
@@ -118,10 +129,34 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_participation_correlates_with_high_school_graduation_colorado
-    ha = load_district_repo
+    ha = load_long_district_repo
     options = { for: 'COLORADO' }
     cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
 
     refute cor
+  end
+
+  def test_calculate_ratio_returns_ratio_of_two_values
+    ha = load_district_repo
+
+    assert_equal 0.500, ha.calculate_ratio(1, 2)
+  end
+
+  def test_calculate_ratio_returns_na_if_second_value_is_na
+    ha = load_district_repo
+
+    assert_equal 'N/A', ha.calculate_ratio(1, 'N/A')
+  end
+
+  def test_calculate_ratio_returns_na_if_second_value_is_na
+    ha = load_district_repo
+
+    assert_equal 'N/A', ha.calculate_ratio('N/A', 1)
+  end
+
+  def test_calculate_ratio_returns_na_if_both_values_na
+    ha = load_district_repo
+
+    assert_equal 'N/A', ha.calculate_ratio('N/A', 'N/A')
   end
 end

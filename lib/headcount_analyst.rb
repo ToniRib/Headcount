@@ -16,6 +16,7 @@ class HeadcountAnalyst
                                                   against: 'COLORADO')
     g = highschool_graduation_rate_variation(district_name,
                                              against: 'COLORADO')
+
     calculate_ratio(k, g)
   end
 
@@ -33,6 +34,7 @@ class HeadcountAnalyst
 
     average1 = district_enrollment1.average(type)
     average2 = district_enrollment2.average(type)
+
     calculate_ratio(average1, average2)
   end
 
@@ -52,7 +54,7 @@ class HeadcountAnalyst
   def calculate_ratio(data1, data2)
     return 'N/A' if na?(data1) || na?(data2)
 
-    truncate_value(data1 / data2)
+    truncate_value(data1.to_f / data2)
   end
 
   def in_correlation_range?(value)
@@ -65,13 +67,10 @@ class HeadcountAnalyst
   end
 
   def kgp_correlates_with_hgr_range(district_names)
-    correlated = 0
-
-    correlated += district_names.reduce(0) do |acc, district_name|
+    correlated = district_names.reduce(0) do |acc, district_name|
       acc + bool_to_binary[kgp_correlates_with_hgr_district(district_name)]
     end
-
-    0.7 < correlated.to_f / district_names.length
+     0.7 < correlated.to_f / district_names.length
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(options)
