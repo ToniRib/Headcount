@@ -98,7 +98,7 @@ class EnrollmentTest < Minitest::Test
   def test_returns_participation_as_nil_if_year_does_not_exist
     e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A'}})
 
-    assert_equal nil, e.kindergarten_participation_in_year(2020)
+    assert_nil e.kindergarten_participation_in_year(2020)
   end
 
   def test_averages_participation_all_values
@@ -109,7 +109,7 @@ class EnrollmentTest < Minitest::Test
 
   def test_average_returns_nil_if_all_na
     e = Enrollment.new({:name => "ACADEMY 20", :kindergarten_participation => {2010 => "N/A", 2011 => "N/A", 2012 => "N/A"}})
-    assert_equal nil, e.average(:kindergarten_participation)
+    assert_nil e.average(:kindergarten_participation)
   end
 
   def test_returns_total_participation
@@ -218,7 +218,18 @@ class EnrollmentTest < Minitest::Test
     e = Enrollment.new({:name => "ACADEMY 20",
                         :high_school_graduation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A'}})
 
-    assert_equal nil, e.graduation_rate_in_year(2020)
+    assert_nil e.graduation_rate_in_year(2020)
+  end
+
+  def test_returns_nil_for_all_queries_if_input_data_is_garbage
+    e = Enrollment.new({3 => 4,
+                        :coolio => {2010 => 'hello', :sty => 'hi', 2012 => 'N/A'}})
+
+    assert_nil e.graduation_rate_in_year(2012)
+    assert_equal Hash.new, e.graduation_rate_by_year
+
+    assert_nil e.kindergarten_participation_in_year(2010)
+    assert_equal Hash.new, e.kindergarten_participation_by_year
   end
 
 end

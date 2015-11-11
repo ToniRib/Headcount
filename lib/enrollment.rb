@@ -41,14 +41,14 @@ class Enrollment
   end
 
   def percentage_by_year(type)
-    @data[type].each do |year, value|
+    @data[type].to_h.each do |year, value|
       @data[type][year] = truncate_value(value)
     end
   end
-
-  def add_data(data_hash)
-    @data.merge(data_hash) if name == data_hash[:name]
-  end
+  #
+  # def add_data(data_hash)
+  #   @data.merge(data_hash) if name == data_hash[:name]
+  # end
 
   def graduation_rate_in_year(year)
     if year_exists?(:high_school_graduation, year)
@@ -63,6 +63,6 @@ class Enrollment
   end
 
   def year_exists?(type, year)
-    @data[type][year]
+    @data[type].to_h[year]
   end
 end
