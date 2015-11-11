@@ -1,25 +1,17 @@
 require_relative 'data_formattable'
 
 class Enrollment
-  attr_reader :kp, :hs
+  attr_reader :name, :kp, :hs
 
   include DataFormattable
 
   def initialize(data_hash)
     @data = data_hash
-    name = data_hash[:name]
+    @name = data_hash[:name]
     @kp = KindergartenParticipation.new(name: name, data: data_hash[:kindergarten_participation])
     @hs = HighschoolGraduation.new(name: name, data: data_hash[:high_school_graduation])
   end
 
-  def name
-    @data[:name]
-  end
-
-  def high_school_graduation
-    @data[:high_school_graduation]
-  end
-  
   def average(category)
     denom = count_non_na(category)
     denom != 0 ? total(category) / denom : 'N/A'

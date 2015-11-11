@@ -179,7 +179,7 @@ class EnrollmentTest < Minitest::Test
     expected_empty = {}
 
     assert_equal 'ACADEMY 20', e.name
-    assert_equal expected_hash, e.high_school_graduation
+    assert_equal expected_hash, e.hs.data
     assert_equal expected_empty, e.kp.data
   end
 
@@ -189,11 +189,11 @@ class EnrollmentTest < Minitest::Test
                        :high_school_graduation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677 })
 
     expected_highschool = { 2010 => 0.3915, 2011 => 0.35356, 2012 => 0.2677 }
-    expected_kindergarten = { 2010 => 0.391, 2011 => 0.353, 2012 => 'N/A' }
+    expected_kindergarten = { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' }
 
     assert_equal 'ACADEMY 20', e.name
-    assert_equal expected_highschool, e.high_school_graduation
-    assert_equal expected_kindergarten, e.kindergarten_participation_by_year
+    assert_equal expected_highschool, e.hs.data
+    assert_equal expected_kindergarten, e.kp.data
   end
 
   def test_returns_graduation_rate_by_year_truncated
