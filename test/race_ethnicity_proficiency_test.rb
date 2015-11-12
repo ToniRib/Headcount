@@ -108,7 +108,7 @@ class RaceEthnicityProficiencyTest < Minitest::Test
     assert_equal expected, r.proficiency_by_race_or_ethnicity(:pacific_islander)
   end
 
-  def test_returns_empty_hash_if_race_does_not_exist
+  def test_returns_unknown_race_error_if_race_does_not_exist
     data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
                        hispanic: 0.145, native_american: 0.4763,
                        two_or_more: 0.473, white: 0.3445 },
@@ -121,8 +121,7 @@ class RaceEthnicityProficiencyTest < Minitest::Test
 
     r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
 
-    expected = {}
-
-    assert_equal expected, r.proficiency_by_race_or_ethnicity(:purple)
+    exception = assert_raises(UnknownRaceError) { r.proficiency_by_race_or_ethnicity(:purple) }
+    assert_equal('Unknown race/ethnicity requested', exception.message)
   end
 end

@@ -17,9 +17,13 @@ class RaceEthnicityProficiency
   end
 
   def proficiency_by_race_or_ethnicity(race)
-    transpose_data(data)[race].to_h.map do |year, percent|
-      [year, truncate_value(percent)]
-    end.to_h
+    race_data = transpose_data(data)[race].to_h
+
+    if race_data.empty?
+      raise UnknownRaceError, 'Unknown race/ethnicity requested'
+    end
+
+    race_data.map { |year, percent| [year, truncate_value(percent)] }.to_h
   end
 
   # method for getting one race for all years (may need transpose)
