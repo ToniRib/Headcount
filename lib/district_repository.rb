@@ -28,9 +28,10 @@ class DistrictRepository
     @statewide_test_repo.load_data(:statewide_testing => options[:statewide_testing])
 
     district_names_across_repositories.each do |name|
-      @districts[name] = District.new(name: name)
-      @districts[name].enrollment = @enrollment_repo.find_by_name(name)
-      @districts[name].statewide_test = @statewide_test_repo.find_by_name(name)
+      district = District.new(name: name)
+      district.enrollment = @enrollment_repo.find_by_name(name)
+      district.statewide_test = @statewide_test_repo.find_by_name(name)
+      @districts[name] = district
     end
   end
 
