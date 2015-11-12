@@ -1,5 +1,7 @@
 require_relative 'year_percent_parser'
 require_relative 'enrollment'
+require_relative 'pre_processor'
+require_relative 'post_processor'
 require 'pry'
 
 class EnrollmentRepository
@@ -10,44 +12,13 @@ class EnrollmentRepository
   end
 
   def load_data(options)
-    data = get_data(options)
-    data = transpose_data(data)
+    post = PostProcessor.new
+    data = post.final_data_prep(options)
 
     data.each_pair do |district_name, district_data|
       enrollment_options = { name: district_name.upcase }.merge(district_data)
       @enrollments[district_name.upcase] = Enrollment.new(enrollment_options)
     end
-  end
-
-  def get_data(opts)
-    {
-      kindergarten_participation: year_percent_data(kindergarten_file(opts)),
-      high_school_graduation: year_percent_data(high_school_grad_file(opts))
-    }
-  end
-
-  def kindergarten_file(options)
-    options[:enrollment][:kindergarten]
-  end
-
-  def high_school_grad_file(options)
-    options[:enrollment][:high_school_graduation]
-  end
-
-  def transpose_data(data)
-    data_transpose = Hash.new { |h, k| h[k] = {} }
-
-    data.each_pair do |type, district|
-      district.to_h.each_pair { |name, d| data_transpose[name][type] = d }
-    end
-
-    data_transpose
-  end
-
-  def year_percent_data(file)
-    return nil if file.nil?
-
-    YearPercentParser.new.parse(file)
   end
 
   def find_by_name(district_name)

@@ -90,26 +90,4 @@ class EnrollmentRepositoryTest < Minitest::Test
     assert_equal 0.895, data
     assert_nil er.enrollments['ACADEMY 20'].kindergarten_participation_in_year(2011)
   end
-
-  def test_transpose_data_transposes_a_nested_hash
-    e = EnrollmentRepository.new
-    h = { i1: { q1: 1, q2:2 }, i2: { q1: 3, q2: 4} }
-    expected = { q1: { i1: 1, i2: 3 }, q2: { i1: 2, i2: 4 } }
-
-    assert_equal expected, e.transpose_data(h)
-  end
-
-  def test_transpose_data_transposes_a_nested_hash_when_one_nil
-    e = EnrollmentRepository.new
-    h = { i1: { q1: 1, q2:2 }, i2: nil }
-    expected = { q1: { i1: 1 }, q2: { i1: 2 } }
-
-    assert_equal expected, e.transpose_data(h)
-  end
-
-  def test_year_percent_data_parsing_returns_nil_if_no_file
-    e = EnrollmentRepository.new
-
-    assert_nil e.year_percent_data(nil)
-  end
 end
