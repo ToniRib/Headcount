@@ -10,9 +10,9 @@ class EnrollmentRepository
   end
 
   def load_data(options)
+    #{:enrollment=>{:kindergarten=>"./test/fixtures/kindergarten_tester.csv"}}
     data = get_data(options)
     data = transpose_data(data)
-
     data.each_pair do |district_name, district_data|
       enrollment_options = { name: district_name.upcase }.merge(district_data)
       @enrollments[district_name.upcase] = Enrollment.new(enrollment_options)
@@ -20,6 +20,7 @@ class EnrollmentRepository
   end
 
   def get_data(options)
+    #{:enrollment=>{:kindergarten=>"./test/fixtures/kindergarten_tester.csv"}}
     { :kindergarten_participation => get_year_percent_data(options[:enrollment][:kindergarten]),
       :high_school_graduation => get_year_percent_data(options[:enrollment][:high_school_graduation]) }
   end
