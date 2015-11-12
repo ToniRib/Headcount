@@ -387,4 +387,148 @@ class StatewideTestTest < Minitest::Test
     exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_grade_in_year(:reading, 8, 2008) }
     assert_equal('Data does not exist in dataset', exception.message)
   end
+
+  def test_can_initialize_with_math_data
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } })
+
+    expected = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                           hispanic: 0.145, native_american: 0.4763,
+                           two_or_more: 0.473, white: 0.3445 },
+                 2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                           hispanic: 0.372, native_american: 0.583,
+                           two_or_more: 0.3750, white: 0.3928 },
+                 2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                           hispanic: 0.377, native_american: 0.988,
+                           two_or_more: 0.266, white: 0.4837 } }
+
+    empty = {}
+
+    assert_equal 'ACADEMY 20', s.name
+    assert_equal expected, s.math.data
+    assert_equal empty, s.reading.data
+    assert_equal empty, s.writing.data
+  end
+
+  def test_can_initialize_with_reading_data
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :reading =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } })
+
+    expected = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                           hispanic: 0.145, native_american: 0.4763,
+                           two_or_more: 0.473, white: 0.3445 },
+                 2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                           hispanic: 0.372, native_american: 0.583,
+                           two_or_more: 0.3750, white: 0.3928 },
+                 2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                           hispanic: 0.377, native_american: 0.988,
+                           two_or_more: 0.266, white: 0.4837 } }
+
+    empty = {}
+
+    assert_equal 'ACADEMY 20', s.name
+    assert_equal expected, s.reading.data
+    assert_equal empty, s.math.data
+    assert_equal empty, s.writing.data
+  end
+
+  def test_can_initialize_with_writing_data
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :writing =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } })
+
+    expected = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                           hispanic: 0.145, native_american: 0.4763,
+                           two_or_more: 0.473, white: 0.3445 },
+                 2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                           hispanic: 0.372, native_american: 0.583,
+                           two_or_more: 0.3750, white: 0.3928 },
+                 2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                           hispanic: 0.377, native_american: 0.988,
+                           two_or_more: 0.266, white: 0.4837 } }
+
+    empty = {}
+
+    assert_equal 'ACADEMY 20', s.name
+    assert_equal expected, s.writing.data
+    assert_equal empty, s.reading.data
+    assert_equal empty, s.math.data
+  end
+
+  def test_can_initialize_with_math_reading_and_writing_data
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } },
+                          :reading =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } },
+                          :writing =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } })
+
+    expected = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                           hispanic: 0.145, native_american: 0.4763,
+                           two_or_more: 0.473, white: 0.3445 },
+                 2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                           hispanic: 0.372, native_american: 0.583,
+                           two_or_more: 0.3750, white: 0.3928 },
+                 2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                           hispanic: 0.377, native_american: 0.988,
+                           two_or_more: 0.266, white: 0.4837 } }
+
+    empty = {}
+
+    assert_equal 'ACADEMY 20', s.name
+    assert_equal expected, s.math.data
+    assert_equal expected, s.reading.data
+    assert_equal expected, s.writing.data
+  end
 end
