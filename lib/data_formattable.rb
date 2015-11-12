@@ -31,4 +31,14 @@ module DataFormattable
     empty_leaves = Hash.new({})
     empty_leaves.merge(hash)
   end
+
+  def transpose_data(data)
+    data_transpose = Hash.new{ |h, k| h[k] = {} }
+
+    data.each_pair do |type, district|
+      district.to_h.each_pair{ |name, d| data_transpose[name][type] = d }
+    end
+
+    data_transpose
+  end
 end

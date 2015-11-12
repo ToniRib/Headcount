@@ -7,7 +7,7 @@ require 'pry'
 class DistrictRepository
   include DataFormattable
 
-  attr_reader :districts, :enrollment_repo
+  attr_reader :districts, :enrollment_repo, :statewide_test_repo
 
   def initialize
     @districts = {}

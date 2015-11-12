@@ -7,16 +7,6 @@ class PostProcessor
 
   include DataFormattable
 
-  def transpose_data(data)
-    data_transpose = Hash.new{ |h, k| h[k] = {} }
-
-    data.each_pair do |type, district|
-      district.to_h.each_pair{ |name, d| data_transpose[name][type] = d }
-    end
-
-    data_transpose
-  end
-
   def get_enrollment_data(options)
     data = { :kindergarten_participation => get_year_percent_data(options[:enrollment][:kindergarten]),
       :high_school_graduation => get_year_percent_data(options[:enrollment][:high_school_graduation])

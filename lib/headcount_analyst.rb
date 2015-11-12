@@ -1,10 +1,12 @@
 require_relative 'district_repository'
 require_relative 'data_formattable'
+require_relative 'data_calculatable'
 
 class HeadcountAnalyst
   attr_reader :district_repository
 
   include DataFormattable
+  include DataCalculatable
 
   def initialize(dr)
     @district_repository = dr
@@ -12,6 +14,14 @@ class HeadcountAnalyst
 
   def find_enrollment_by_name(district_name)
     @district_repository.find_by_name(district_name).enrollment
+  end
+
+  def find_statewide_testing_by_name(district_name)
+    @district_repository.find_by_name(district_name).statewide_test
+  end
+
+  def district_names
+    @district_repository.districts.keys
   end
 
   def kindergarten_participation_against_high_school_graduation(district_name)
@@ -81,5 +91,22 @@ class HeadcountAnalyst
     else
       kgp_correlates_with_hgr_district(options[:for])
     end
+  end
+
+  def top_statewide_test_year_over_year_growth(options)   #(grade: 3, subject: math)
+    growth_values = district_names.map do |district|
+      test_data = find_statewide_testing_by_name(district)
+      test_hash = transpose_data(test_data.proficient_by_grade(options[:grade]))
+      subject_hash = test_hash[options[:subject]]
+      total = total2(subject_hash)
+      denom = count_non_na2(subject_hash)
+      [truncate_value(average2(total,denom)),district]
+    end
+    top_growth = growth_values.reject{|na| na = "N/A"}.sort
+    s = top_growth[-1].to_a.reverse
+    if s.length == 0
+      "N/A, no data"
+    end
+
   end
 end

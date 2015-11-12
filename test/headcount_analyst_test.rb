@@ -24,6 +24,23 @@ class HeadcountAnalystTest < Minitest::Test
     HeadcountAnalyst.new(dr)
   end
 
+  def load_district_repo_multi_class
+    options = {
+      :enrollment => {
+        :kindergarten => "./test/fixtures/kindergarten_tester.csv",
+        :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
+      },
+      :statewide_testing => {
+        :third_grade => "./test/fixtures/third_grade_tester.csv",
+        :math => "./test/fixtures/math_average_proficiency_tester.csv"
+      }
+    }
+
+    dr = DistrictRepository.new
+    dr.load_data(options)
+    HeadcountAnalyst.new(dr)
+  end
+
   def test_class_exists
     assert HeadcountAnalyst
   end
@@ -189,4 +206,19 @@ class HeadcountAnalystTest < Minitest::Test
 
     refute ha.in_correlation_range?(1.6)
   end
+
+  def test_growth_by_grade_in_math
+    ha = load_district_repo_multi_class
+    top_growth = ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+
+    assert_equal ["ACADEMY 20", 0.838], top_growth
+  end
+
+  def test_growth_by_grade_in_math
+    ha = load_district_repo_multi_class
+    top_growth = ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :math)
+
+    assert_equal "N/A, no data", top_growth
+  end
+
 end
