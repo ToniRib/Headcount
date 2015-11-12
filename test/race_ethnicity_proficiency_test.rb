@@ -188,4 +188,6 @@ class RaceEthnicityProficiencyTest < Minitest::Test
 
     assert_equal 0.988, r.proficiency_by_race_in_year(:pacific_islander, 2009)
   end
+
+  # more tests here for negative cases
 end
