@@ -38,6 +38,11 @@ class DistrictRepository
 
     names = enroll_names | statewidetest_names
 
+    names.each do |district_name|
+
+
+    end
+
     @enrollment_repo.enrollments.keys.each do |district_name|
       @districts[district_name.upcase] = District.new(name: district_name)
       enrollment = @enrollment_repo.enrollments[district_name.upcase]
