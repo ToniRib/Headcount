@@ -178,15 +178,39 @@ class StatewideTestTest < Minitest::Test
   end
 
   def test_returns_proficiency_for_third_grade_math_in_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = 0.948
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:math, 3, 2008)
   end
 
   def test_returns_proficiency_for_third_grade_reading_in_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = 0.896
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:reading, 3, 2008)
   end
 
   def test_returns_proficiency_for_third_grade_writing_in_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = 0.441
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:writing, 3, 2008)
   end
 
   def test_returns_proficiency_for_third_grade_math_in_different_year
@@ -222,10 +246,6 @@ class StatewideTestTest < Minitest::Test
   end
 
   def test_returns_proficiency_for_eighth_grade_writing_in_different_year
-    skip
-  end
-
-  def test_returns_unknown_data_error_for_unknown_grade
     skip
   end
 
