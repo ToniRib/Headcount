@@ -29,17 +29,16 @@ class RaceEthnicityProficiency
   def proficiency_by_race_in_year(race, year)
     year_data = proficiency_in_year(year)
 
-    year_data[race]
+    if year_or_race_does_not_exist(year_data, race)
+      raise UnknownRaceError, 'Data does not exist in dataset'
+    end
 
-    # if year_or_subject_does_not_exist(year_data, subj)
-    #   raise UnknownDataError, 'Data does not exist in dataset'
-    # end
-    #
-    # year_data[subj]
+    year_data[race]
   end
 
-  # method for getting just one percentage for a year & race
-  # 0.345
+  def year_or_race_does_not_exist(year_data, race)
+    year_data.empty? || year_data[race].nil?
+  end
 
   # will move into DataFormattable module
   def transpose_data(data)
