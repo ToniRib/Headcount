@@ -4,10 +4,6 @@ class PostProcessor
 
   include DataFormattable
 
-  def final_data_prep(options)
-    transpose_data(get_data(options))
-  end
-
   def transpose_data(data)
     data_transpose = Hash.new{ |h, k| h[k] = {} }
 
@@ -18,16 +14,23 @@ class PostProcessor
     data_transpose
   end
 
-  def get_data(options)
+  def get_enrollment_data(options)
+    data = { :kindergarten_participation => get_year_percent_data(options[:enrollment][:kindergarten]),
+      :high_school_graduation => get_year_percent_data(options[:enrollment][:high_school_graduation])
+    }
+    transpose_data(data)
+  end
+
+  def get_statewide_testing_data(options)
     options = hash_leaves_go_empty_hashes(options)
-    { :kindergarten_participation => get_year_percent_data(options[:enrollment][:kindergarten]),
-      :high_school_graduation => get_year_percent_data(options[:enrollment][:high_school_graduation]),
-      :third_grade => get_year_mrw_percent_data(options[:statewide_testing][:third_grade]),
-      :eighth_grade => get_year_mrw_percent_data(options[:statewide_testing][:eighth_grade]),
+    data = {
+      :third_grade_proficiency => get_year_mrw_percent_data(options[:statewide_testing][:third_grade]),
+      :eighth_grade_proficiency => get_year_mrw_percent_data(options[:statewide_testing][:eighth_grade]),
       :math => get_year_race_percent_data(options[:statewide_testing][:math]),
       :reading => get_year_race_percent_data(options[:statewide_testing][:reading]),
       :writing => get_year_race_percent_data(options[:statewide_testing][:writing])
     }
+    transpose_data(data)
   end
 
   def get_year_percent_data(file)

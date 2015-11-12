@@ -83,38 +83,27 @@ class PostProcessorTest < Minitest::Test
   end
 
 
-  def test_gets_data_from_options
+  def test_gets_enrollment_data_from_options
     post = PostProcessor.new
-    data = post.get_data(full_options)
-    expected1 = 0.39465
-
-    assert_equal expected1, data[:kindergarten_participation]["Colorado"][2007]
-
-    expected2 = 0.697
-
-    assert_equal expected2, data[:third_grade]["Colorado"][2008]["Math"]
-
-    expected3 = 0.8169
-
-    assert_equal expected3, data[:math]["ACADEMY 20"][2011]["Asian"]
-  end
-
-  def test_performs_final_data_prep_and_organizes_by_district
-    post = PostProcessor.new
-    data = post.final_data_prep(full_options)
-
+    data = post.get_enrollment_data(full_options)
     expected1 = 0.39465
 
     assert_equal expected1, data["Colorado"][:kindergarten_participation][2007]
 
-    expected2 = 0.697
+    expected2 = 0.608
 
-    assert_equal expected2, data["Colorado"][:third_grade][2008]["Math"]
-
-    expected3 = 0.8169
-
-    assert_equal expected3, data["ACADEMY 20"][:math][2011]["Asian"]
+    assert_equal expected2, data["ADAMS COUNTY 14"][:high_school_graduation][2011]
   end
 
+  def test_gets_statewide_testing_from_options
+    post = PostProcessor.new
+    data = post.get_statewide_testing_data(full_options)
+    expected1 = 0.697
 
+    assert_equal expected1, data["Colorado"][:third_grade_proficiency][2008]["Math"]
+
+    expected2 = 0.7094
+
+    assert_equal expected2, data["Colorado"][:math][2011]["Asian"]
+  end
 end
