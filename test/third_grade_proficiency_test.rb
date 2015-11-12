@@ -25,4 +25,43 @@ class ThirdGradeProficiencyTest < Minitest::Test
     assert_equal 'ACADEMY 20', t.name
     assert_equal expected, t.data
   end
+
+  def test_can_be_initialized_with_data_that_contains_nas
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 'N/A', writing: 0.1234 },
+             2009 => { math: 'N/A', reading: 0.900, writing: 0.54367 } }
+
+    t = ThirdGradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 'ACADEMY 20', t.name
+    assert_equal data, t.data
+  end
+
+  def test_returns_truncated_proficiency
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
+             2009 => { math: 0.2911, reading: 0.900, writing: 0.54367 } }
+
+    t = ThirdGradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = { 2007 => { math: 0.857, reading: 0.847, writing: 0.788 },
+                 2008 => { math: 0.473, reading: 0.473, writing: 0.123 },
+                 2009 => { math: 0.291, reading: 0.900, writing: 0.543 } }
+
+    assert_equal expected, t.proficiency
+  end
+
+  def test_returns_truncated_proficiency_with_nas
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 'N/A', writing: 0.1234 },
+             2009 => { math: 'N/A', reading: 0.900, writing: 0.54367 } }
+
+    t = ThirdGradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = { 2007 => { math: 0.857, reading: 0.847, writing: 0.788 },
+                 2008 => { math: 0.473, reading: 'N/A', writing: 0.123 },
+                 2009 => { math: 'N/A', reading: 0.900, writing: 0.543 } }
+
+    assert_equal expected, t.proficiency
+  end
 end
