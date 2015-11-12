@@ -189,5 +189,37 @@ class RaceEthnicityProficiencyTest < Minitest::Test
     assert_equal 0.988, r.proficiency_by_race_in_year(:pacific_islander, 2009)
   end
 
-  # more tests here for negative cases
+  def test_returns_unknown_race_error_for_year_proficiency_if_race_does_not_exist
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    exception = assert_raises(UnknownRaceError) { r.proficiency_by_race_in_year(:purple, 2007) }
+    assert_equal('Data does not exist in dataset', exception.message)
+  end
+
+  def test_returns_unknown_race_error_for_year_proficiency_if_year_does_not_exist
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    exception = assert_raises(UnknownRaceError) { r.proficiency_by_race_in_year(:hispanic, 2027) }
+    assert_equal('Data does not exist in dataset', exception.message)
+  end
 end
