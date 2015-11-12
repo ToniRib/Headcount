@@ -113,4 +113,27 @@ class EnrollmentRepositoryTest < Minitest::Test
 
     assert_nil e.get_year_percent_data(nil)
   end
+
+  def test_getting_percent_data_loads_file_repo
+    f = FileRepo.new
+    e = EnrollmentRepository.new(f)
+
+    e.get_year_percent_data("./test/fixtures/highschool_grad_tester.csv")
+    headers = [:location, :timeframe, :dataformat, :data]
+
+    assert_equal Array, f.files["./test/fixtures/highschool_grad_tester.csv"].class
+    assert_equal headers, f.files["./test/fixtures/highschool_grad_tester.csv"][0].headers
+  end
+
+  def test_can_parse_file_using_filerepo_parser
+    f = FileRepo.new
+    e = EnrollmentRepository.new(f)
+
+    e.get_year_percent_data("./test/fixtures/highschool_grad_tester.csv")
+    headers = [:location, :timeframe, :dataformat, :data]
+
+    assert_equal Array, f.files["./test/fixtures/highschool_grad_tester.csv"].class
+    assert_equal headers, f.files["./test/fixtures/highschool_grad_tester.csv"][0].headers
+  end
+
 end
