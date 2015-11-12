@@ -37,13 +37,5 @@ if __FILE__ == $PROGRAM_NAME
                 :eighth_grade => "./test/fixtures/eighth_grade_tester.csv"
                 }
   )
-  # er.load_data(
-  #   {
-  #     :enrollment => {
-  #       :kindergarten => './data/Kindergartners in full-day program.csv',
-  #       :high_school_graduation => './data/High school graduation rates.csv'
-  #     }
-  #   }
-  # )
   p sw.find_by_name('ACADEMY 20')
 end

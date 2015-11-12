@@ -31,8 +31,7 @@ class PostProcessor
       :eighth_grade_proficiency => get_year_mrw_percent_data(options[:statewide_testing][:eighth_grade]),
       :math => get_year_race_percent_data(options[:statewide_testing][:math]),
       :reading => get_year_race_percent_data(options[:statewide_testing][:reading]),
-      :writing => get_year_race_percent_data(options[:statewide_testing][:writing])
-    }
+      :writing => get_year_race_percent_data(options[:statewide_testing][:writing])}
     transpose_data(data)
   end
 
