@@ -38,9 +38,9 @@ class EnrollmentRepository
   def get_year_percent_data(file)
     return nil if file.nil?
     pre = Preprocessor.new
-    pre.pull_from_CSV(file)
-    
-    YearPercentParser.new.parse(file)
+    ruby_rows = pre.pull_from_CSV(file)
+
+    YearPercentParser.new.parse(ruby_rows)
   end
 
   def find_by_name(district_name)
