@@ -365,4 +365,26 @@ class StatewideTestTest < Minitest::Test
     exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_grade_in_year(:reading, 3, 2015) }
     assert_equal('Data does not exist in dataset', exception.message)
   end
+
+  def test_returns_unknown_data_error_for_proficient_for_subject_if_third_grade_data_does_not_exist
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_grade_in_year(:reading, 3, 2008) }
+    assert_equal('Data does not exist in dataset', exception.message)
+  end
+
+  def test_returns_unknown_data_error_for_proficient_for_subject_if_eighth_grade_data_does_not_exist
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_grade_in_year(:reading, 8, 2008) }
+    assert_equal('Data does not exist in dataset', exception.message)
+  end
 end
