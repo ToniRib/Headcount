@@ -568,4 +568,81 @@ class StatewideTestTest < Minitest::Test
     assert_equal expected, s.third.data
     assert_equal expected, s.eighth.data
   end
+
+  def test_returns_proficiency_for_a_race_across_all_years_and_subjects
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } },
+                          :reading =>
+                            { 2007 => { asian: 0.4738, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.377, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.2625, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } },
+                          :writing =>
+                            { 2007 => { asian: 0.859, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.955, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.379, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } })
+
+    expected = { 2007 => {math: 0.284, reading: 0.473, writing: 0.859},
+                 2008 => {math: 0.473, reading: 0.377, writing: 0.473},
+                 2009 => {math: 0.482, reading: 0.262, writing: 0.379} }
+
+    assert_equal expected, s.proficient_by_race_or_ethnicity(:asian)
+  end
+
+  def test_returns_proficiency_for_a_race_across_all_years_and_subjects_with_missing_years
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } },
+                          :reading =>
+                            { 2007 => { asian: 0.4738, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.377, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.372, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.2625, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } },
+                          :writing =>
+                            { 2007 => { asian: 0.859, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 },
+                              2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                                        hispanic: 0.955, native_american: 0.583,
+                                        two_or_more: 0.3750, white: 0.3928 },
+                              2009 => { asian: 0.379, black: 0.594, pacific_islander: 0.988,
+                                        hispanic: 0.377, native_american: 0.988,
+                                        two_or_more: 0.266, white: 0.4837 } })
+
+    expected = { 2007 => {math: 0.284, reading: 0.473, writing: 0.859},
+                 2008 => {math: nil, reading: 0.377, writing: 0.473},
+                 2009 => {math: 0.482, reading: 0.262, writing: 0.379} }
+
+    assert_equal expected, s.proficient_by_race_or_ethnicity(:asian)
+  end
 end

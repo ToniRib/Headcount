@@ -1,5 +1,6 @@
 require_relative 'grade_proficiency'
 require_relative 'race_ethnicity_proficiency'
+require 'pry'
 
 class StatewideTest
   attr_reader :name, :third, :eighth, :math, :reading, :writing
@@ -47,6 +48,20 @@ class StatewideTest
     when 8 then eighth.proficiency_in_year_and_subject(year, subject)
     else        raise_unknown_data_error
     end
+  end
+
+  def proficient_by_race_or_ethnicity(race)
+    m = math.proficiency_by_race_or_ethnicity(race)
+    r = reading.proficiency_by_race_or_ethnicity(race)
+    w = writing.proficiency_by_race_or_ethnicity(race)
+
+    years_with_data_across_subjects(m, r, w).map do |year|
+      [year, { math: m[year], reading: r[year], writing: w[year] }]
+    end.to_h
+  end
+
+  def years_with_data_across_subjects(math, reading, writing)
+    math.keys | reading.keys | writing.keys
   end
 
   def raise_unknown_data_error
