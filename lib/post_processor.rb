@@ -1,4 +1,7 @@
 require_relative 'data_formattable'
+require_relative 'year_percent_parser'
+require_relative 'year_mrw_percent_parser'
+require_relative 'year_race_percent_parser'
 
 class PostProcessor
 
