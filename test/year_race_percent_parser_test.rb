@@ -36,14 +36,14 @@ class YearRacePercentParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
     expected = 0.4205
 
-    assert_equal expected, data['ACADEMY 20'][2014]["Black"]
+    assert_equal expected, data['ACADEMY 20'][2014][:black]
   end
 
   def test_can_find_data_by_location_and_year_expect_na
     parser = YearRacePercentParser.new
     ruby_rows = parser_prep
     data = parser.parse(ruby_rows)
-    
+
     assert_nil data['ACADEMY 20'][2002]
   end
 
@@ -53,7 +53,7 @@ class YearRacePercentParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
     expected = 'N/A'
 
-    assert_equal expected, data['ADAMS COUNTY 14'][2013]["Asian"]
+    assert_equal expected, data['ADAMS COUNTY 14'][2013][:asian]
   end
 
   def test_can_find_multiple_pieces_of_data
@@ -63,8 +63,8 @@ class YearRacePercentParserTest < Minitest::Test
     expected1 = 0.6585
     expected2 = "N/A"
 
-    assert_equal expected1, data['Colorado'][2011]["White"]
-    assert_equal expected2, data['ADAMS COUNTY 14'][2011]["Hawaiian/Pacific Islander"]
+    assert_equal expected1, data['Colorado'][2011][:white]
+    assert_equal expected2, data['ADAMS COUNTY 14'][2011][:pacific_islander]
   end
 
   def test_loads_data_correctly
@@ -74,7 +74,7 @@ class YearRacePercentParserTest < Minitest::Test
 
     examined = ruby_rows[rand(2..60)]
     location = examined.row_data[:location]
-    race = examined.row_data[:race_ethnicity].to_s
+    race = parser.race_to_sym[examined.row_data[:race_ethnicity]]
     year = examined.row_data[:timeframe].to_i
 
     expected = parser.convert_to_float(examined.row_data[:data])

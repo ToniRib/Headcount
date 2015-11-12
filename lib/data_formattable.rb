@@ -26,4 +26,9 @@ module DataFormattable
   def bool_to_binary
     { true => 1, false => 0 }
   end
+
+  def hash_leaves_go_empty_hashes(hash)
+    empty_leaves = Hash.new({})
+    empty_leaves.merge(hash)
+  end
 end

@@ -9,7 +9,7 @@ class YearMRWPercentParser
     data = {}
     ruby_rows.each do |csv_row|
       year = csv_row.row_data[:timeframe].to_i
-      subject = csv_row.row_data[:score].to_s
+      subject = csv_row.row_data[:score].downcase.to_sym
 
       row_data = convert_to_float(csv_row.row_data[:data])
 

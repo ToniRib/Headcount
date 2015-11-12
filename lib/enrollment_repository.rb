@@ -13,7 +13,7 @@ class EnrollmentRepository
 
   def load_data(options)
     post = PostProcessor.new
-    data = post.final_data_prep(options)
+    data = post.get_enrollment_data(options)
 
     data.each_pair do |district_name, district_data|
       enrollment_options = { name: district_name.upcase }.merge(district_data)

@@ -1,5 +1,8 @@
+require_relative 'data_formattable'
+
 class CSVRow
-  attr_reader :row_data, :headers
+  attr_accessor :row_data, :headers
+  include DataFormattable
 
   def initialize(options = {})
     @row_data = options
