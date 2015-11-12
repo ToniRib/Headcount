@@ -214,7 +214,7 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal ["ACADEMY 20", 0.838], top_growth
   end
 
-  def test_growth_by_grade_in_math
+  def test_growth_by_grade_no_data
     ha = load_district_repo_multi_class
     top_growth = ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :math)
 
