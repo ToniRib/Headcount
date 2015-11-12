@@ -30,7 +30,7 @@ class RaceEthnicityProficiency
     year_data = proficiency_in_year(year)
 
     if year_or_race_does_not_exist(year_data, race)
-      raise UnknownRaceError, 'Data does not exist in dataset'
+      raise UnknownDataError, 'Data does not exist in dataset'
     end
 
     year_data[race]

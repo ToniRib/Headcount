@@ -51,7 +51,12 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_race_in_year(subject, race, year)
-
+    case subject
+    when :math    then math.proficiency_by_race_in_year(race, year)
+    when :reading then reading.proficiency_by_race_in_year(race, year)
+    when :writing then writing.proficiency_by_race_in_year(race, year)
+    else          raise_unknown_data_error
+    end
   end
 
   def proficient_by_race_or_ethnicity(race)

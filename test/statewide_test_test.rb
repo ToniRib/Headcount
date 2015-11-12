@@ -681,4 +681,94 @@ class StatewideTestTest < Minitest::Test
 
     exception = assert_raises(UnknownRaceError) { s.proficient_by_race_or_ethnicity(:purple) }
   end
+
+  def test_returns_proficiency_by_race_subject_and_year
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :reading =>
+                            { 2007 => { asian: 0.4738, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :writing =>
+                            { 2007 => { asian: 0.859, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } })
+
+    assert_equal 0.847, s.proficient_for_subject_by_race_in_year(:writing, :black, 2007)
+  end
+
+  def test_returns_proficiency_for_different_race_subject_and_year
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2008 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :reading =>
+                            { 2008 => { asian: 0.4738, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :writing =>
+                            { 2008 => { asian: 0.859, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } })
+
+    assert_equal 0.344, s.proficient_for_subject_by_race_in_year(:math, :white, 2008)
+  end
+
+  def test_returns_unknown_data_error_for_unknown_year_for_proficient_by_subject_race_year
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2008 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :reading =>
+                            { 2008 => { asian: 0.4738, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :writing =>
+                            { 2008 => { asian: 0.859, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_race_in_year(:math, :white, 2007) }
+  end
+
+  def test_returns_unknown_data_error_for_unknown_subject_for_proficient_by_subject_race_year
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2008 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :reading =>
+                            { 2008 => { asian: 0.4738, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :writing =>
+                            { 2008 => { asian: 0.859, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_race_in_year(:science, :white, 2009) }
+  end
+
+  def test_returns_unknown_data_error_for_unknown_race_for_proficient_by_subject_race_year
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :math =>
+                            { 2008 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :reading =>
+                            { 2008 => { asian: 0.4738, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :writing =>
+                            { 2008 => { asian: 0.859, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_race_in_year(:math, :purple, 2009) }
+  end
 end
