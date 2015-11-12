@@ -214,50 +214,155 @@ class StatewideTestTest < Minitest::Test
   end
 
   def test_returns_proficiency_for_third_grade_math_in_different_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = 0.724
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:math, 3, 2009)
   end
 
   def test_returns_proficiency_for_third_grade_reading_in_different_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = 'N/A'
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:reading, 3, 2009)
   end
 
   def test_returns_proficiency_for_third_grade_writing_in_different_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = 0.526
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:writing, 3, 2009)
   end
 
   def test_returns_proficiency_for_eighth_grade_math_in_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = 0.888
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:math, 8, 2008)
   end
 
   def test_returns_proficiency_for_eighth_grade_reading_in_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = 0.866
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:reading, 8, 2008)
   end
 
   def test_returns_proficiency_for_eighth_grade_writing_in_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = 0.671
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:writing, 8, 2008)
   end
 
   def test_returns_proficiency_for_eighth_grade_math_in_different_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = 0.824
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:math, 8, 2010)
   end
 
   def test_returns_proficiency_for_eighth_grade_reading_in_different_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = 'N/A'
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:reading, 8, 2010)
   end
 
   def test_returns_proficiency_for_eighth_grade_writing_in_different_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = 0.662
+
+    assert_equal expected, s.proficient_for_subject_by_grade_in_year(:writing, 8, 2010)
   end
 
   def test_returns_unknown_data_error_for_unknown_grade
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } },
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_grade_in_year(:math, 5, 2008) }
+    assert_equal('Unknown grade requested', exception.message)
   end
 
   def test_returns_unknown_data_error_for_unknown_subject
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } },
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_grade_in_year(:science, 3, 2008) }
+    assert_equal('Data does not exist in dataset', exception.message)
   end
 
   def test_returns_unknown_data_error_for_unknown_year
-    skip
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } },
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_grade_in_year(:reading, 3, 2015) }
+    assert_equal('Data does not exist in dataset', exception.message)
   end
 end
