@@ -3,8 +3,6 @@ require_relative 'grade_proficiency'
 class StatewideTest
   attr_reader :name, :third, :eighth
 
-  # include DataFormattable
-
   def initialize(data_hash)
     @name = data_hash[:name]
     @third = GradeProficiency.new(third_options(data_hash))

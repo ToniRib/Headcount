@@ -1,11 +1,8 @@
-require_relative 'data_formattable'
 require_relative 'highschool_graduation'
 require_relative 'kindergarten_participation'
 
 class Enrollment
   attr_reader :name, :kp, :hs
-
-  include DataFormattable
 
   def initialize(data_hash)
     @name = data_hash[:name]

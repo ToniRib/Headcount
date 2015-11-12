@@ -44,48 +44,6 @@ class EnrollmentTest < Minitest::Test
     assert_equal expected_hash, e.kindergarten_participation_by_year
   end
 
-  def test_na_returns_true_if_na
-    e = Enrollment.new(:name => 'ACADEMY 20',
-                       :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-
-    assert e.na?('N/A')
-  end
-
-  def test_na_returns_false_if_not_na
-    e = Enrollment.new(:name => 'ACADEMY 20',
-                       :kindergarten_participation => {2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-
-    refute e.na?(0.345)
-  end
-
-  def test_truncates_decimal_to_three_places_without_rounding
-    e = Enrollment.new(:name => 'ACADEMY 20',
-                       :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-
-    assert_equal 0.345, e.truncate_to_three_decimals(0.345557)
-  end
-
-  def test_returns_three_decimal_places_for_the_number_one
-    e = Enrollment.new(:name => 'ACADEMY 20',
-                       :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-
-    assert_equal 1.000, e.truncate_to_three_decimals(1)
-  end
-
-  def test_truncates_value_if_value_is_not_na
-    e = Enrollment.new(:name => 'ACADEMY 20',
-                       :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-
-    assert_equal 0.391, e.truncate_value(0.3915)
-  end
-
-  def test_returns_na_instead_of_truncating_if_na
-    e = Enrollment.new(:name => 'ACADEMY 20',
-                       :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
-
-    assert_equal 'N/A', e.truncate_value('N/A')
-  end
-
   def test_returns_kindergarten_participation_for_specific_year
     e = Enrollment.new(:name => 'ACADEMY 20',
                        :kindergarten_participation => { 2010 => 0.3915, 2011 => 0.35356, 2012 => 'N/A' })
