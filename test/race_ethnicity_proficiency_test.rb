@@ -122,7 +122,6 @@ class RaceEthnicityProficiencyTest < Minitest::Test
     r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
 
     exception = assert_raises(UnknownRaceError) { r.proficiency_by_race_or_ethnicity(:purple) }
-    assert_equal('Unknown race/ethnicity requested', exception.message)
   end
 
   def test_returns_proficiency_by_race_for_specific_year
@@ -220,6 +219,5 @@ class RaceEthnicityProficiencyTest < Minitest::Test
     r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
 
     exception = assert_raises(UnknownRaceError) { r.proficiency_by_race_in_year(:hispanic, 2027) }
-    assert_equal('Data does not exist in dataset', exception.message)
   end
 end
