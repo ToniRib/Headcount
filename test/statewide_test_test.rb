@@ -531,4 +531,41 @@ class StatewideTestTest < Minitest::Test
     assert_equal expected, s.reading.data
     assert_equal expected, s.writing.data
   end
+
+  def test_can_initialize_with_all_data
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :eighth_grade_proficiency =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :math =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :reading =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } },
+                          :writing =>
+                            { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                                        hispanic: 0.145, native_american: 0.4763,
+                                        two_or_more: 0.473, white: 0.3445 } })
+
+    expected = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                           hispanic: 0.145, native_american: 0.4763,
+                           two_or_more: 0.473, white: 0.3445 } }
+
+    empty = {}
+
+    assert_equal 'ACADEMY 20', s.name
+    assert_equal expected, s.math.data
+    assert_equal expected, s.reading.data
+    assert_equal expected, s.writing.data
+    assert_equal expected, s.third.data
+    assert_equal expected, s.eighth.data
+  end
 end
