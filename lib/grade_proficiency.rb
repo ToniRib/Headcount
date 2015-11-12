@@ -6,7 +6,6 @@ class GradeProficiency
   attr_reader :name, :data
 
   include DataFormattable
-  # include DataCalculatable
 
   def initialize(options)
     @name = options[:name]
