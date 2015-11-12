@@ -4,7 +4,8 @@ require 'enrollment_repository'
 class EnrollmentRepositoryTest < Minitest::Test
 
   def load_enrollment_repo
-    er = EnrollmentRepository.new
+    f = FileRepo.new
+    er = EnrollmentRepository.new(f)
     er.load_data({
       :enrollment => {
         :kindergarten => "./test/fixtures/kindergarten_tester.csv",
@@ -80,7 +81,8 @@ class EnrollmentRepositoryTest < Minitest::Test
   end
 
   def test_loaded_enrollment_objects_have_high_school_grad_data_no_kinder
-    er = EnrollmentRepository.new
+    f = FileRepo.new
+    er = EnrollmentRepository.new(f)
     er.load_data({
       :enrollment => {
         :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"

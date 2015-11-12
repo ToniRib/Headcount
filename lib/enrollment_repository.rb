@@ -38,10 +38,8 @@ class EnrollmentRepository
 
   def get_year_percent_data(file)
     return nil if file.nil?
-    file_repo.load_file(file) unless file_repo.nil?
-    x = YearPercentParserFileRepo.new.parse(file_repo,file)
-    binding.pry
-    YearPercentParser.new.parse(file)
+    file_repo.load_file(file)
+    YearPercentParserFileRepo.new.parse(file_repo,file)
   end
 
   def find_by_name(district_name)
