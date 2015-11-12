@@ -23,7 +23,7 @@ class StatewideTest
     case grade
     when 3 then third.proficiency_by_year
     when 8 then eighth.proficiency_by_year
-    else        raise UnknownDataError
+    else        raise UnknownDataError, 'Unknown grade requested'
     end
   end
 

@@ -101,4 +101,79 @@ class StatewideTestTest < Minitest::Test
     assert_equal third_expected, s.third.proficiency_by_year
     assert_equal eighth_expected, s.eighth.proficiency_by_year
   end
+
+  def test_can_return_proficiency_for_third_grade_if_data_exists
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } },
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = { 2008 => { :math => 0.948, :reading => 0.896, :writing => 0.441 },
+                 2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                 2010 => { :math => 0.649, :reading => 0.227, :writing => 0.682 } }
+
+    assert_equal expected, s.proficient_by_grade(3)
+  end
+
+  def test_can_return_proficiency_for_eighth_grade_if_data_exists
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } },
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = { 2008 => { :math => 0.888, :reading => 0.866, :writing => 0.671 },
+                 2009 => { :math => 0.824, :reading => 0.864, :writing => 0.706 },
+                 2010 => { :math => 0.824, :reading => 'N/A', :writing => 0.662 } }
+
+    assert_equal expected, s.proficient_by_grade(8)
+  end
+
+  def test_returns_empty_hash_for_proficient_by_grade_if_third_grade_data_does_not_exist
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = {}
+
+    assert_equal expected, s.proficient_by_grade(3)
+  end
+
+  def test_returns_empty_hash_for_proficient_by_grade_if_eighth_grade_data_does_not_exist
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    expected = {}
+
+    assert_equal expected, s.proficient_by_grade(8)
+  end
+
+  def test_returns_unknown_data_error_for_proficient_by_grade_if_grade_is_not_third_or_eighth
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } },
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.9483, :reading => 0.896, :writing => 0.44143 },
+                              2009 => { :math => 0.724, :reading => 'N/A', :writing => 0.526 },
+                              2010 => { :math => 0.64988, :reading => 0.2272, :writing => 0.682 } })
+
+    exception = assert_raises(UnknownDataError) { s.proficient_by_grade(5) }
+    assert_equal('Unknown grade requested', exception.message)
+  end
 end
