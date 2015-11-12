@@ -6,7 +6,7 @@ class KindergartenParticipationTest < Minitest::Test
     assert KindergartenParticipation
   end
 
-  def test_can_be_initialized_with_data
+  def test_can_be_initialized_with_data_and_a_name
     data = { 2007 => 0.513, 2008 => 0.475 }
     k = KindergartenParticipation.new(name: 'ACADEMY 20', data: data )
 
@@ -14,7 +14,7 @@ class KindergartenParticipationTest < Minitest::Test
     assert_equal data, k.data
   end
 
-  def test_can_be_initialized_with_no_data
+  def test_can_be_initialized_with_name_only_and_nil_data
     k = KindergartenParticipation.new(name: 'ACADEMY 20', data: nil )
 
     expected = {}
