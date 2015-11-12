@@ -79,7 +79,7 @@ class PostProcessorTest < Minitest::Test
     data = post.get_year_race_percent_data("./test/fixtures/math_average_proficiency_tester.csv")
     expected = 0.8169
 
-    assert_equal expected, data["ACADEMY 20"][2011]["Asian"]
+    assert_equal expected, data["ACADEMY 20"][2011][:asian]
   end
 
 
@@ -104,6 +104,6 @@ class PostProcessorTest < Minitest::Test
 
     expected2 = 0.7094
 
-    assert_equal expected2, data["Colorado"][:math][2011]["Asian"]
+    assert_equal expected2, data["Colorado"][:math][2011][:asian]
   end
 end
