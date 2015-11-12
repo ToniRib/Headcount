@@ -1,5 +1,5 @@
-class UnknownDataError < StandardError
+class UnknownDataError < ArgumentError
 end
 
-class UnknownRaceError < StandardError
+class UnknownRaceError < ArgumentError
 end

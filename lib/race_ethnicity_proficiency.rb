@@ -20,7 +20,7 @@ class RaceEthnicityProficiency
     race_data = transpose_data(data)[race].to_h
 
     if race_data.empty?
-      raise UnknownRaceError, 'Unknown race/ethnicity requested'
+      raise UnknownRaceError, "Unknown race/ethnicity requested: #{race}."
     end
 
     race_data.map { |year, percent| [year, truncate_value(percent)] }.to_h
