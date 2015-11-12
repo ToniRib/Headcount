@@ -26,8 +26,17 @@ class RaceEthnicityProficiency
     race_data.map { |year, percent| [year, truncate_value(percent)] }.to_h
   end
 
-  # method for getting one race for all years (may need transpose)
-  #  { 2007 => 0.284, 2008 => 0.473, 2009 => 0.482 }
+  def proficiency_by_race_in_year(race, year)
+    year_data = proficiency_in_year(year)
+
+    year_data[race]
+
+    # if year_or_subject_does_not_exist(year_data, subj)
+    #   raise UnknownDataError, 'Data does not exist in dataset'
+    # end
+    #
+    # year_data[subj]
+  end
 
   # method for getting just one percentage for a year & race
   # 0.345

@@ -124,4 +124,68 @@ class RaceEthnicityProficiencyTest < Minitest::Test
     exception = assert_raises(UnknownRaceError) { r.proficiency_by_race_or_ethnicity(:purple) }
     assert_equal('Unknown race/ethnicity requested', exception.message)
   end
+
+  def test_returns_proficiency_by_race_for_specific_year
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 0.847, r.proficiency_by_race_in_year(:black, 2007)
+  end
+
+  def test_returns_proficiency_by_race_for_specific_different_year
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 0.594, r.proficiency_by_race_in_year(:black, 2009)
+  end
+
+  def test_returns_proficiency_for_a_different_race_for_specific_year
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 'N/A', r.proficiency_by_race_in_year(:pacific_islander, 2008)
+  end
+
+  def test_returns_proficiency_for_a_different_race_for_specific_different_year
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 0.988, r.proficiency_by_race_in_year(:pacific_islander, 2009)
+  end
 end
