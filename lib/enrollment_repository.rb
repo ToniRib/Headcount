@@ -1,5 +1,6 @@
 require_relative 'year_percent_parser'
 require_relative 'enrollment'
+require_relative 'preprocessor'
 require 'pry'
 
 class EnrollmentRepository
@@ -36,6 +37,9 @@ class EnrollmentRepository
 
   def get_year_percent_data(file)
     return nil if file.nil?
+    pre = Preprocessor.new
+    pre.pull_from_CSV(file)
+    
     YearPercentParser.new.parse(file)
   end
 
