@@ -27,7 +27,7 @@ class PostProcessor
       :math => get_year_race_percent_data(options[:statewide_testing][:math]),
       :reading => get_year_race_percent_data(options[:statewide_testing][:reading]),
       :writing => get_year_race_percent_data(options[:statewide_testing][:writing])
-  }
+    }
   end
 
   def get_year_percent_data(file)
@@ -52,13 +52,3 @@ class PostProcessor
   end
 
 end
-
-# ({
-#   :statewide_testing => {
-#     :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
-#     :eigth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
-#     :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
-#     :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
-#     :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
-#   }
-# {:enrollment=>{:kindergarten=>"./test/fixtures/kindergarten_tester.csv"}}

@@ -3,15 +3,17 @@ require 'enrollment_repository'
 
 class PostProcessorTest < Minitest::Test
 
-  def load_enrollment_repo
-    er = EnrollmentRepository.new
-    er.load_data({
+  def full_options
+    options = {
       :enrollment => {
         :kindergarten => "./test/fixtures/kindergarten_tester.csv",
         :high_school_graduation => "./test/fixtures/highschool_grad_tester.csv"
+      },
+      :statewide_testing => {
+        :third_grade => "./test/fixtures/third_grade_tester.csv",
+        :math => "./test/fixtures/math_average_proficiency_tester.csv"
       }
-    })
-    er
+    }
   end
 
   def test_class_exists
@@ -46,7 +48,73 @@ class PostProcessorTest < Minitest::Test
     leaved = post.hash_leaves_go_empty_hashes(h)
 
     assert({}, h[:i3])
-
   end
+
+  def test_gets_data_from_enrollment_files
+    post = PostProcessor.new
+    data = post.get_year_percent_data("./test/fixtures/kindergarten_tester.csv")
+    expected = 0.39465
+
+    assert_equal expected, data["Colorado"][2007]
+  end
+
+  def test_gets_data_from_statewide_test_files
+    post = PostProcessor.new
+    data = post.get_year_mrw_percent_data("./test/fixtures/third_grade_tester.csv")
+    expected = 0.697
+
+    assert_equal expected, data['Colorado'][2008]["Math"]
+  end
+
+  def test_gets_data_from_statewide_test_files_mrw
+    post = PostProcessor.new
+    data = post.get_year_mrw_percent_data("./test/fixtures/third_grade_tester.csv")
+    expected = 0.697
+
+    assert_equal expected, data['Colorado'][2008]["Math"]
+  end
+
+  def test_gets_data_from_statewide_test_files_mrw
+    post = PostProcessor.new
+    data = post.get_year_race_percent_data("./test/fixtures/math_average_proficiency_tester.csv")
+    expected = 0.8169
+
+    assert_equal expected, data["ACADEMY 20"][2011]["Asian"]
+  end
+
+
+  def test_gets_data_from_options
+    post = PostProcessor.new
+    data = post.get_data(full_options)
+    expected1 = 0.39465
+
+    assert_equal expected1, data[:kindergarten_participation]["Colorado"][2007]
+
+    expected2 = 0.697
+
+    assert_equal expected2, data[:third_grade]["Colorado"][2008]["Math"]
+
+    expected3 = 0.8169
+
+    assert_equal expected3, data[:math]["ACADEMY 20"][2011]["Asian"]
+  end
+
+  def test_performs_final_data_prep_and_organizes_by_district
+    post = PostProcessor.new
+    data = post.final_data_prep(full_options)
+
+    expected1 = 0.39465
+
+    assert_equal expected1, data["Colorado"][:kindergarten_participation][2007]
+
+    expected2 = 0.697
+
+    assert_equal expected2, data["Colorado"][:third_grade][2008]["Math"]
+
+    expected3 = 0.8169
+
+    assert_equal expected3, data["ACADEMY 20"][:math][2011]["Asian"]
+  end
+
 
 end
