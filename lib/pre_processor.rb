@@ -2,7 +2,6 @@ require 'csv'
 require_relative 'csv_row'
 
 class Preprocessor
-
   def pull_from_CSV(file_name)
     rows = []
 
@@ -15,5 +14,4 @@ class Preprocessor
 
     rows
   end
-
 end
