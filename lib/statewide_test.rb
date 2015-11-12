@@ -50,6 +50,10 @@ class StatewideTest
     end
   end
 
+  def proficient_for_subject_by_race_in_year(subject, race, year)
+
+  end
+
   def proficient_by_race_or_ethnicity(race)
     m = math.proficiency_by_race_or_ethnicity(race)
     r = reading.proficiency_by_race_or_ethnicity(race)
