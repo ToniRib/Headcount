@@ -221,4 +221,10 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal "N/A, no data", top_growth
   end
 
+  def test_growth_by_grade_impossible_grade
+    ha = load_district_repo_multi_class
+
+    exception = assert_raises(UnknownDataError) { ha.top_statewide_test_year_over_year_growth(grade: 9, subject: :math)}
+  end
+
 end

@@ -102,11 +102,16 @@ class HeadcountAnalyst
       denom = count_non_na2(subject_hash)
       [truncate_value(average2(total,denom)),district]
     end
-    top_growth = growth_values.reject{|na| na = "N/A"}.sort
+
+    top_growth = growth_values.reject{|na| na[0] == "N/A"}.sort
     s = top_growth[-1].to_a.reverse
-    if s.length == 0
-      "N/A, no data"
+
+    if s == []
+      return "N/A, no data"
+    else
+      return s
     end
+
 
   end
 end
