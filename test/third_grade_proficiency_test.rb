@@ -128,7 +128,7 @@ class ThirdGradeProficiencyTest < Minitest::Test
 
     t = ThirdGradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    exception = assert_raises(UnknownDataError) {t.proficiency_in_year_and_subject(2009, :science)}
+    exception = assert_raises(UnknownDataError) { t.proficiency_in_year_and_subject(2009, :science) }
     assert_equal('Data does not exist in dataset', exception.message)
   end
 
@@ -139,7 +139,7 @@ class ThirdGradeProficiencyTest < Minitest::Test
 
     t = ThirdGradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    exception = assert_raises(UnknownDataError) {t.proficiency_in_year_and_subject(2015, :math)}
+    exception = assert_raises(UnknownDataError) { t.proficiency_in_year_and_subject(2015, :math) }
     assert_equal('Data does not exist in dataset', exception.message)
   end
 end
