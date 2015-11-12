@@ -40,4 +40,13 @@ class PostProcessorTest < Minitest::Test
     assert_nil post.get_year_percent_data(nil)
   end
 
+  def test_inserts_empty_hash_leaves_where_otherwise_nil
+    post = PostProcessor.new
+    h = { i1: { q1: 1, q2:2 }, i2: { q1: 3, q2: 4} }
+    leaved = post.hash_leaves_go_empty_hashes(h)
+
+    assert({}, h[:i3])
+
+  end
+
 end
