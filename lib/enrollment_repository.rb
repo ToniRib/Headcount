@@ -3,9 +3,10 @@ require_relative 'enrollment'
 require 'pry'
 
 class EnrollmentRepository
-  attr_reader :enrollments
+  attr_reader :enrollments, :file_repo
 
-  def initialize
+  def initialize(file_repo = nil)
+    @file_repo = file_repo
     @enrollments = {}
   end
 

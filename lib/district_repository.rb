@@ -1,13 +1,15 @@
 require_relative 'district'
 require_relative 'enrollment_repository'
+require_relative 'file_repo'
 require 'pry'
 
 class DistrictRepository
-  attr_reader :districts, :enrollment_repo
+  attr_reader :districts, :enrollment_repo, :file_repo
 
   def initialize
     @districts = {}
-    @enrollment_repo = EnrollmentRepository.new
+    @file_repo = FileRepo.new
+    @enrollment_repo = EnrollmentRepository.new(file_repo)
   end
 
   def load_data(options)
