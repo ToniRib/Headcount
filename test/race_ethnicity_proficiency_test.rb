@@ -31,4 +31,44 @@ class RaceEthnicityProficiencyTest < Minitest::Test
     assert_equal 'ACADEMY 20', r.name
     assert_equal expected, r.data
   end
+
+  def test_can_get_proficiency_for_all_races_from_one_year
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = { asian: 0.284, black: 0.847, pacific_islander: 0.988,
+                 hispanic: 0.145, native_american: 0.476,
+                 two_or_more: 0.473, white: 0.344 }
+
+    assert_equal expected, r.proficiency_in_year(2007)
+  end
+
+  def test_can_get_proficiency_for_all_races_from_a_different_year
+    data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                       hispanic: 0.145, native_american: 0.4763,
+                       two_or_more: 0.473, white: 0.3445 },
+             2008 => { asian: 0.473, black: 0.9583, pacific_islander: 'N/A',
+                       hispanic: 0.372, native_american: 0.583,
+                       two_or_more: 0.3750, white: 0.3928 },
+             2009 => { asian: 0.48222, black: 0.594, pacific_islander: 0.988,
+                       hispanic: 0.377, native_american: 0.988,
+                       two_or_more: 0.266, white: 0.4837 } }
+
+    r = RaceEthnicityProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = { asian: 0.473, black: 0.958, pacific_islander: 'N/A',
+                 hispanic: 0.372, native_american: 0.583,
+                 two_or_more: 0.375, white: 0.392 }
+
+    assert_equal expected, r.proficiency_in_year(2008)
+  end
 end

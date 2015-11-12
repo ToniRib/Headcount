@@ -6,38 +6,25 @@ class RaceEthnicityProficiency
   attr_reader :name, :data
 
   include DataFormattable
-  # include DataCalculatable
 
   def initialize(options)
     @name = options[:name]
     @data = options[:data] || @data = {}
   end
 
-  def proficiency_by_year
-    data.to_h.each { |year, values| truncate_each_subject_value(values) }
-  end
-
-  def truncate_each_subject_value(values)
-    # discuss with aaron: should project change this and others like it
-    # since it is directly modifying data (see map below)
-    values.each { |subj, percent| values[subj] = truncate_value(percent) }
-  end
-
   def proficiency_in_year(year)
-    data[year].to_h.map { |subj, percent| [subj, truncate_value(percent)] }.to_h
+    data[year].to_h.map { |race, percent| [race, truncate_value(percent)] }.to_h
   end
 
-  def proficiency_in_year_and_subject(year, subj)
-    year_data = proficiency_in_year(year)
+  # method for getting one year
+  # { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
+                    #  hispanic: 0.145, native_american: 0.4763,
+                    #  two_or_more: 0.473, white: 0.3445 } }
 
-    if year_or_subject_does_not_exist(year_data, subj)
-      raise UnknownDataError, 'Data does not exist in dataset'
-    end
+  # method for getting one race for all years (may need transpose)
+  #  { 2007 => 0.284, 2008 => 0.473, 2009 => 0.482 }
 
-    year_data[subj]
-  end
+  # method for getting just one percentage for a year & race
+  # 0.345
 
-  def year_or_subject_does_not_exist(year_data, subj)
-    year_data.empty? || year_data[subj].nil?
-  end
 end
