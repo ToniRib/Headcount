@@ -10,5 +10,4 @@ class FileRepo
   def load_file(file)
     files[file] = processor.pull_from_CSV(file)
   end
-
 end
