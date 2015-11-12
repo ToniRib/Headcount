@@ -36,7 +36,7 @@ class YearMRWPercentParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
     expected = 0.849
 
-    assert_equal expected, data['ACADEMY 20'][2010]["Math"]
+    assert_equal expected, data['ACADEMY 20'][2010][:math]
   end
 
   def test_can_find_data_by_location_and_year_expect_na
@@ -45,7 +45,7 @@ class YearMRWPercentParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
     expected = 'N/A'
 
-    assert_equal expected, data['ACADEMY 20'][2008]["Writing"]
+    assert_equal expected, data['ACADEMY 20'][2008][:writing]
   end
 
   def test_can_find_data_by_location_and_year_expect_na_with_div_zero
@@ -54,7 +54,7 @@ class YearMRWPercentParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
     expected = 'N/A'
 
-    assert_equal expected, data['ADAMS COUNTY 14'][2010]["Math"]
+    assert_equal expected, data['ADAMS COUNTY 14'][2010][:math]
   end
 
   def test_can_find_multiple_pieces_of_data
@@ -64,8 +64,8 @@ class YearMRWPercentParserTest < Minitest::Test
     expected1 = 0.698
     expected2 = 0.476
 
-    assert_equal expected1, data['Colorado'][2010]["Reading"]
-    assert_equal expected2, data['ADAMS COUNTY 14'][2011]["Math"]
+    assert_equal expected1, data['Colorado'][2010][:reading]
+    assert_equal expected2, data['ADAMS COUNTY 14'][2011][:math]
   end
 
   def test_loads_data_correctly
@@ -75,7 +75,7 @@ class YearMRWPercentParserTest < Minitest::Test
 
     examined = ruby_rows[rand(2..60)]
     location = examined.row_data[:location]
-    subject = examined.row_data[:score].to_s
+    subject = examined.row_data[:score].downcase.to_sym
     year = examined.row_data[:timeframe].to_i
 
     expected = parser.convert_to_float(examined.row_data[:data])

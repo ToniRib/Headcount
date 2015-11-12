@@ -11,7 +11,6 @@ class Preprocessor
       row = CSVRow.new(line.to_h)
       rows << row
     end
-
     rows
   end
 end

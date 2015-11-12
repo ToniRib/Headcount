@@ -63,7 +63,7 @@ class PostProcessorTest < Minitest::Test
     data = post.get_year_mrw_percent_data("./test/fixtures/third_grade_tester.csv")
     expected = 0.697
 
-    assert_equal expected, data['Colorado'][2008]["Math"]
+    assert_equal expected, data['Colorado'][2008][:math]
   end
 
   def test_gets_data_from_statewide_test_files_mrw
@@ -71,7 +71,7 @@ class PostProcessorTest < Minitest::Test
     data = post.get_year_mrw_percent_data("./test/fixtures/third_grade_tester.csv")
     expected = 0.697
 
-    assert_equal expected, data['Colorado'][2008]["Math"]
+    assert_equal expected, data['Colorado'][2008][:math]
   end
 
   def test_gets_data_from_statewide_test_files_mrw
@@ -100,7 +100,7 @@ class PostProcessorTest < Minitest::Test
     data = post.get_statewide_testing_data(full_options)
     expected1 = 0.697
 
-    assert_equal expected1, data["Colorado"][:third_grade_proficiency][2008]["Math"]
+    assert_equal expected1, data["Colorado"][:third_grade_proficiency][2008][:math]
 
     expected2 = 0.7094
 
