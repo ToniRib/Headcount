@@ -23,7 +23,7 @@ class StatewideTest
     case grade
     when 3 then third.proficiency_by_year
     when 8 then eighth.proficiency_by_year
-    else        raise UnknownDataError, 'Unknown grade requested'
+    else        raise_unknown_data_error
     end
   end
 
@@ -31,7 +31,11 @@ class StatewideTest
     case grade
     when 3 then third.proficiency_in_year_and_subject(year, subject)
     when 8 then eighth.proficiency_in_year_and_subject(year, subject)
-    else        raise UnknownDataError
+    else        raise_unknown_data_error
     end
+  end
+
+  def raise_unknown_data_error
+    raise UnknownDataError, 'Unknown grade requested'
   end
 end

@@ -176,4 +176,68 @@ class StatewideTestTest < Minitest::Test
     exception = assert_raises(UnknownDataError) { s.proficient_by_grade(5) }
     assert_equal('Unknown grade requested', exception.message)
   end
+
+  def test_returns_proficiency_for_third_grade_math_in_year
+    skip
+  end
+
+  def test_returns_proficiency_for_third_grade_reading_in_year
+    skip
+  end
+
+  def test_returns_proficiency_for_third_grade_writing_in_year
+    skip
+  end
+
+  def test_returns_proficiency_for_third_grade_math_in_different_year
+    skip
+  end
+
+  def test_returns_proficiency_for_third_grade_reading_in_different_year
+    skip
+  end
+
+  def test_returns_proficiency_for_third_grade_writing_in_different_year
+    skip
+  end
+
+  def test_returns_proficiency_for_eighth_grade_math_in_year
+    skip
+  end
+
+  def test_returns_proficiency_for_eighth_grade_reading_in_year
+    skip
+  end
+
+  def test_returns_proficiency_for_eighth_grade_writing_in_year
+    skip
+  end
+
+  def test_returns_proficiency_for_eighth_grade_math_in_different_year
+    skip
+  end
+
+  def test_returns_proficiency_for_eighth_grade_reading_in_different_year
+    skip
+  end
+
+  def test_returns_proficiency_for_eighth_grade_writing_in_different_year
+    skip
+  end
+
+  def test_returns_unknown_data_error_for_unknown_grade
+    skip
+  end
+
+  def test_returns_unknown_data_error_for_unknown_grade
+    skip
+  end
+
+  def test_returns_unknown_data_error_for_unknown_subject
+    skip
+  end
+
+  def test_returns_unknown_data_error_for_unknown_year
+    skip
+  end
 end
