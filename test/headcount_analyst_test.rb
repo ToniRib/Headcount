@@ -41,6 +41,17 @@ class HeadcountAnalystTest < Minitest::Test
     HeadcountAnalyst.new(dr)
   end
 
+  def load_unusual_grade_entries
+    options = { :statewide_testing =>
+                {
+                  :third_grade => "./test/fixtures/unusual_grade_data_tester.csv"
+                }
+              }
+    dr = DistrictRepository.new
+    dr.load_data(options)
+    HeadcountAnalyst.new(dr)
+  end
+
   def test_class_exists
     assert HeadcountAnalyst
   end
@@ -153,131 +164,48 @@ class HeadcountAnalystTest < Minitest::Test
     refute cor
   end
 
-  def test_calculate_ratio_returns_ratio_of_two_values
-    ha = load_district_repo
-
-    assert_equal 0.500, ha.calculate_ratio(1, 2)
-  end
-
-  def test_calculate_ratio_returns_na_if_second_value_is_na
-    ha = load_district_repo
-
-    assert_equal 'N/A', ha.calculate_ratio(1, 'N/A')
-  end
-
-  def test_calculate_ratio_returns_na_if_second_value_is_na
-    ha = load_district_repo
-
-    assert_equal 'N/A', ha.calculate_ratio('N/A', 1)
-  end
-
-  def test_calculate_ratio_returns_na_if_both_values_na
-    ha = load_district_repo
-
-    assert_equal 'N/A', ha.calculate_ratio('N/A', 'N/A')
-  end
-
-  def test_number_is_within_correlation_range
-    ha = load_district_repo
-
-    assert ha.in_correlation_range?(0.8)
-  end
-
-  def test_number_is_on_low_edge_of_correlation_range
-    ha = load_district_repo
-
-    assert ha.in_correlation_range?(0.6)
-  end
-
-  def test_number_is_on_high_edge_of_correlation_range
-    ha = load_district_repo
-
-    assert ha.in_correlation_range?(1.5)
-  end
-
-  def test_number_is_below_correlation_range
-    ha = load_district_repo
-
-    refute ha.in_correlation_range?(0.2)
-  end
-
-  def test_number_is_above_correlation_range
-    ha = load_district_repo
-
-    refute ha.in_correlation_range?(1.6)
-  end
-
-  def test_growth_value_over_range
-    input = {2001 => 1, 2002 => 2, 2003 => 3, 2004 => 4}
-    ha = HeadcountAnalyst.new
-    expected = 0.75
-
-    assert_equal expected, ha.growth_value_over_range(input)
-  end
-
-  def test_growth_value_over_constant_range
-    x = rand(0..100)
-    input = {2001 => x, 2002 => x, 2003 => x, 2004 => x}
-    ha = HeadcountAnalyst.new
-    expected = 0
-
-    assert_equal expected, ha.growth_value_over_range(input)
-  end
-
-  def test_growth_value_one_item
-    input = {2001 => 3}
-    ha = HeadcountAnalyst.new
-    expected = ha.not_enough_data
-
-    assert_equal expected, ha.growth_value_over_range(input)
-  end
-
-  def test_growth_value_no_items
-    input = {}
-    ha = HeadcountAnalyst.new
-    expected = ha.not_enough_data
-
-    assert_equal expected, ha.growth_value_over_range(input)
-  end
-
-  def test_pulls_largest_growth_value
-    input = [[3,"COLORADO"],[4,"HIGLAND"],[2,"HEY TONI!!!"]]
-    ha = HeadcountAnalyst.new
-    expected = ["HIGLAND",4]
-
-    assert_equal expected, ha.return_largest_growth_value(input)
-  end
-
-  def test_pulls_largest_growth_values
-    input = [[3,"COLORADO"],[4,"HIGLAND"],[2,"HEY TONI!!!"],[6,"AHHHH"]]
-    ha = HeadcountAnalyst.new
-    expected = [["AHHHH",6],["HIGLAND",4]]
-
-    assert_equal expected, ha.return_largest_growth_value(input,2)
-  end
-
-  def test_pulls_largest_growth_value_with_no_datas
-    ha = HeadcountAnalyst.new
-    input = [[ha.not_enough_data,"COLORADO"],[ha.not_enough_data,"HIGLAND"],[2,"HEY TONI!!!"]]
-    expected = ["HEY TONI!!!",2]
-
-    assert_equal expected, ha.return_largest_growth_value(input)
-  end
-
-  def test_growth_by_grade_in_math
+  def test_growth_by_grade_math
     ha = load_district_repo_multi_class
-    top_growth = ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+    top = ha.top_statewide_test_year_over_year_growth(grade:3, subject: :math)
 
-    assert_equal ["COLORADO", 0.002], top_growth
+    assert_equal ["COLORADO", 0.002], top
   end
 
-
-  def test_growth_by_grade_no_data
+  def test_growth_by_grade_reading
     ha = load_district_repo_multi_class
-    top_growth = ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :math)
+    top = ha.top_statewide_test_year_over_year_growth(grade:3, subject: :reading)
 
-    assert_equal "N/A, no districts with sufficient data", top_growth
+    assert_equal ["COLORADO", 0.001], top
   end
+
+  def test_growth_by_grade_reading_top_2
+    ha = load_district_repo_multi_class
+    top = ha.top_statewide_test_year_over_year_growth(grade:3, top:2, subject: :reading)
+
+    assert_equal [["COLORADO", 0.001], ["ACADEMY 20", -0.006]], top
+  end
+
+  def test_growth_by_grade_reading_more_than_there_are
+    ha = load_district_repo_multi_class
+    top = ha.top_statewide_test_year_over_year_growth(grade:3, top:6, subject: :reading)
+
+    assert_equal [["COLORADO", 0.001], ["ACADEMY 20", -0.006], ["ADAMS COUNTY 14", -0.008]], top
+  end
+
+  def test_growth_by_grade_insufficient_data
+    ha = load_unusual_grade_entries
+    top = ha.top_statewide_test_year_over_year_growth(grade:3, subject: :writing)
+
+    assert_equal ["No districts have sufficient data!"], top
+  end
+
+  def test_growth_by_grade_only_one_with_data
+    ha = load_unusual_grade_entries
+    top = ha.top_statewide_test_year_over_year_growth(grade:3, subject: :reading)
+
+    assert_equal ["COLORADO", -0.158], top
+  end
+
 
   def test_growth_by_grade_impossible_grade
     ha = load_district_repo_multi_class

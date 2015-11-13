@@ -109,6 +109,7 @@ class RaceEthnicityProficiencyTest < Minitest::Test
   end
 
   def test_returns_unknown_race_error_if_race_does_not_exist
+    skip
     data = { 2007 => { asian: 0.2847, black: 0.8473, pacific_islander: 0.9887,
                        hispanic: 0.145, native_american: 0.4763,
                        two_or_more: 0.473, white: 0.3445 },
