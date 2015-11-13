@@ -119,6 +119,7 @@ class HeadcountAnalyst
   end
 
   def top_statewide_test_year_over_year_growth(options)   #(grade: 3, subject: math)
+    detect_correct_inputs_for_year_growth_query(options)
     growth_values = district_names.map do |district|
       test_data = find_statewide_testing_by_name(district)
       test_hash = transpose_data(test_data.proficient_by_grade(options[:grade]))
@@ -128,4 +129,13 @@ class HeadcountAnalyst
     end
     return_largest_growth_value(growth_values)
   end
+
+  def detect_correct_inputs_for_year_growth_query(options)
+    if options[:grade].nil? || options[:subject].nil?
+      raise InsufficientInformationError, 'A grade and subject must be provided'
+    end
+  end
+
+
+
 end

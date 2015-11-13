@@ -243,7 +243,6 @@ class HeadcountAnalystTest < Minitest::Test
   def test_pulls_largest_growth_value
     input = [[3,"COLORADO"],[4,"HIGLAND"],[2,"HEY TONI!!!"]]
     ha = HeadcountAnalyst.new
-
     expected = ["HIGLAND",4]
 
     assert_equal expected, ha.return_largest_growth_value(input)
@@ -252,7 +251,6 @@ class HeadcountAnalystTest < Minitest::Test
   def test_pulls_largest_growth_value_with_no_datas
     ha = HeadcountAnalyst.new
     input = [[ha.not_enough_data,"COLORADO"],[ha.not_enough_data,"HIGLAND"],[2,"HEY TONI!!!"]]
-
     expected = ["HEY TONI!!!",2]
 
     assert_equal expected, ha.return_largest_growth_value(input)
@@ -279,4 +277,10 @@ class HeadcountAnalystTest < Minitest::Test
     exception = assert_raises(UnknownDataError) { ha.top_statewide_test_year_over_year_growth(grade: 9, subject: :math)}
   end
 
+  def test_growth_by_grade_impossible_without_both_grade_and_subject
+    ha = load_district_repo_multi_class
+
+    assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(grade: 3)}
+    assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(subject: :math)}
+  end
 end
