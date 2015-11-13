@@ -108,17 +108,19 @@ class HeadcountAnalyst
     end
   end
 
-  def return_largest_growth_value(growth_values)
-    growth_values.sort!.reject!{|r,d| r == not_enough_data}
+  def return_largest_growth_value(growth_values,number = 1)
+    growth_values.sort!{|a,b| b <=> a}.reject!{|r,d| r == not_enough_data}
 
     if growth_values.length > 0
-      growth_values[-1].to_a.reverse
+      values = growth_values[0..(number-1)].map{|x| x.reverse}
+      values.flatten! if values.length == 1
     else
-      "N/A, no districts with sufficient data"
+      values = "N/A, no districts with sufficient data"
     end
+    values
   end
 
-  def top_statewide_test_year_over_year_growth(options)   #(grade: 3, subject: math)
+  def top_statewide_test_year_over_year_growth(options)   #(grade: 3, top:3, subject: math)
     detect_correct_inputs_for_year_growth_query(options)
     growth_values = district_names.map do |district|
       test_data = find_statewide_testing_by_name(district)
@@ -127,7 +129,7 @@ class HeadcountAnalyst
       response = growth_value_over_range(year_hash)
       [response,district]
     end
-    return_largest_growth_value(growth_values)
+    return_largest_growth_value(growth_values,options.fetch(:top,1))
   end
 
   def detect_correct_inputs_for_year_growth_query(options)

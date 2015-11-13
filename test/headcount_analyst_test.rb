@@ -248,6 +248,14 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal expected, ha.return_largest_growth_value(input)
   end
 
+  def test_pulls_largest_growth_values
+    input = [[3,"COLORADO"],[4,"HIGLAND"],[2,"HEY TONI!!!"],[6,"AHHHH"]]
+    ha = HeadcountAnalyst.new
+    expected = [["AHHHH",6],["HIGLAND",4]]
+
+    assert_equal expected, ha.return_largest_growth_value(input,2)
+  end
+
   def test_pulls_largest_growth_value_with_no_datas
     ha = HeadcountAnalyst.new
     input = [[ha.not_enough_data,"COLORADO"],[ha.not_enough_data,"HIGLAND"],[2,"HEY TONI!!!"]]
