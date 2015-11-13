@@ -96,4 +96,23 @@ class HeadcountAnalyst
     growth_values = helper.remove_all_entries_with_insufficient_data(growth_values.to_a)
     helper.return_largest_growth_value(growth_values,options.fetch(:top,1))
   end
+
+  # def top_statewide_test_year_over_year_growth(options)
+  #   total_districts = @district_repository.districts.length
+  #
+  #   math_opt = {grade: options[:grade], subject: :math, top: total_districts}
+  #   read_opt = {grade: options[:grade], subject: :reading, top: total_districts}
+  #   writ_opt = {grade: options[:grade], subject: :writing, top: total_districts}
+  #
+  #   math_ranks = top_statewide_test_year_over_year_growth(math_opt)
+  #   read_ranks = top_statewide_test_year_over_year_growth(read_opt)
+  #   writ_ranks = top_statewide_test_year_over_year_growth(writ_opt)
+  #
+  #   math_ranks.map_with_index do |i|
+  #     math_ranks[i] + read_ranks[i] + writ_ranks[i]
+  #   end
+  # end
+
+#   ha.top_statewide_test_year_over_year_growth(grade: 3)
+# => ['the top district name', 0.111]
 end
