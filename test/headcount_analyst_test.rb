@@ -219,4 +219,10 @@ class HeadcountAnalystTest < Minitest::Test
     assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(grade: 3)}
     assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(subject: :math)}
   end
+
+  def test_overall_growth_scores_multi_subject
+    ha = load_district_repo_multi_class
+
+    ha.top(grade: 3)
+  end
 end

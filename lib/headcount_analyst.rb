@@ -97,21 +97,27 @@ class HeadcountAnalyst
     helper.return_largest_growth_value(growth_values,options.fetch(:top,1))
   end
 
-  # def top_statewide_test_year_over_year_growth(options)
-  #   total_districts = @district_repository.districts.length
-  #
-  #   math_opt = {grade: options[:grade], subject: :math, top: total_districts}
-  #   read_opt = {grade: options[:grade], subject: :reading, top: total_districts}
-  #   writ_opt = {grade: options[:grade], subject: :writing, top: total_districts}
-  #
-  #   math_ranks = top_statewide_test_year_over_year_growth(math_opt)
-  #   read_ranks = top_statewide_test_year_over_year_growth(read_opt)
-  #   writ_ranks = top_statewide_test_year_over_year_growth(writ_opt)
-  #
-  #   math_ranks.map_with_index do |i|
-  #     math_ranks[i] + read_ranks[i] + writ_ranks[i]
-  #   end
-  # end
+  def total_districts
+    @district_repository.districts.keys
+  end
+
+  def subjects
+      [:math,:reading,:writing]
+  end
+
+  def query_options(subject,grade)
+    {grade: grade, subject: subject, top: total_districts.length}
+  end
+
+  def top(options)
+    overall_rankings = total_districts.zip(Array.new(total_districts.length,0)).to_h
+    total_districts.each do |district|
+      subjects.each do |subject|
+        ranks = top_statewide_test_year_over_year_growth(query_options(subject, options[:grade])).to_h
+        overall_rankings[district] += ranks[district]
+      end
+    end
+  end
 
 #   ha.top_statewide_test_year_over_year_growth(grade: 3)
 # => ['the top district name', 0.111]
