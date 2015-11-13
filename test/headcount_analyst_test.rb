@@ -207,18 +207,70 @@ class HeadcountAnalystTest < Minitest::Test
     refute ha.in_correlation_range?(1.6)
   end
 
+  def test_growth_value_over_range
+    input = {2001 => 1, 2002 => 2, 2003 => 3, 2004 => 4}
+    ha = HeadcountAnalyst.new
+    expected = 0.75
+
+    assert_equal expected, ha.growth_value_over_range(input)
+  end
+
+  def test_growth_value_over_constant_range
+    x = rand(0..100)
+    input = {2001 => x, 2002 => x, 2003 => x, 2004 => x}
+    ha = HeadcountAnalyst.new
+    expected = 0
+
+    assert_equal expected, ha.growth_value_over_range(input)
+  end
+
+  def test_growth_value_one_item
+    input = {2001 => 3}
+    ha = HeadcountAnalyst.new
+    expected = ha.not_enough_data
+
+    assert_equal expected, ha.growth_value_over_range(input)
+  end
+
+  def test_growth_value_no_items
+    input = {}
+    ha = HeadcountAnalyst.new
+    expected = ha.not_enough_data
+
+    assert_equal expected, ha.growth_value_over_range(input)
+  end
+
+  def test_pulls_largest_growth_value
+    input = [[3,"COLORADO"],[4,"HIGLAND"],[2,"HEY TONI!!!"]]
+    ha = HeadcountAnalyst.new
+
+    expected = ["HIGLAND",4]
+
+    assert_equal expected, ha.return_largest_growth_value(input)
+  end
+
+  def test_pulls_largest_growth_value_with_no_datas
+    ha = HeadcountAnalyst.new
+    input = [[ha.not_enough_data,"COLORADO"],[ha.not_enough_data,"HIGLAND"],[2,"HEY TONI!!!"]]
+
+    expected = ["HEY TONI!!!",2]
+
+    assert_equal expected, ha.return_largest_growth_value(input)
+  end
+
   def test_growth_by_grade_in_math
     ha = load_district_repo_multi_class
     top_growth = ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
 
-    assert_equal ["ACADEMY 20", 0.838], top_growth
+    assert_equal ["COLORADO", 0.002], top_growth
   end
+
 
   def test_growth_by_grade_no_data
     ha = load_district_repo_multi_class
     top_growth = ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :math)
 
-    assert_equal "N/A, no data", top_growth
+    assert_equal "N/A, no districts with sufficient data", top_growth
   end
 
   def test_growth_by_grade_impossible_grade

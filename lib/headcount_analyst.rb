@@ -8,7 +8,7 @@ class HeadcountAnalyst
   include DataFormattable
   include DataCalculatable
 
-  def initialize(dr)
+  def initialize(dr = nil)
     @district_repository = dr
   end
 
@@ -93,25 +93,39 @@ class HeadcountAnalyst
     end
   end
 
+  def not_enough_data
+    -1000
+  end
+
+  def growth_value_over_range(year_hash)
+    if year_hash.length <= 1
+      not_enough_data
+    else
+      last_year, first_year = year_hash.keys[-1], year_hash.keys[0]
+      num = year_hash[last_year] - year_hash[first_year]
+      denom = year_hash.length
+      truncate_value(num.to_f/denom)
+    end
+  end
+
+  def return_largest_growth_value(growth_values)
+    growth_values.sort!.reject!{|r,d| r == not_enough_data}
+
+    if growth_values.length > 0
+      growth_values[-1].to_a.reverse
+    else
+      "N/A, no districts with sufficient data"
+    end
+  end
+
   def top_statewide_test_year_over_year_growth(options)   #(grade: 3, subject: math)
     growth_values = district_names.map do |district|
       test_data = find_statewide_testing_by_name(district)
       test_hash = transpose_data(test_data.proficient_by_grade(options[:grade]))
-      subject_hash = test_hash[options[:subject]]
-      total = total2(subject_hash)
-      denom = count_non_na2(subject_hash)
-      [truncate_value(average2(total,denom)),district]
+      year_hash = test_hash[options[:subject]].reject{|year,value| value == "N/A"}
+      response = growth_value_over_range(year_hash)
+      [response,district]
     end
-
-    top_growth = growth_values.reject{|na| na[0] == "N/A"}.sort
-    s = top_growth[-1].to_a.reverse
-
-    if s == []
-      return "N/A, no data"
-    else
-      return s
-    end
-
-
+    return_largest_growth_value(growth_values)
   end
 end
