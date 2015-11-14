@@ -1,7 +1,10 @@
 require 'minitest'
 require 'headcount_analyst'
+require 'data_formattable'
 
 class HeadcountAnalystTest < Minitest::Test
+  include DataFormattable
+
   def load_district_repo
     dr = DistrictRepository.new
     dr.load_data({
@@ -225,6 +228,32 @@ class HeadcountAnalystTest < Minitest::Test
                 "ACADEMY 20" => -0.008,
                 "ADAMS COUNTY 14" => -0.013}
     assert_equal expected, ha.list_scores_by_overall(grade: 3)
+  end
+
+  def test_overall_growth_scores_multi_subject_weighted
+    ha = load_district_repo_multi_class
+
+    math_options = {grade: 3, subject: :math}
+    read_options = {grade: 3, subject: :reading}
+    writ_options = {grade: 3, subject: :writing}
+
+    over_options = {grade: 3,
+               weighting: {:math => 0.5, :reading => 0.5, :writing => 0.0}}
+
+    math = ha.list_scores_by_subject(math_options).to_h
+    read = ha.list_scores_by_subject(read_options).to_h
+    write = ha.list_scores_by_subject(writ_options).to_h
+    w = [ over_options[:weighting][:math],
+          over_options[:weighting][:reading],
+          over_options[:weighting][:writing] ]
+
+    expected_colorado = truncate_value(math["COLORADO"]*w[0] + read["COLORADO"]*w[1] + write["COLORADO"]*w[2])
+    expected_academy = truncate_value(math["ACADEMY 20"]*w[0] + read["ACADEMY 20"]*w[1] + write["ACADEMY 20"]*w[2])
+    expected_adams = truncate_value(math["ADAMS COUNTY 14"]*w[0] + read["ADAMS COUNTY 14"]*w[1] + write["ADAMS COUNTY 14"]*w[2])
+
+    assert_equal expected_colorado, ha.list_scores_by_overall(over_options)["COLORADO"]
+    assert_equal expected_academy, ha.list_scores_by_overall(over_options)["ACADEMY 20"]
+    assert_equal expected_adams, ha.list_scores_by_overall(over_options)["ADAMS COUNTY 14"]
   end
 
   def test_overall_growth_scores_multi_subject_unusual_data
