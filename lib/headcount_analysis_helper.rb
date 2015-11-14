@@ -39,7 +39,6 @@ class HeadcountAnalystHelper
   def return_largest_growth_value(growth_values)
     growth_values.sort!{|a,b| b <=> a}
     values = growth_values.map{|x| x.reverse}
-    values.flatten! if values.length == 1
     values = [:error,"No districts have sufficient data!"] if values.length == 0
     values
   end

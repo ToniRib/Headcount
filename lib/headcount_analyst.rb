@@ -85,6 +85,10 @@ class HeadcountAnalyst
   end
 
   def top_statewide_test_year_over_year_growth(options)   #(grade: 3, top:3, subject: math)
+    list_scores_by_subject(options)[0..(options.fetch(:top,1)-1)]
+  end
+
+  def list_scores_by_subject(options) #(grade: 3, subject:math)
     helper.detect_correct_inputs_for_year_growth_query(options)
     growth_values = district_names.map do |district|
       test_data = find_statewide_testing_by_name(district)
@@ -94,7 +98,7 @@ class HeadcountAnalyst
       [response,district]
     end
     growth_values = helper.remove_all_entries_with_insufficient_data(growth_values.to_a)
-    helper.return_largest_growth_value(growth_values,options.fetch(:top,1))
+    helper.return_largest_growth_value(growth_values)
   end
 
   def total_districts
@@ -118,7 +122,6 @@ class HeadcountAnalyst
           overall_rankings[district] += ranks[district]
         end
       end
-      binding.pry
     end
   end
 
