@@ -86,7 +86,7 @@ class HeadcountAnalyst
 
   def top_by_subject(options)   #(grade: 3, top:3, subject: math)
     response = list_scores_by_subject(options)[0..(options.fetch(:top,1)-1)]
-    response.reject! {|d_v| d_v[1] == helper.not_enough_data}
+    response.reject! {|d_v| d_v[1] <= helper.not_enough_data/2}
     response = [:error, "No districts have sufficient data!"] if response.length == 0
     response.flatten! if response.length == 1
     response
@@ -114,7 +114,7 @@ class HeadcountAnalyst
 
 
   def list_scores_by_overall(options)
-    overall_rankings = total_districts.zip(Array.new(total_districts.length,0)).to_h
+    overall_rankings = Hash.new(0)
     subjects.each do |subject|
       ranks = list_scores_by_subject(query_options(subject, options[:grade])).to_h
       ranks.each do |dist,val|
