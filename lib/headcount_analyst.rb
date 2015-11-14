@@ -114,8 +114,11 @@ class HeadcountAnalyst
     total_districts.each do |district|
       subjects.each do |subject|
         ranks = top_statewide_test_year_over_year_growth(query_options(subject, options[:grade])).to_h
-        overall_rankings[district] += ranks[district]
+        if ranks != {error: "No districts have sufficient data!"}
+          overall_rankings[district] += ranks[district]
+        end
       end
+      binding.pry
     end
   end
 

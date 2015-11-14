@@ -196,7 +196,7 @@ class HeadcountAnalystTest < Minitest::Test
     ha = load_unusual_grade_entries
     top = ha.top_statewide_test_year_over_year_growth(grade:3, subject: :writing)
 
-    assert_equal ["No districts have sufficient data!"], top
+    assert_equal [[:error,"No districts have sufficient data!"]], top
   end
 
   def test_growth_by_grade_only_one_with_data
@@ -223,6 +223,12 @@ class HeadcountAnalystTest < Minitest::Test
   def test_overall_growth_scores_multi_subject
     ha = load_district_repo_multi_class
 
-    ha.top(grade: 3)
+    assert_equal 4, ha.top(grade: 3)
+  end
+
+  def test_overall_growth_scores_multi_subject_unusual_data
+    ha = load_unusual_grade_entries
+
+    assert_equal 3, ha.top(grade: 3)
   end
 end
