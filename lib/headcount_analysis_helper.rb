@@ -51,7 +51,7 @@ class HeadcountAnalystHelper
   end
 
   def detect_correct_inputs_for_year_growth_query(options)
-    if options[:grade].nil? || options[:subject].nil?
+    if options[:grade].nil?
       raise InsufficientInformationError, 'A grade and subject must be provided'
     end
   end

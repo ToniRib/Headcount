@@ -216,7 +216,6 @@ class HeadcountAnalystTest < Minitest::Test
   def test_growth_by_grade_impossible_without_both_grade_and_subject
     ha = load_district_repo_multi_class
 
-    assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(grade: 3)}
     assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(subject: :math)}
   end
 
@@ -225,7 +224,7 @@ class HeadcountAnalystTest < Minitest::Test
     expected = {"COLORADO" => 0.004,
                 "ACADEMY 20" => -0.022,
                 "ADAMS COUNTY 14" => -0.039}
-    assert_equal expected, ha.top(grade: 3)
+    assert_equal expected, ha.list_scores_by_overall(grade: 3)
   end
 
   def test_overall_growth_scores_multi_subject_unusual_data
@@ -233,6 +232,18 @@ class HeadcountAnalystTest < Minitest::Test
     expected = {"COLORADO" => -2000.158,
                 "ACADEMY 20" => -3000,
                 "ADAMS COUNTY 14" => -3000}
-    assert_equal expected, ha.top(grade: 3)
+    assert_equal expected, ha.list_scores_by_overall(grade: 3)
+  end
+
+  def test_top_overall_growth_scores_multi_subject
+    ha = load_district_repo_multi_class
+    expected = ["COLORADO" ,0.004]
+    assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3)
+  end
+
+  def test_top_overall_growth_unusual_data
+    ha = load_unusual_grade_entries
+    expected = [:error, "No districts have sufficient data!"]
+    assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3)
   end
 end

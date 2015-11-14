@@ -84,7 +84,7 @@ class HeadcountAnalyst
     end
   end
 
-  def top_statewide_test_year_over_year_growth(options)   #(grade: 3, top:3, subject: math)
+  def top_by_subject(options)   #(grade: 3, top:3, subject: math)
     response = list_scores_by_subject(options)[0..(options.fetch(:top,1)-1)]
     response.reject! {|d_v| d_v[1] == helper.not_enough_data}
     response = [:error, "No districts have sufficient data!"] if response.length == 0
@@ -92,7 +92,15 @@ class HeadcountAnalyst
     response
   end
 
-  def list_scores_by_subject(options) #(grade: 3, subject:math)
+  def top_statewide_test_year_over_year_growth(options)  #(grade: 3, top:3, subject: math)
+    if options[:subject]
+      top_by_subject(options)
+    else
+      top_overall(options)
+    end
+  end
+
+  def list_scores_by_subject(options) #(grade: 3, subject: :math)
     helper.detect_correct_inputs_for_year_growth_query(options)
     growth_values = district_names.map do |district|
       test_data = find_statewide_testing_by_name(district)
@@ -102,6 +110,25 @@ class HeadcountAnalyst
       [district,response]
     end
     helper.sort_growth_values(growth_values)
+  end
+
+
+  def list_scores_by_overall(options)
+    overall_rankings = total_districts.zip(Array.new(total_districts.length,0)).to_h
+    subjects.each do |subject|
+      ranks = list_scores_by_subject(query_options(subject, options[:grade])).to_h
+      ranks.each do |dist,val|
+        overall_rankings[dist] += val
+      end
+    end
+    overall_rankings
+  end
+
+  def top_overall(options)
+    all_ranks = list_scores_by_overall(options)
+    all_ranks = helper.remove_all_entries_with_insufficient_data(all_ranks)
+    all_ranks = {error: "No districts have sufficient data!"} if all_ranks.length == 0
+    top = helper.sort_growth_values(all_ranks.to_a)[0]
   end
 
   def total_districts
@@ -115,24 +142,4 @@ class HeadcountAnalyst
   def query_options(subject,grade)
     {grade: grade, subject: subject}
   end
-
-  def top(options)
-    overall_rankings = total_districts.zip(Array.new(total_districts.length,0)).to_h
-    subjects.each do |subject|
-      ranks = list_scores_by_subject(query_options(subject, options[:grade])).to_h
-      ranks.each do |dist,val|
-        overall_rankings[dist] += val
-      end
-    end
-    overall_rankings
-  end
-
-  def top_statewide_test_year_over_year_growths(options)
-    all_ranks = top(options)
-    all_ranks = helper.remove_all_entries_with_insufficient_data(all_ranks)
-    all_ranks = {error: "No districts have sufficient data!"} if all_ranks.length == 0
-    top = helper.sort_growth_values(all_ranks.to_a)[0]
-  end
-#   ha.top_statewide_test_year_over_year_growth(grade: 3)
-# => ['the top district name', 0.111]
 end
