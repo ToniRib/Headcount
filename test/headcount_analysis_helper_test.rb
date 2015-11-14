@@ -89,27 +89,19 @@ class HeadcountAnalystHelperTest < Minitest::Test
     assert_equal expected, ha.growth_value_over_range(input)
   end
 
-  def test_pulls_largest_growth_value
-    input = [[3,"COLORADO"],[4,"HIGLAND"],[2,"HEY TONI!!!"]]
-    ha = HeadcountAnalystHelper.new
-    expected = ["HIGLAND",4]
-
-    assert_equal expected, ha.return_largest_growth_value(input)
-  end
-
   def test_pulls_largest_growth_values
-    input = [[3,"COLORADO"],[4,"HIGLAND"],[2,"HEY TONI!!!"],[6,"AHHHH"]]
+    input = [["COLORADO",3],["HIGLAND",4],["HEY TONI!!!",2],["AHHHH",6]]
     ha = HeadcountAnalystHelper.new
-    expected = [["AHHHH",6],["HIGLAND",4]]
+    expected = [["AHHHH",6],["HIGLAND",4],["COLORADO",3],["HEY TONI!!!",2]]
 
-    assert_equal expected, ha.return_largest_growth_value(input,2)
+    assert_equal expected, ha.sort_growth_values(input)
   end
 
   def test_pulls_largest_growth_value_with_no_datas
     ha = HeadcountAnalystHelper.new
-    input = [[ha.not_enough_data,"COLORADO"],[ha.not_enough_data,"HIGLAND"],[2,"HEY TONI!!!"]]
-    expected = ["HEY TONI!!!",2]
+    input = [["COLORADO",ha.not_enough_data],["HIGLAND",ha.not_enough_data],["HEY TONI!!!",2]]
+    expected = [["HEY TONI!!!",2],["HIGLAND",ha.not_enough_data],["COLORADO",ha.not_enough_data]]
 
-    assert_equal expected, ha.return_largest_growth_value(input)
+    assert_equal expected, ha.sort_growth_values(input)
   end
 end

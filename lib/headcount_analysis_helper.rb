@@ -36,29 +36,24 @@ class HeadcountAnalystHelper
     end
   end
 
-  def return_largest_growth_value(growth_values)
-    growth_values.sort!{|a,b| b <=> a}
-    values = growth_values.map{|x| x.reverse}
-    values = [:error,"No districts have sufficient data!"] if values.length == 0
-    values
+  def sort_growth_values(growth_values)
+    growth_values.sort!{|a,b| b[1] <=> a[1]}
+    growth_values = [:error,"No districts have sufficient data!"] if growth_values.length == 0
+    growth_values
   end
 
-  def remove_all_entries_with_insufficient_data(data_district_array)
-    data_district_array.reject{|data,district| data == not_enough_data}
+  def remove_all_entries_with_insufficient_data(data_district_hash)
+    data_district_hash.reject{|district,data| data <= not_enough_data/2}
   end
-
 
   def not_enough_data
     -1000
   end
-
 
   def detect_correct_inputs_for_year_growth_query(options)
     if options[:grade].nil? || options[:subject].nil?
       raise InsufficientInformationError, 'A grade and subject must be provided'
     end
   end
-
-
 
 end
