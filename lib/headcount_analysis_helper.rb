@@ -47,7 +47,7 @@ class HeadcountAnalystHelper
   end
 
   def not_enough_data
-    -1000
+    -100000
   end
 
   def detect_correct_inputs_for_year_growth_query(options)

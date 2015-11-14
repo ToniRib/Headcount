@@ -118,11 +118,14 @@ class HeadcountAnalyst
     subjects.each do |subject|
       ranks = list_scores_by_subject(query_options(subject, options[:grade])).to_h
       ranks.each do |dist,val|
-        overall_rankings[dist] += val
+        weighted_val = val * options.fetch(:weighting,{}).fetch(subject ,1.to_f/3)
+        overall_rankings[dist] += weighted_val
       end
     end
-    overall_rankings
+    overall_rankings.keys.zip(overall_rankings.map{|k,v| truncate_value(v)}).to_h
   end
+
+ # :weighting => {:math = 0.5, :reading => 0.5, :writing => 0.0})
 
   def top_overall(options)
     all_ranks = list_scores_by_overall(options)
@@ -130,6 +133,7 @@ class HeadcountAnalyst
     all_ranks = {error: "No districts have sufficient data!"} if all_ranks.length == 0
     top = helper.sort_growth_values(all_ranks.to_a)[0]
   end
+
 
   def total_districts
     @district_repository.districts.keys

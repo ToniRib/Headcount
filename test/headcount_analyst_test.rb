@@ -221,23 +221,23 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_overall_growth_scores_multi_subject
     ha = load_district_repo_multi_class
-    expected = {"COLORADO" => 0.004,
-                "ACADEMY 20" => -0.022,
-                "ADAMS COUNTY 14" => -0.039}
+    expected = {"COLORADO" => 0.001,
+                "ACADEMY 20" => -0.008,
+                "ADAMS COUNTY 14" => -0.013}
     assert_equal expected, ha.list_scores_by_overall(grade: 3)
   end
 
   def test_overall_growth_scores_multi_subject_unusual_data
     ha = load_unusual_grade_entries
-    expected = {"COLORADO" => -2000.158,
-                "ACADEMY 20" => -3000,
-                "ADAMS COUNTY 14" => -3000}
+    expected = {"COLORADO" => -66666.72,
+                "ACADEMY 20" => -100000.0,
+                "ADAMS COUNTY 14" => -100000.0}
     assert_equal expected, ha.list_scores_by_overall(grade: 3)
   end
 
   def test_top_overall_growth_scores_multi_subject
     ha = load_district_repo_multi_class
-    expected = ["COLORADO" ,0.004]
+    expected = ["COLORADO" ,0.001]
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3)
   end
 
