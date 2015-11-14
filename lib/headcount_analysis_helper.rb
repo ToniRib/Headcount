@@ -60,20 +60,6 @@ class HeadcountAnalystHelper
     end
   end
 
-  def list_scores_per_district_subject(options)   #(grade: 3 subject: math)
-    detect_correct_inputs_for_year_growth_query(options)
-    binding.pry
-    growth_values = district_names.map do |district|
-      test_data = find_statewide_testing_by_name(district)
-      test_hash = transpose_data(test_data.proficient_by_grade(options[:grade]))
-      year_hash = test_hash[options[:subject]].reject{|year,value| value == "N/A"}
-      response = growth_value_over_range(year_hash)
-      [response,district]
-    end
-    growth_values = remove_all_entries_with_insufficient_data(growth_values.to_a)
-    binding.pry
-    return_largest_growth_value(growth_values)
-  end
 
 
 end
