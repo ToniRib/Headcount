@@ -208,27 +208,64 @@ class HeadcountAnalystTest < Minitest::Test
   def test_calculates_avg_percentage_growth_for_third_grade_math
     ha = load_statewide_testing_repo
 
-    expected = { "COLORADO" => 0.003,
-                "ACADEMY 20" => -0.004,
-                "ADAMS COUNTY 14" => -0.008,
-                "ADAMS-ARAPAHOE 28J" => 0.004,
-                "AGATE 300" => nil,
-                "AGUILAR REORGANIZED 6" => nil,
-                "AKRON R-1" => 0.018 }
+    expected = [["COLORADO", 0.003],
+                ["ACADEMY 20", -0.004],
+                ["ADAMS COUNTY 14", -0.008],
+                ["ADAMS-ARAPAHOE 28J", 0.004],
+                ["AGATE 300", nil],
+                ["AGUILAR REORGANIZED 6", nil],
+                ["AKRON R-1", 0.018]]
 
-    assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+    assert_equal expected, ha.growth_by_district(grade: 3, subject: :math)
   end
 
   def test_calculates_avg_percentage_growth_for_eighth_grade_reading
     ha = load_statewide_testing_repo
 
-    expected = { "COLORADO" => -0.007,
-                "ACADEMY 20" => -0.003,
-                "ADAMS COUNTY 14" => -0.001,
-                "ADAMS-ARAPAHOE 28J" => -0.009,
-                "AGATE 300" => nil,
-                "AGUILAR REORGANIZED 6" => nil,
-                "AKRON R-1" => 0.00 }
+    expected = [["COLORADO", -0.007],
+                ["ACADEMY 20", -0.003],
+                ["ADAMS COUNTY 14", -0.001],
+                ["ADAMS-ARAPAHOE 28J", -0.009],
+                ["AGATE 300", nil],
+                ["AGUILAR REORGANIZED 6", nil],
+                ["AKRON R-1", 0.00]]
+
+    assert_equal expected, ha.growth_by_district(grade: 8, subject: :reading)
+  end
+
+  def test_sorts_all_non_nil_districts_by_growth
+    ha = load_statewide_testing_repo
+
+    original = [["COLORADO", -0.007],
+                ["ACADEMY 20", -0.003],
+                ["ADAMS COUNTY 14", -0.001],
+                ["ADAMS-ARAPAHOE 28J", -0.009],
+                ["AGATE 300", nil],
+                ["AGUILAR REORGANIZED 6", nil],
+                ["AKRON R-1", 0.00]]
+
+    expected = [["AKRON R-1", 0.00],
+                ["ADAMS COUNTY 14", -0.001],
+                ["ACADEMY 20", -0.003],
+                ["COLORADO", -0.007],
+                ["ADAMS-ARAPAHOE 28J", -0.009]]
+
+    assert_equal expected, ha.sort_districts_by_growth(original)
+  end
+
+  def test_gets_top_growth_in_third_grade_math
+    ha = load_statewide_testing_repo
+
+    expected = ["AKRON R-1", 0.018]
+
+
+    assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+  end
+
+  def test_gets_top_growth_in_eighth_grade_reading
+    ha = load_statewide_testing_repo
+
+    expected = ["AKRON R-1", 0.000]
 
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :reading)
   end
