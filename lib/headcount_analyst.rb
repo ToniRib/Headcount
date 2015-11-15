@@ -85,16 +85,16 @@ class HeadcountAnalyst
 
   def top_statewide_test_year_over_year_growth(options)
     raise_insufficient_info_error unless options.key?(:grade)
-    binding.pry
+    
+    @district_repository.district_names_across_repositories.map do |name|
+      begin
+        num = @district_repository.districts[name].statewide_test.average_percent_growth_by_grade_for_subject(options[:grade], options[:subject])
+      rescue
+        num = nil
+      end
 
-    case :grade
-    when 3
-
-    end
-  end
-
-  def average_growth_by_district
-
+      [name, num]
+    end.to_h
   end
 
   def average_percentage_growth(arr)

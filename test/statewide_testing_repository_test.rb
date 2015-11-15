@@ -10,10 +10,4 @@ class StatewideTestRespositoryTest < Minitest::Test
                   })
     sw
   end
-
-  def test_calculates_average_percent_growth_for_all_districts
-    sw = load_short_grade_proficiency_data
-    # binding.pry
-  
-  end
 end

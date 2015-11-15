@@ -204,4 +204,32 @@ class HeadcountAnalystTest < Minitest::Test
 
     exception = assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(hello: 9) }
   end
+
+  def test_calculates_avg_percentage_growth_for_third_grade_math
+    ha = load_statewide_testing_repo
+
+    expected = { "COLORADO" => 0.003,
+                "ACADEMY 20" => -0.004,
+                "ADAMS COUNTY 14" => -0.008,
+                "ADAMS-ARAPAHOE 28J" => 0.004,
+                "AGATE 300" => nil,
+                "AGUILAR REORGANIZED 6" => nil,
+                "AKRON R-1" => 0.018 }
+
+    assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+  end
+
+  def test_calculates_avg_percentage_growth_for_eighth_grade_reading
+    ha = load_statewide_testing_repo
+
+    expected = { "COLORADO" => -0.007,
+                "ACADEMY 20" => -0.003,
+                "ADAMS COUNTY 14" => -0.001,
+                "ADAMS-ARAPAHOE 28J" => -0.009,
+                "AGATE 300" => nil,
+                "AGUILAR REORGANIZED 6" => nil,
+                "AKRON R-1" => 0.00 }
+
+    assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :reading)
+  end
 end
