@@ -59,7 +59,7 @@ class StatewideTest
     end
   end
 
-  def average_percent_growth_by_grade_all_subjects(grade, weights)
+  def avg_growth_by_grade_all_subjects(grade, weights)
     case grade
     when 3 then third.combined_average_growth(weights)
     when 8 then eighth.combined_average_growth(weights)
@@ -67,7 +67,7 @@ class StatewideTest
     end
   end
 
-  def average_percent_growth_by_grade_for_subject(grade, subject)
+  def avg_growth_by_grade_for_subject(grade, subject)
     case grade
     when 3 then third.avg_percentage_growth_by_subject(subject)
     when 8 then eighth.avg_percentage_growth_by_subject(subject)

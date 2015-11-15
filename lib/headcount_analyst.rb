@@ -120,7 +120,8 @@ class HeadcountAnalyst
 
     district_names.map do |name|
       begin
-        num = find_swtest_by_name(name).average_percent_growth_by_grade_all_subjects(options[:grade], options[:weighting])
+        st = find_swtest_by_name(name)
+        num = st.avg_growth_by_grade_all_subjects(options[:grade], options[:weighting])
       rescue
         num = nil
       end
@@ -142,7 +143,8 @@ class HeadcountAnalyst
   def growth_by_district(options)
     district_names.map do |name|
       begin
-        num = find_swtest_by_name(name).average_percent_growth_by_grade_for_subject(options[:grade], options[:subject])
+        st = find_swtest_by_name(name)
+        num = st.avg_growth_by_grade_for_subject(options[:grade], options[:subject])
       rescue
         num = nil
       end

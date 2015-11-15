@@ -782,7 +782,7 @@ class StatewideTestTest < Minitest::Test
     expected = -0.005
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
-    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(8, weights)
+    assert_equal expected, s.avg_growth_by_grade_all_subjects(8, weights)
   end
 
   def test_calculates_average_percent_growth_for_all_subjects_for_third_grade
@@ -795,7 +795,7 @@ class StatewideTestTest < Minitest::Test
     expected = -0.005
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
-    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(3, weights)
+    assert_equal expected, s.avg_growth_by_grade_all_subjects(3, weights)
   end
 
   def test_returns_unknown_data_error_for_average_percentage_by_year_for_unknown_grade
@@ -807,7 +807,7 @@ class StatewideTestTest < Minitest::Test
 
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
-    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(7, weights) }
+    assert_raises(UnknownDataError) { s.avg_growth_by_grade_all_subjects(7, weights) }
   end
 
   def test_returns_unknown_data_error_for_average_percentage_by_year_if_data_not_loaded
@@ -818,7 +818,7 @@ class StatewideTestTest < Minitest::Test
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
-    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(8, weights) }
+    assert_raises(UnknownDataError) { s.avg_growth_by_grade_all_subjects(8, weights) }
   end
 
   def test_calculates_average_percent_growth_for_eighth_grade_math
@@ -828,7 +828,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    assert_equal -0.032, s.average_percent_growth_by_grade_for_subject(8, :math)
+    assert_equal -0.032, s.avg_growth_by_grade_for_subject(8, :math)
   end
 
   def test_calculates_average_percent_growth_for_third_grade_reading
@@ -838,7 +838,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    assert_equal -0.002, s.average_percent_growth_by_grade_for_subject(3, :reading)
+    assert_equal -0.002, s.avg_growth_by_grade_for_subject(3, :reading)
   end
 
   def test_returns_unknown_data_error_for_average_percentage_for_subject_if_year_unknown
@@ -848,7 +848,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_for_subject(7, :math) }
+    assert_raises(UnknownDataError) { s.avg_growth_by_grade_for_subject(7, :math) }
   end
 
   def test_returns_unknown_data_error_for_average_percentage_for_subject_if_subject_unknown
@@ -858,6 +858,6 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_for_subject(8, :science) }
+    assert_raises(UnknownDataError) { s.avg_growth_by_grade_for_subject(8, :science) }
   end
 end
