@@ -6,7 +6,7 @@ class DistrictRepositoryTest < Minitest::Test
     dr = DistrictRepository.new
     dr.load_data({
       :enrollment => {
-        :kindergarten => "./test/fixtures/kindergarten_tester.csv"
+        :kindergarten => './test/fixtures/kindergarten_tester.csv'
       }
     })
     dr
@@ -20,11 +20,11 @@ class DistrictRepositoryTest < Minitest::Test
         :high_school_graduation => './test/fixtures/highschool_grad_tester.csv'
       },
       :statewide_testing => {
-        :third_grade => "./test/fixtures/third_grade_tester.csv",
-        :eigth_grade => "./test/fixtures/eighth_grade_tester.csv",
-        :math => "./test/fixtures/math_average_proficiency_tester.csv",
-        :reading => "./test/fixtures/reading_average_proficiency_tester.csv",
-        :writing => "./test/fixtures/writing_average_proficiency_tester.csv"
+        :third_grade => './test/fixtures/third_grade_tester.csv',
+        :eigth_grade => './test/fixtures/eighth_grade_tester.csv',
+        :math => './test/fixtures/math_average_proficiency_tester.csv',
+        :reading => './test/fixtures/reading_average_proficiency_tester.csv',
+        :writing => './test/fixtures/writing_average_proficiency_tester.csv'
       }
     })
     dr
@@ -50,19 +50,19 @@ class DistrictRepositoryTest < Minitest::Test
   def test_can_find_by_district_name
     dr = kindergarten_test
 
-    assert_equal "ACADEMY 20", dr.find_by_name("ACADEMY 20").name
+    assert_equal 'ACADEMY 20', dr.find_by_name('ACADEMY 20').name
   end
 
   def test_can_find_by_other_district_name
     dr = kindergarten_test
 
-    assert_equal "COLORADO", dr.find_by_name("Colorado").name
+    assert_equal 'COLORADO', dr.find_by_name('Colorado').name
   end
 
   def test_gives_error_if_district_does_not_exist
     dr = kindergarten_test
 
-    assert_raises (UnknownDataError){ dr.find_by_name("XYZ") }
+    assert_raises (UnknownDataError){ dr.find_by_name('XYZ') }
   end
 
   def test_returns_true_if_district_exists
@@ -108,9 +108,9 @@ class DistrictRepositoryTest < Minitest::Test
   def test_districts_get_enrollments_after_loading
     dr = kindergarten_test
 
-    district = dr.find_by_name("ACADEMY 20")
+    district = dr.find_by_name('ACADEMY 20')
 
-    assert_equal "ACADEMY 20", district.enrollment.name
+    assert_equal 'ACADEMY 20', district.enrollment.name
 
     kp2010 = district.enrollment.kindergarten_participation_in_year(2010)
 
