@@ -18,21 +18,33 @@ class DistrictRepository
   def district_names_across_repositories
     enroll_names = @enrollment_repo.enrollments.keys
     statewidetest_names = @statewide_test_repo.statewide_tests.keys
-    (enroll_names | statewidetest_names).map{|n| n.upcase}
+    (enroll_names | statewidetest_names).map{ |n| n.upcase }
   end
 
   def load_data(options)
     options = hash_leaves_go_empty_hashes(options)
 
-    @enrollment_repo.load_data(:enrollment => options[:enrollment])
-    @statewide_test_repo.load_data(:statewide_testing => options[:statewide_testing])
+    @enrollment_repo.load_data(enrollment_data(options))
+    @statewide_test_repo.load_data(statewide_test_data(options))
 
     district_names_across_repositories.each do |name|
-      district = District.new(name: name)
-      district.enrollment = @enrollment_repo.find_by_name(name)
-      district.statewide_test = @statewide_test_repo.find_by_name(name)
-      @districts[name] = district
+      create_district_with_data(name)
     end
+  end
+
+  def enrollment_data(options)
+    { :enrollment => options[:enrollment] }
+  end
+
+  def statewide_test_data(options)
+    { :statewide_testing => options[:statewide_testing] }
+  end
+
+  def create_district_with_data(name)
+    district = District.new(name: name)
+    district.enrollment = @enrollment_repo.find_by_name(name)
+    district.statewide_test = @statewide_test_repo.find_by_name(name)
+    @districts[name] = district
   end
 
   def find_by_name(district_name)
