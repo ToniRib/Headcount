@@ -815,4 +815,44 @@ class StatewideTestTest < Minitest::Test
 
     assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(8) }
   end
+
+  def test_calculates_average_percent_growth_for_eighth_grade_math
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    assert_equal -0.032, s.average_percent_growth_by_grade_for_subject(8, :math)
+  end
+
+  def test_calculates_average_percent_growth_for_third_grade_reading
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    assert_equal -0.002, s.average_percent_growth_by_grade_for_subject(3, :reading)
+  end
+
+  def test_returns_unknown_data_error_for_average_percentage_for_subject_if_year_unknown
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_for_subject(7, :math) }
+  end
+
+  def test_returns_unknown_data_error_for_average_percentage_for_subject_if_subject_unknown
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_for_subject(8, :science) }
+  end
 end
