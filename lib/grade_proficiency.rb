@@ -46,6 +46,9 @@ class GradeProficiency
 
   def average_percentage_growth(arr)
     arr.reject! { |val| na?(val) }
+
+    raise InsufficientInformationError if arr.length < 2
+
     arr.each_cons(2).map { |a, b| b - a }.reduce(:+) / (arr.length - 1.0)
   end
 

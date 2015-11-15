@@ -193,6 +193,30 @@ class GradeProficiencyTest < Minitest::Test
     assert_equal expected, t.average_percentage_growth([1.12, 3.32, 4.34])
   end
 
+  def test_avg_percentage_growth_returns_exception_for_empty_array
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    assert_raises(InsufficientInformationError) { t.average_percentage_growth([]) }
+  end
+
+  def test_avg_percentage_growth_returns_exception_for_single_element_array
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    assert_raises(InsufficientInformationError) { t.average_percentage_growth([1]) }
+  end
+
+  def test_avg_percentage_growth_returns_exception_for_array_with_nas
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    assert_raises(InsufficientInformationError) { t.average_percentage_growth(['N/A', 2, 'N/A']) }
+  end
+
+  def test_avg_percentage_growth_does_not_return_exception_for_array_with_2_elements
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    assert_equal 1, t.average_percentage_growth([1, 2])
+  end
+
   def test_avg_percentage_growth_removes_nas_when_performing_calculations
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
