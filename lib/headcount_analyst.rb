@@ -10,6 +10,12 @@ class HeadcountAnalyst
     @district_repository = dr
   end
 
+  def district_names
+    names = @district_repository.district_names_across_repositories
+    names.delete('COLORADO')
+    names
+  end
+
   def find_enrollment_by_name(district_name)
     @district_repository.find_by_name(district_name).enrollment
   end
@@ -85,9 +91,9 @@ class HeadcountAnalyst
 
   def top_statewide_test_year_over_year_growth(options)
     raise_insufficient_info_error unless options.key?(:grade)
-    
+
     g = growth_by_district(options)
-    g = sort_districts_by_growth(g)[0..options.fetch(:top, 0)]
+    g = sort_districts_by_growth(g)[0..(options.fetch(:top, 1)-1)]
     g.flatten! if g.count == 1
     g
   end
@@ -97,7 +103,7 @@ class HeadcountAnalyst
   end
 
   def growth_by_district(options)
-    @district_repository.district_names_across_repositories.map do |name|
+    district_names.map do |name|
       begin
         num = @district_repository.districts[name].statewide_test.average_percent_growth_by_grade_for_subject(options[:grade], options[:subject])
       rescue

@@ -208,8 +208,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_calculates_avg_percentage_growth_for_third_grade_math
     ha = load_statewide_testing_repo
 
-    expected = [["COLORADO", 0.003],
-                ["ACADEMY 20", -0.004],
+    expected = [["ACADEMY 20", -0.004],
                 ["ADAMS COUNTY 14", -0.008],
                 ["ADAMS-ARAPAHOE 28J", 0.004],
                 ["AGATE 300", nil],
@@ -222,8 +221,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_calculates_avg_percentage_growth_for_eighth_grade_reading
     ha = load_statewide_testing_repo
 
-    expected = [["COLORADO", -0.007],
-                ["ACADEMY 20", -0.003],
+    expected = [["ACADEMY 20", -0.003],
                 ["ADAMS COUNTY 14", -0.001],
                 ["ADAMS-ARAPAHOE 28J", -0.009],
                 ["AGATE 300", nil],
@@ -242,9 +240,9 @@ class HeadcountAnalystTest < Minitest::Test
                 ["ADAMS-ARAPAHOE 28J", -0.009],
                 ["AGATE 300", nil],
                 ["AGUILAR REORGANIZED 6", nil],
-                ["AKRON R-1", 0.00]]
+                ["AKRON R-1", 0.10]]
 
-    expected = [["AKRON R-1", 0.00],
+    expected = [["AKRON R-1", 0.10],
                 ["ADAMS COUNTY 14", -0.001],
                 ["ACADEMY 20", -0.003],
                 ["COLORADO", -0.007],
@@ -258,7 +256,6 @@ class HeadcountAnalystTest < Minitest::Test
 
     expected = ["AKRON R-1", 0.018]
 
-
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
   end
 
@@ -268,5 +265,13 @@ class HeadcountAnalystTest < Minitest::Test
     expected = ["AKRON R-1", 0.000]
 
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :reading)
+  end
+
+  def test_gets_top_three_growth_leaders_in_third_grade_math
+    ha = load_statewide_testing_repo
+
+    expected = [["AKRON R-1", 0.018], ["ADAMS-ARAPAHOE 28J", 0.004], ["ACADEMY 20", -0.004]]
+
+    assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math, top: 3)
   end
 end
