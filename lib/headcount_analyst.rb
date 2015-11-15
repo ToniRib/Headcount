@@ -16,8 +16,12 @@ class HeadcountAnalyst
     names
   end
 
-  def find_enrollment_by_name(district_name)
-    @district_repository.find_by_name(district_name).enrollment
+  def find_enrollment_by_name(name)
+    @district_repository.find_by_name(name).enrollment
+  end
+
+  def find_swtest_by_name(name)
+    @district_repository.find_by_name(name).statewide_test
   end
 
   def kindergarten_participation_against_high_school_graduation(district_name)
@@ -111,7 +115,7 @@ class HeadcountAnalyst
     options[:weighting] = standard_weights unless options.key?(:weighting)
     district_names.map do |name|
       begin
-        num = @district_repository.districts[name].statewide_test.average_percent_growth_by_grade_all_subjects(options[:grade], options[:weighting])
+        num = find_swtest_by_name(name).average_percent_growth_by_grade_all_subjects(options[:grade], options[:weighting])
       rescue
         num = nil
       end
@@ -127,7 +131,7 @@ class HeadcountAnalyst
   def growth_by_district(options)
     district_names.map do |name|
       begin
-        num = @district_repository.districts[name].statewide_test.average_percent_growth_by_grade_for_subject(options[:grade], options[:subject])
+        num = find_swtest_by_name(name).average_percent_growth_by_grade_for_subject(options[:grade], options[:subject])
       rescue
         num = nil
       end

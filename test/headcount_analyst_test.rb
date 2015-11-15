@@ -291,4 +291,13 @@ class HeadcountAnalystTest < Minitest::Test
 
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3)
   end
+
+  def test_returns_top_two_growth_acorss_all_subjects_with_weights
+    ha = load_statewide_testing_repo
+
+    expected = [["AKRON R-1", 0.01245], ["ADAMS-ARAPAHOE 28J", 0.00125]]
+    options = { :grade => 3, :weighting => {:math => 0.7, :reading => 0.3, :writing => 0.0}, :top => 2 }
+
+    assert_equal expected, ha.top_statewide_test_year_over_year_growth(options)
+  end
 end
