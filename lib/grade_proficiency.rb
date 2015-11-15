@@ -44,8 +44,18 @@ class GradeProficiency
     transpose_data(data)
   end
 
+  def average_percentage_growth(arr)
+    arr.reject! { |val| na?(val) }
+    arr.each_cons(2).map { |a, b| b - a }.reduce(:+) / (arr.length - 1.0)
+  end
+
+  def average_percentage_growth_by_subject(subj)
+    percent = average_percentage_growth(proficiency_for_subject(subj).values)
+    truncate_value(percent)
+  end
+
   def proficiency_for_subject(subj)
-    # need exception testing here
+    raise UnknownDataError unless proficiency_by_subject.key?(subj)
     proficiency_by_subject[subj]
   end
 end

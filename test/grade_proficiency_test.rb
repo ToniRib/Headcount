@@ -168,4 +168,50 @@ class GradeProficiencyTest < Minitest::Test
 
     assert_equal expected, t.proficiency_for_subject(:math)
   end
+
+  def test_proficiency_for_subject_returns_exception_for_unknown_subject
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
+             2009 => { math: 0.2911, reading: 0.900, writing: 0.54367 } }
+
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    assert_raises(UnknownDataError) { t.proficiency_for_subject(:science) }
+  end
+
+  def test_avg_percentage_growth_calculates_average_percentage_growth_across_years
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    assert_equal 1.5, t.average_percentage_growth([1, 3, 4])
+  end
+
+  def test_avg_percentage_growth_calculates_for_floats
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    expected = 1.6099999999999999
+
+    assert_equal expected, t.average_percentage_growth([1.12, 3.32, 4.34])
+  end
+
+  def test_avg_percentage_growth_removes_nas_when_performing_calculations
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    values = [0.34, 0.37, 0.41, 'N/A', 0.456]
+    expected = 0.03866666666666666
+
+    assert_equal expected, t.average_percentage_growth(values)
+  end
+
+  def test_avg_percentage_growth_can_be_calculated_for_a_subject
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
+             2009 => { math: 0.2911, reading: 0.900, writing: 0.54367 } }
+
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal -0.283, t.average_percentage_growth_by_subject(:math)
+    assert_equal 0.026, t.average_percentage_growth_by_subject(:reading)
+    assert_equal -0.123, t.average_percentage_growth_by_subject(:writing)
+    assert_raises(UnknownDataError) { t.average_percentage_growth_by_subject(:science) }
+  end
 end
