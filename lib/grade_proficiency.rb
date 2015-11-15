@@ -65,6 +65,12 @@ class GradeProficiency
     }
   end
 
+  def combined_average_growth(weights = {:math => 1.0, :reading => 1.0, :writing => 1.0})
+    total = average_percentage_growth_all_subjects.values.reduce(:+)
+    total / weights.values.count { |i| !i.zero? }
+  end
+
+
   def proficiency_for_subject(subj)
     raise UnknownDataError unless proficiency_by_subject.key?(subj)
     proficiency_by_subject[subj]
