@@ -119,20 +119,24 @@ class HeadcountAnalyst
     options = check_and_set_weights(options)
 
     district_names.map do |name|
-      begin
-        st = find_swtest_by_name(name)
-        num = st.avg_growth_by_grade_all_subjects(options[:grade], options[:weighting])
-      rescue
-        num = nil
-      end
+      [name, get_weighted_growth(options, name)]
+    end
+  end
 
-      [name, num]
+  def get_weighted_growth(options, name)
+    begin
+      st = find_swtest_by_name(name)
+      st.avg_growth_by_grade_all_subjects(options[:grade], options[:weighting])
+    rescue
+      nil
     end
   end
 
   def check_and_set_weights(options)
     options[:weighting] = standard_weights unless options.key?(:weighting)
+
     raise ArgumentError if options[:weighting].values.reduce(:+) != 1.0
+
     options
   end
 
@@ -142,14 +146,16 @@ class HeadcountAnalyst
 
   def growth_by_district(options)
     district_names.map do |name|
-      begin
-        st = find_swtest_by_name(name)
-        num = st.avg_growth_by_grade_for_subject(options[:grade], options[:subject])
-      rescue
-        num = nil
-      end
+      [name, get_subject_growth(options, name)]
+    end
+  end
 
-      [name, num]
+  def get_subject_growth(options, name)
+    begin
+      st = find_swtest_by_name(name)
+      st.avg_growth_by_grade_for_subject(options[:grade], options[:subject])
+    rescue
+      nil
     end
   end
 
