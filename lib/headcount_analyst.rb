@@ -84,9 +84,9 @@ class HeadcountAnalyst
   end
 
   def top_statewide_test_year_over_year_growth(options)
-     raise_insufficient_info_error unless options.key?(:grade)
+    raise_insufficient_info_error unless options.key?(:grade)
 
-
+    
   end
 
   def raise_insufficient_info_error

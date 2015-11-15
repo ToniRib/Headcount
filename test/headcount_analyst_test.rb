@@ -28,8 +28,8 @@ class HeadcountAnalystTest < Minitest::Test
     dr = DistrictRepository.new
     dr.load_data({
       :statewide_testing => {
-        :third_grade => "./test/fixtures/third_grade_tester.csv",
-        :eighth_grade => "./test/fixtures/eighth_grade_tester.csv" } })
+        :third_grade => "./test/fixtures/third_grade_long_tester.csv",
+        :eighth_grade => "./test/fixtures/eighth_grade_long_tester.csv" } })
     HeadcountAnalyst.new(dr)
   end
 
