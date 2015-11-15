@@ -69,8 +69,8 @@ class StatewideTest
 
   def average_percent_growth_by_grade_for_subject(grade, subject)
     case grade
-    when 3 then third.average_percentage_growth_by_subject(subject)
-    when 8 then eighth.average_percentage_growth_by_subject(subject)
+    when 3 then third.avg_percentage_growth_by_subject(subject)
+    when 8 then eighth.avg_percentage_growth_by_subject(subject)
     else        raise_unknown_data_error
     end
   end

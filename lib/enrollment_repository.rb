@@ -32,16 +32,13 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   er = EnrollmentRepository.new
-  er.load_data(:enrollment =>
-                { :kindergarten => './test/fixtures/kindergarten_tester.csv',
-                  :high_school_graduation => './test/fixtures/highschool_grad_tester.csv' })
-  # er.load_data(
-  #   {
-  #     :enrollment => {
-  #       :kindergarten => './data/Kindergartners in full-day program.csv',
-  #       :high_school_graduation => './data/High school graduation rates.csv'
-  #     }
-  #   }
-  # )
+  er.load_data(
+    {
+      :enrollment => {
+        :kindergarten => './data/Kindergartners in full-day program.csv',
+        :high_school_graduation => './data/High school graduation rates.csv'
+      }
+    }
+  )
   p er.find_by_name('ACADEMY 20')
 end

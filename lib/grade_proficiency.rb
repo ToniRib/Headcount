@@ -52,21 +52,21 @@ class GradeProficiency
     arr.each_cons(2).map { |a, b| b - a }.reduce(:+) / (arr.length - 1.0)
   end
 
-  def average_percentage_growth_by_subject(subj)
+  def avg_percentage_growth_by_subject(subj)
     percent = average_percentage_growth(proficiency_for_subject(subj).values)
     truncate_value(percent)
   end
 
-  def average_percentage_growth_all_subjects(weights)
+  def avg_percentage_growth_all_subjects(weights)
     {
-      math: average_percentage_growth_by_subject(:math) * weights[:math],
-      reading: average_percentage_growth_by_subject(:reading) * weights[:reading],
-      writing: average_percentage_growth_by_subject(:writing) * weights[:writing]
+      math: avg_percentage_growth_by_subject(:math) * weights[:math],
+      reading: avg_percentage_growth_by_subject(:reading) * weights[:reading],
+      writing: avg_percentage_growth_by_subject(:writing) * weights[:writing]
     }
   end
 
   def combined_average_growth(weights)
-    total = average_percentage_growth_all_subjects(weights).values.reduce(:+)
+    total = avg_percentage_growth_all_subjects(weights).values.reduce(:+)
     if total.zero?
       0
     else

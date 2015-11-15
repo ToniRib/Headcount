@@ -233,10 +233,10 @@ class GradeProficiencyTest < Minitest::Test
 
     t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    assert_equal -0.283, t.average_percentage_growth_by_subject(:math)
-    assert_equal 0.026, t.average_percentage_growth_by_subject(:reading)
-    assert_equal -0.123, t.average_percentage_growth_by_subject(:writing)
-    assert_raises(UnknownDataError) { t.average_percentage_growth_by_subject(:science) }
+    assert_equal -0.283, t.avg_percentage_growth_by_subject(:math)
+    assert_equal 0.026, t.avg_percentage_growth_by_subject(:reading)
+    assert_equal -0.123, t.avg_percentage_growth_by_subject(:writing)
+    assert_raises(UnknownDataError) { t.avg_percentage_growth_by_subject(:science) }
   end
 
   def test_avg_percentage_growth_can_be_calculated_across_all_subjects_standard_weights
