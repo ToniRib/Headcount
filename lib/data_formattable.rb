@@ -33,10 +33,10 @@ module DataFormattable
   end
 
   def transpose_data(data)
-    data_transpose = Hash.new{ |h, k| h[k] = {} }
+    data_transpose = Hash.new { |h, k| h[k] = {} }
 
     data.each_pair do |type, district|
-      district.to_h.each_pair{ |name, d| data_transpose[name][type] = d }
+      district.to_h.each_pair { |name, d| data_transpose[name][type] = d }
     end
 
     data_transpose

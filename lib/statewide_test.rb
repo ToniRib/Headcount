@@ -90,6 +90,6 @@ class StatewideTest
   end
 
   def raise_unknown_data_error
-    raise UnknownDataError, 'Unknown grade requested'
+    fail UnknownDataError, 'Unknown grade requested'
   end
 end

@@ -5,10 +5,16 @@ module DataCalculatable
   end
 
   def total
-    data.reduce(0) { |acc, pair| acc + pair[1].to_f }
+    data.reduce(0) { |a, e| a + e[1].to_f }
   end
 
   def count_non_na
     data.values.count { |val| val != 'N/A' }
+  end
+
+  def calculate_ratio(data1, data2)
+    return 'N/A' if na?(data1) || na?(data2)
+
+    truncate_value(data1.to_f / data2)
   end
 end

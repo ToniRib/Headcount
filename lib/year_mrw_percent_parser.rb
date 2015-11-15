@@ -7,6 +7,7 @@ class YearMRWPercentParser
 
   def parse(ruby_rows)
     data = {}
+    
     ruby_rows.each do |csv_row|
       year = csv_row.row_data[:timeframe].to_i
       subject = csv_row.row_data[:score].downcase.to_sym

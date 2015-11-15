@@ -4,7 +4,6 @@ require_relative 'year_mrw_percent_parser'
 require_relative 'year_race_percent_parser'
 
 class PostProcessor
-
   include DataFormattable
 
   def get_enrollment_data(options)
@@ -78,5 +77,4 @@ class PostProcessor
     ruby_rows = pre.pull_from_CSV(file)
     YearRacePercentParser.new.parse(ruby_rows)
   end
-
 end

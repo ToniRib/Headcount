@@ -23,8 +23,8 @@ class YearRacePercentParser
   def race_to_sym
     symbols = [:all, :asian, :black, :pacific_islander,
                :hispanic, :native_american, :two_or_more, :white]
-    strings = ["All Students","Asian","Black","Hawaiian/Pacific Islander",
-               "Hispanic","Native American","Two or more","White"]
+    strings = ['All Students', 'Asian', 'Black', 'Hawaiian/Pacific Islander',
+               'Hispanic', 'Native American', 'Two or more', 'White']
     strings.zip(symbols).to_h
   end
 end

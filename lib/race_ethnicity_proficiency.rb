@@ -20,7 +20,7 @@ class RaceEthnicityProficiency
     race_data = transpose_data(data)[race].to_h
 
     if race_data.empty?
-      raise UnknownRaceError, "Unknown race/ethnicity requested: #{race}."
+      fail UnknownRaceError, "Unknown race/ethnicity requested: #{race}."
     end
 
     race_data.map { |year, percent| [year, truncate_value(percent)] }.to_h
@@ -30,7 +30,7 @@ class RaceEthnicityProficiency
     year_data = proficiency_in_year(year)
 
     if year_or_race_does_not_exist(year_data, race)
-      raise UnknownDataError, 'Data does not exist in dataset'
+      fail UnknownDataError, 'Data does not exist in dataset'
     end
 
     year_data[race]

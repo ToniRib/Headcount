@@ -18,7 +18,7 @@ class DistrictRepository
   def district_names_across_repositories
     enroll_names = @enrollment_repo.enrollments.keys
     statewidetest_names = @statewide_test_repo.statewide_tests.keys
-    (enroll_names | statewidetest_names).map{ |n| n.upcase }
+    (enroll_names | statewidetest_names).map(&:upcase)
   end
 
   def load_data(options)
@@ -37,11 +37,11 @@ class DistrictRepository
   end
 
   def enrollment_data(options)
-    { :enrollment => options[:enrollment] }
+    { enrollment: options[:enrollment] }
   end
 
   def statewide_test_data(options)
-    { :statewide_testing => options[:statewide_testing] }
+    { statewide_testing: options[:statewide_testing] }
   end
 
   def create_district_with_data(name)
@@ -55,7 +55,7 @@ class DistrictRepository
     if district_exists?(district_name)
       @districts[district_name.upcase]
     else
-      raise UnknownDataError, 'District not found'
+      fail UnknownDataError, 'District not found'
     end
   end
 
@@ -70,12 +70,12 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   dr = DistrictRepository.new
-  dr.load_data({
-    :enrollment => {
-      :kindergarten => './test/fixtures/kindergarten_tester.csv',
-      :high_school_graduation => './test/fixtures/highschool_grad_tester.csv'
+  dr.load_data(
+    enrollment: {
+      kindergarten: './test/fixtures/kindergarten_tester.csv',
+      high_school_graduation: './test/fixtures/highschool_grad_tester.csv'
     }
-  })
+  )
 
   p dr.find_by_name('ACADEMY 20')
 end

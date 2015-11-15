@@ -13,7 +13,7 @@ class GradeProficiency
   end
 
   def proficiency_by_year
-    data.to_h.each { |year, values| truncate_each_subject_value(values) }
+    data.to_h.each { |_, values| truncate_each_subject_value(values) }
   end
 
   def truncate_each_subject_value(values)
@@ -30,7 +30,7 @@ class GradeProficiency
     year_data = proficiency_in_year(year)
 
     if year_or_subject_does_not_exist(year_data, subj)
-      raise UnknownDataError, 'Data does not exist in dataset'
+      fail UnknownDataError, 'Data does not exist in dataset'
     end
 
     year_data[subj]
@@ -47,7 +47,7 @@ class GradeProficiency
   def average_percentage_growth(arr)
     arr.reject! { |val| na?(val) }
 
-    raise InsufficientInformationError if arr.length < 2
+    fail InsufficientInformationError if arr.length < 2
 
     arr.each_cons(2).map { |a, b| b - a }.reduce(:+) / (arr.length - 1.0)
   end
@@ -75,7 +75,8 @@ class GradeProficiency
   end
 
   def proficiency_for_subject(subj)
-    raise UnknownDataError unless proficiency_by_subject.key?(subj)
+    fail UnknownDataError unless proficiency_by_subject.key?(subj)
+
     proficiency_by_subject[subj]
   end
 end

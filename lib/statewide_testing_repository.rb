@@ -32,10 +32,9 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   sw = StatewideTestRepository.new
-  sw.load_data( :statewide_testing => {
-                :third_grade => "./test/fixtures/third_grade_tester.csv",
-                :eighth_grade => "./test/fixtures/eighth_grade_tester.csv"
-                }
-  )
+  sw.load_data(statewide_testing: {
+                 third_grade: './test/fixtures/third_grade_tester.csv',
+                 eighth_grade: './test/fixtures/eighth_grade_tester.csv'
+               })
   p sw.find_by_name('ACADEMY 20')
 end

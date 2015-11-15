@@ -5,6 +5,7 @@ class HeadcountAnalyst
   attr_reader :district_repository
 
   include DataFormattable
+  include DataCalculatable
 
   def initialize(dr)
     @district_repository = dr
@@ -60,12 +61,6 @@ class HeadcountAnalyst
     variation
   end
 
-  def calculate_ratio(data1, data2)
-    return 'N/A' if na?(data1) || na?(data2)
-
-    truncate_value(data1.to_f / data2)
-  end
-
   def in_correlation_range?(value)
     (0.6..1.5).cover?(value)
   end
@@ -79,7 +74,8 @@ class HeadcountAnalyst
     correlated = district_names.reduce(0) do |acc, district_name|
       acc + bool_to_binary[kgp_correlates_with_hgr_district(district_name)]
     end
-     0.7 < correlated.to_f / district_names.length
+
+    0.7 < correlated.to_f / district_names.length
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(options)
@@ -106,13 +102,13 @@ class HeadcountAnalyst
   end
 
   def format_growth(g, options)
-    g = sort_districts_by_growth(g)[0..(options.fetch(:top, 1)-1)]
+    g = sort_districts_by_growth(g)[0..(options.fetch(:top, 1) - 1)]
     g.flatten! if g.count == 1
     g
   end
 
   def sort_districts_by_growth(districts)
-    districts.select { |d| !d[1].nil? }.sort_by { |name, val| val }.reverse
+    districts.select { |d| !d[1].nil? }.sort_by { |_, val| val }.reverse
   end
 
   def combined_growth_by_district(options)
@@ -124,18 +120,16 @@ class HeadcountAnalyst
   end
 
   def get_weighted_growth(options, name)
-    begin
-      st = find_swtest_by_name(name)
-      st.avg_growth_by_grade_all_subjects(options[:grade], options[:weighting])
-    rescue
-      nil
-    end
+    st = find_swtest_by_name(name)
+    st.avg_growth_by_grade_all_subjects(options[:grade], options[:weighting])
+  rescue
+    nil
   end
 
   def check_and_set_weights(options)
     options[:weighting] = standard_weights unless options.key?(:weighting)
 
-    raise ArgumentError if options[:weighting].values.reduce(:+) != 1.0
+    fail ArgumentError if options[:weighting].values.reduce(:+) != 1.0
 
     options
   end
@@ -151,16 +145,14 @@ class HeadcountAnalyst
   end
 
   def get_subject_growth(options, name)
-    begin
-      st = find_swtest_by_name(name)
-      st.avg_growth_by_grade_for_subject(options[:grade], options[:subject])
-    rescue
-      nil
-    end
+    st = find_swtest_by_name(name)
+    st.avg_growth_by_grade_for_subject(options[:grade], options[:subject])
+  rescue
+    nil
   end
 
   def raise_insufficient_info_error
-    raise InsufficientInformationError,
-    'A grade must be provided to answer this question'
+    fail InsufficientInformationError,
+         'A grade must be provided to answer this question'
   end
 end
