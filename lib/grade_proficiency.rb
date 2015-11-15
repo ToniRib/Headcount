@@ -65,7 +65,7 @@ class GradeProficiency
     }
   end
 
-  def combined_average_growth(weights = {:math => 0.333, :reading => 0.333, :writing => 0.333})
+  def combined_average_growth(weights)
     total = average_percentage_growth_all_subjects(weights).values.reduce(:+)
     total.zero? ? 0 : total / weights.values.count { |i| !i.zero? }
   end

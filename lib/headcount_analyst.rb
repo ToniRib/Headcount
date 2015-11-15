@@ -92,7 +92,12 @@ class HeadcountAnalyst
   def top_statewide_test_year_over_year_growth(options)
     raise_insufficient_info_error unless options.key?(:grade)
 
-    g = growth_by_district(options)
+    if options.key?(:subject)
+      g = growth_by_district(options)
+    else
+      g = combined_growth_by_district(options)
+    end
+
     g = sort_districts_by_growth(g)[0..(options.fetch(:top, 1)-1)]
     g.flatten! if g.count == 1
     g
@@ -100,6 +105,23 @@ class HeadcountAnalyst
 
   def sort_districts_by_growth(districts)
     districts.select { |d| !d[1].nil? }.sort_by { |name, val| val }.reverse
+  end
+
+  def combined_growth_by_district(options)
+    options[:weighting] = standard_weights unless options.key?(:weighting)
+    district_names.map do |name|
+      begin
+        num = @district_repository.districts[name].statewide_test.average_percent_growth_by_grade_all_subjects(options[:grade], options[:weighting])
+      rescue
+        num = nil
+      end
+
+      [name, num]
+    end
+  end
+
+  def standard_weights
+    { math: 0.333, reading: 0.333, writing: 0.333 }
   end
 
   def growth_by_district(options)
