@@ -102,6 +102,10 @@ class HeadcountAnalyst
       g = combined_growth_by_district(options)
     end
 
+    format_growth(g, options)
+  end
+
+  def format_growth(g, options)
     g = sort_districts_by_growth(g)[0..(options.fetch(:top, 1)-1)]
     g.flatten! if g.count == 1
     g
