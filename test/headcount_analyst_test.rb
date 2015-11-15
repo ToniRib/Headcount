@@ -204,4 +204,18 @@ class HeadcountAnalystTest < Minitest::Test
 
     exception = assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(hello: 9) }
   end
+
+  def test_calculates_average_percentage_growth_across_years
+    ha = load_statewide_testing_repo
+
+    assert_equal 1.5, ha.average_percentage_growth([1, 3, 4])
+  end
+
+  def test_calculates_average_percentage_growth_across_years_for_floats
+    ha = load_statewide_testing_repo
+
+    expected = 1.6099999999999999
+
+    assert_equal expected, ha.average_percentage_growth([1.12, 3.32, 4.34])
+  end
 end

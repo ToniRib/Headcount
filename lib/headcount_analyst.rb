@@ -86,10 +86,15 @@ class HeadcountAnalyst
   def top_statewide_test_year_over_year_growth(options)
     raise_insufficient_info_error unless options.key?(:grade)
 
-    
+
+  end
+
+  def average_percentage_growth(arr)
+    arr.each_cons(2).map { |a, b| b - a }.reduce(:+) / (arr.length - 1.0)
   end
 
   def raise_insufficient_info_error
-    raise InsufficientInformationError, 'A grade must be provided to answer this question'
+    raise InsufficientInformationError,
+    'A grade must be provided to answer this question'
   end
 end
