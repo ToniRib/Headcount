@@ -7,7 +7,7 @@ require 'pry'
 class DistrictRepository
   include DataFormattable
 
-  attr_reader :districts, :enrollment_repo
+  attr_reader :districts, :enrollment_repo, :statewide_test_repo
 
   def initialize
     @districts = {}
@@ -24,12 +24,16 @@ class DistrictRepository
   def load_data(options)
     options = hash_leaves_go_empty_hashes(options)
 
-    @enrollment_repo.load_data(enrollment_data(options))
-    @statewide_test_repo.load_data(statewide_test_data(options))
+    load_data_into_repositories(options)
 
     district_names_across_repositories.each do |name|
       create_district_with_data(name)
     end
+  end
+
+  def load_data_into_repositories(options)
+    @enrollment_repo.load_data(enrollment_data(options))
+    @statewide_test_repo.load_data(statewide_test_data(options))
   end
 
   def enrollment_data(options)
@@ -48,11 +52,15 @@ class DistrictRepository
   end
 
   def find_by_name(district_name)
-    @districts[district_name.upcase] if district_exists?(district_name)
+    if district_exists?(district_name)
+      @districts[district_name.upcase]
+    else
+      raise UnknownDataError, 'District not found'
+    end
   end
 
   def district_exists?(district_name)
-    @districts.keys.include?(district_name.upcase)
+    @districts.key?(district_name.upcase)
   end
 
   def find_all_matching(str)

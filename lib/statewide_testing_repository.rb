@@ -37,6 +37,5 @@ if __FILE__ == $PROGRAM_NAME
                 :eighth_grade => "./test/fixtures/eighth_grade_tester.csv"
                 }
   )
-  # binding.pry
   p sw.find_by_name('ACADEMY 20')
 end

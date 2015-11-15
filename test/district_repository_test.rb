@@ -12,6 +12,24 @@ class DistrictRepositoryTest < Minitest::Test
     dr
   end
 
+  def full_data_test
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => './test/fixtures/kindergarten_tester.csv',
+        :high_school_graduation => './test/fixtures/highschool_grad_tester.csv'
+      },
+      :statewide_testing => {
+        :third_grade => "./test/fixtures/third_grade_tester.csv",
+        :eigth_grade => "./test/fixtures/eighth_grade_tester.csv",
+        :math => "./test/fixtures/math_average_proficiency_tester.csv",
+        :reading => "./test/fixtures/reading_average_proficiency_tester.csv",
+        :writing => "./test/fixtures/writing_average_proficiency_tester.csv"
+      }
+    })
+    dr
+  end
+
   def test_class_exists
     assert DistrictRepository
   end
@@ -44,7 +62,7 @@ class DistrictRepositoryTest < Minitest::Test
   def test_gives_error_if_district_does_not_exist
     dr = kindergarten_test
 
-    refute dr.find_by_name("XYZ")
+    assert_raises (UnknownDataError){ dr.find_by_name("XYZ") }
   end
 
   def test_returns_true_if_district_exists
@@ -97,5 +115,14 @@ class DistrictRepositoryTest < Minitest::Test
     kp2010 = district.enrollment.kindergarten_participation_in_year(2010)
 
     assert_equal 0.436, kp2010
+  end
+
+  def test_can_load_enrollment_and_statewide_test_data
+    dr = full_data_test
+
+    names = dr.district_names_across_repositories
+
+    assert_equal names, dr.enrollment_repo.enrollments.keys
+    assert_equal names, dr.statewide_test_repo.statewide_tests.keys
   end
 end
