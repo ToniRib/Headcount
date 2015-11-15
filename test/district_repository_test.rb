@@ -35,7 +35,7 @@ class DistrictRepositoryTest < Minitest::Test
   end
 
   def test_load_data_creates_district_objects
-    dr = kindergarten_test
+    dr = full_data_test
 
     assert_equal 3, dr.districts.count
 
