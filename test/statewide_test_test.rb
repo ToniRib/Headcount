@@ -769,6 +769,50 @@ class StatewideTestTest < Minitest::Test
                                         hispanic: 0.145, native_american: 0.4763,
                                         two_or_more: 0.473, white: 0.3445 } })
 
-    exception = assert_raises(UnknownDataError) { s.proficient_for_subject_by_race_in_year(:math, :purple, 2009) }
+    assert_raises(UnknownDataError) { s.proficient_for_subject_by_race_in_year(:math, :purple, 2009) }
+  end
+
+  def test_calculates_average_percent_growth_for_all_subjects_for_eighth_grade
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :eighth_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = { math: -0.032, reading: -0.002, writing: -0.005 }
+
+    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(8)
+  end
+
+  def test_calculates_average_percent_growth_for_all_subjects_for_third_grade
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    expected = { math: -0.032, reading: -0.002, writing: -0.005 }
+
+    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(3)
+  end
+
+  def test_returns_unknown_data_error_for_average_percentage_by_year_for_unknown_grade
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(7) }
+  end
+
+  def test_returns_unknown_data_error_for_average_percentage_by_year_if_data_not_loaded
+    s = StatewideTest.new(:name => 'ACADEMY 20',
+                          :third_grade_proficiency =>
+                            { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
+                              2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
+                              2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+
+    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(8) }
   end
 end

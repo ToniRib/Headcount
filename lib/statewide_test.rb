@@ -59,6 +59,22 @@ class StatewideTest
     end
   end
 
+  def average_percent_growth_by_grade_all_subjects(grade)
+    case grade
+    when 3 then third.average_percentage_growth_all_subjects
+    when 8 then eighth.average_percentage_growth_all_subjects
+    else        raise_unknown_data_error
+    end
+  end
+
+  def average_percent_growth_by_grade_for_subject(grade, subject)
+    case grade
+    when 3 then third.average_percentage_growth_by_subject(subject)
+    when 8 then eighth.average_percentage_growth_by_subject(subject)
+    else        raise_unknown_data_error
+    end
+  end
+
   def proficient_by_race_or_ethnicity(race)
     m = math.proficiency_by_race_or_ethnicity(race)
     r = reading.proficiency_by_race_or_ethnicity(race)

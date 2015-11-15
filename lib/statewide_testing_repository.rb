@@ -28,18 +28,6 @@ class StatewideTestRepository
   def district_exists?(district_name)
     @statewide_tests.keys.include?(district_name.upcase)
   end
-
-  def average_growth_by_district(subj)
-    x = statewide_tests.flat_map do |name, swt|
-      [ name, average_percentage_growth(swt.third.proficiency_for_subject(subj)) ]
-    end
-    binding.pry
-  end
-
-
-  def average_percentage_growth(arr)
-    arr.each_cons(2).map { |a, b| b - a }.reduce(:+) / (arr.length - 1.0)
-  end
 end
 
 if __FILE__ == $PROGRAM_NAME
@@ -49,6 +37,6 @@ if __FILE__ == $PROGRAM_NAME
                 :eighth_grade => "./test/fixtures/eighth_grade_tester.csv"
                 }
   )
-  binding.pry
+  # binding.pry
   p sw.find_by_name('ACADEMY 20')
 end
