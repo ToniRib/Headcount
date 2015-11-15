@@ -246,8 +246,34 @@ class GradeProficiencyTest < Minitest::Test
 
     t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    expected = -0.12666666666666665
+    expected = -0.04218
 
     assert_equal expected, t.combined_average_growth
+  end
+
+  def test_avg_percentage_growth_can_be_calculated_across_all_subjects_with_weighting
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
+             2009 => { math: 0.2911, reading: 0.900, writing: 0.54367 } }
+
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = -0.06424999999999999
+    weights = {:math => 0.5, :reading => 0.5, :writing => 0.0}
+
+    assert_equal expected, t.combined_average_growth(weights)
+  end
+
+  def test_avg_percentage_growth_can_be_calculated_across_all_subjects_all_weights_zero
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
+             2009 => { math: 0.2911, reading: 0.900, writing: 0.54367 } }
+
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = 0
+    weights = {:math => 0, :reading => 0, :writing => 0}
+
+    assert_equal expected, t.combined_average_growth(weights)
   end
 end

@@ -779,9 +779,10 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    expected = { math: -0.032, reading: -0.002, writing: -0.005 }
+    expected = -0.004329
+    weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
-    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(8)
+    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(8, weights)
   end
 
   def test_calculates_average_percent_growth_for_all_subjects_for_third_grade
@@ -791,9 +792,10 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    expected = { math: -0.032, reading: -0.002, writing: -0.005 }
+    expected = -0.004329
+    weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
-    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(3)
+    assert_equal expected, s.average_percent_growth_by_grade_all_subjects(3, weights)
   end
 
   def test_returns_unknown_data_error_for_average_percentage_by_year_for_unknown_grade
@@ -803,7 +805,9 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(7) }
+    weights = { math: 0.333, reading: 0.333, writing: 0.333 }
+
+    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(7, weights) }
   end
 
   def test_returns_unknown_data_error_for_average_percentage_by_year_if_data_not_loaded
@@ -812,8 +816,9 @@ class StatewideTestTest < Minitest::Test
                             { 2008 => { :math => 0.88857, :reading => 0.866, :writing => 0.67143 },
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
+    weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
-    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(8) }
+    assert_raises(UnknownDataError) { s.average_percent_growth_by_grade_all_subjects(8, weights) }
   end
 
   def test_calculates_average_percent_growth_for_eighth_grade_math
