@@ -142,4 +142,30 @@ class GradeProficiencyTest < Minitest::Test
     exception = assert_raises(UnknownDataError) { t.proficiency_in_year_and_subject(2015, :math) }
     assert_equal('Data does not exist in dataset', exception.message)
   end
+
+  def test_proficiency_by_subject_returns_proficiency_sorted_by_subject
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
+             2009 => { math: 0.2911, reading: 0.900, writing: 0.54367 } }
+
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = { math: { 2007 => 0.857, 2008 => 0.47336, 2009 => 0.2911 },
+                 reading: { 2007 => 0.8473, 2008 => 0.473, 2009 => 0.900 },
+                 writing: { 2007 => 0.7889, 2008 => 0.1234, 2009 => 0.54367 } }
+
+    assert_equal expected, t.proficiency_by_subject
+  end
+
+  def test_proficiency_for_subject_returns_data_for_all_years_for_subject
+    data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
+             2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
+             2009 => { math: 0.2911, reading: 0.900, writing: 0.54367 } }
+
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
+
+    expected = { 2007 => 0.857, 2008 => 0.47336, 2009 => 0.2911 }
+
+    assert_equal expected, t.proficiency_for_subject(:math)
+  end
 end

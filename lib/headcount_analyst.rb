@@ -85,7 +85,15 @@ class HeadcountAnalyst
 
   def top_statewide_test_year_over_year_growth(options)
     raise_insufficient_info_error unless options.key?(:grade)
+    binding.pry
 
+    case :grade
+    when 3
+
+    end
+  end
+
+  def average_growth_by_district
 
   end
 

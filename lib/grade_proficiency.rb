@@ -39,4 +39,13 @@ class GradeProficiency
   def year_or_subject_does_not_exist(year_data, subj)
     year_data.empty? || year_data[subj].nil?
   end
+
+  def proficiency_by_subject
+    transpose_data(data)
+  end
+
+  def proficiency_for_subject(subj)
+    # need exception testing here
+    proficiency_by_subject[subj]
+  end
 end

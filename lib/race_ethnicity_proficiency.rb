@@ -39,15 +39,4 @@ class RaceEthnicityProficiency
   def year_or_race_does_not_exist(year_data, race)
     year_data.empty? || year_data[race].nil?
   end
-
-  # will move into DataFormattable module
-  def transpose_data(data)
-    data_transpose = Hash.new{ |h, k| h[k] = {} }
-
-    data.each_pair do |type, district|
-      district.to_h.each_pair{ |name, d| data_transpose[name][type] = d }
-    end
-
-    data_transpose
-  end
 end

@@ -218,4 +218,10 @@ class HeadcountAnalystTest < Minitest::Test
 
     assert_equal expected, ha.average_percentage_growth([1.12, 3.32, 4.34])
   end
+
+  def test_need_new_name
+    ha = load_statewide_testing_repo
+
+    ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+  end
 end
