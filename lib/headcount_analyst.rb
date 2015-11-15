@@ -112,7 +112,8 @@ class HeadcountAnalyst
   end
 
   def combined_growth_by_district(options)
-    options[:weighting] = standard_weights unless options.key?(:weighting)
+    options = check_and_set_weights(options)
+
     district_names.map do |name|
       begin
         num = find_swtest_by_name(name).average_percent_growth_by_grade_all_subjects(options[:grade], options[:weighting])
@@ -124,8 +125,14 @@ class HeadcountAnalyst
     end
   end
 
+  def check_and_set_weights(options)
+    options[:weighting] = standard_weights unless options.key?(:weighting)
+    raise ArgumentError if options[:weighting].values.reduce(:+) != 1.0
+    options
+  end
+
   def standard_weights
-    { math: 0.333, reading: 0.333, writing: 0.333 }
+    { math: 1.0 / 3, reading: 1.0 / 3, writing: 1.0 / 3 }
   end
 
   def growth_by_district(options)

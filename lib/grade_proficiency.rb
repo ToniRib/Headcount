@@ -67,7 +67,11 @@ class GradeProficiency
 
   def combined_average_growth(weights)
     total = average_percentage_growth_all_subjects(weights).values.reduce(:+)
-    total.zero? ? 0 : total / weights.values.count { |i| !i.zero? }
+    if total.zero?
+      0
+    else
+      truncate_value(total / weights.values.count { |i| !i.zero? })
+    end
   end
 
   def proficiency_for_subject(subj)
