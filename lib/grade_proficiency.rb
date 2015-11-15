@@ -54,6 +54,14 @@ class GradeProficiency
     truncate_value(percent)
   end
 
+  def average_percentage_growth_all_subjects
+    {
+      math: average_percentage_growth_by_subject(:math),
+      reading: average_percentage_growth_by_subject(:reading),
+      writing: average_percentage_growth_by_subject(:writing)
+    }
+  end
+
   def proficiency_for_subject(subj)
     raise UnknownDataError unless proficiency_by_subject.key?(subj)
     proficiency_by_subject[subj]
