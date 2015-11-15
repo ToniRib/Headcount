@@ -82,4 +82,14 @@ class HeadcountAnalyst
       kgp_correlates_with_hgr_district(options[:for])
     end
   end
+
+  def top_statewide_test_year_over_year_growth(options)
+     raise_insufficient_info_error unless options.key?(:grade)
+
+
+  end
+
+  def raise_insufficient_info_error
+    raise InsufficientInformationError, 'A grade must be provided to answer this question'
+  end
 end

@@ -24,6 +24,15 @@ class HeadcountAnalystTest < Minitest::Test
     HeadcountAnalyst.new(dr)
   end
 
+  def load_statewide_testing_repo
+    dr = DistrictRepository.new
+    dr.load_data({
+      :statewide_testing => {
+        :third_grade => "./test/fixtures/third_grade_tester.csv",
+        :eighth_grade => "./test/fixtures/eighth_grade_tester.csv" } })
+    HeadcountAnalyst.new(dr)
+  end
+
   def test_class_exists
     assert HeadcountAnalyst
   end
@@ -188,5 +197,11 @@ class HeadcountAnalystTest < Minitest::Test
     ha = load_district_repo
 
     refute ha.in_correlation_range?(1.6)
+  end
+
+  def test_growth_raises_insufficient_info_exception_if_no_grade
+    ha = load_statewide_testing_repo
+
+    exception = assert_raises(InsufficientInformationError) { ha.top_statewide_test_year_over_year_growth(hello: 9) }
   end
 end
