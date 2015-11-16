@@ -24,7 +24,7 @@ class PostProcessor
   end
 
   def get_statewide_testing_data(options)
-    options = hash_leaves_go_empty_hashes(options)
+    options = nil_key_return_empty_hash(options)
     data = {
       third_grade_proficiency: get_data(:mrw,third_data(options)),
       eighth_grade_proficiency: get_data(:mrw,eighth_data(options)),

@@ -45,7 +45,7 @@ class PostProcessorTest < Minitest::Test
   def test_inserts_empty_hash_leaves_where_otherwise_nil
     post = PostProcessor.new
     h = { i1: { q1: 1, q2:2 }, i2: { q1: 3, q2: 4} }
-    leaved = post.hash_leaves_go_empty_hashes(h)
+    leaved = post.nil_key_return_empty_hash(h)
 
     assert({}, h[:i3])
   end

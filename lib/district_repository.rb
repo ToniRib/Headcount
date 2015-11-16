@@ -22,10 +22,8 @@ class DistrictRepository
   end
 
   def load_data(options)
-    options = hash_leaves_go_empty_hashes(options)
-
+    options = nil_key_return_empty_hash(options)
     load_data_into_repositories(options)
-
     district_names_across_repositories.each do |name|
       create_district_with_data(name)
     end
