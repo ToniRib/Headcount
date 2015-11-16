@@ -45,6 +45,7 @@ class GradeProficiency
   end
 
   def average_percentage_growth(arr)
+    # may need to change this to a hash to subtract time between years
     arr.reject! { |val| na?(val) }
 
     fail InsufficientInformationError if arr.length < 2
@@ -70,6 +71,7 @@ class GradeProficiency
     if total.zero?
       0
     else
+      # remove the division & just return the total (truncated)
       truncate_value(total / weights.values.count { |i| !i.zero? })
     end
   end
