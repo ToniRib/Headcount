@@ -79,7 +79,7 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(options)
-    if options[:for] == 'COLORADO'
+    if options[:for] == 'STATEWIDE'
       district_names = @district_repository.districts.keys - ['COLORADO']
       kgp_correlates_with_hgr_range(district_names)
     elsif options[:across]

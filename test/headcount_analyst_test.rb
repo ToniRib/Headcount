@@ -139,7 +139,7 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_participation_correlates_with_high_school_graduation_colorado
     ha = load_long_district_repo
-    options = { for: 'COLORADO' }
+    options = { for: 'STATEWIDE' }
     cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
 
     refute cor
