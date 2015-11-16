@@ -23,6 +23,16 @@ class YearRaceNumberParser
     data
   end
 
+  def header_sort_key(csv_row)
+    if csv_row.headers.include?(:race)
+      race_to_sym[csv_row.row_data[:race]]
+    elsif csv_row.headers.include?(:"poverty level")
+      poverty_to_sym[csv_row.row_data[:"poverty level"]]
+    else
+      nil
+    end
+  end
+
   def race_to_sym
     symbols = [:asian, :black, :pacific_islander,
                :hispanic, :native_american, :two_or_more, :white, :total]
@@ -30,6 +40,13 @@ class YearRaceNumberParser
                'Native Hawaiian or Other Pacific Islander',
                'Hispanic Students', 'American Indian Students',
                'Two or more races', 'White Students', 'Total']
+    strings.zip(symbols).to_h
+  end
+
+  def poverty_to_sym
+    symbols = [:free, :reduced]
+    strings = ['Eligible for Free Lunch', 'Eligible for Reduced Price Lunch']
+
     strings.zip(symbols).to_h
   end
 end

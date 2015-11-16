@@ -1,0 +1,26 @@
+parsers:
+  year_percent_parser
+    e: kindergarten participation
+    e: HighSchool grad rate
+    soc: Title 1 students
+
+  year_mrw_percent_parser
+    sw: 3rd grade on CSAP
+    sw: 8th grade on CSAP
+
+  year_race_percent_parser
+    sw: Average proficiency... math
+    sw: Average proficiency... reading
+    sw: Average proficiency... writing
+
+  year_race_number_parser
+    e: Pupil enrollment by race_ethnicity
+
+  year_lunch_percent_parser (VERY similar to year_race_number)
+    soc: Students qualifying for free lunch
+
+  year_number_parser (Very similar to year_race_number)
+    soc: school aged children in poverty
+
+  range_currency_parser
+    soc: Median household income
