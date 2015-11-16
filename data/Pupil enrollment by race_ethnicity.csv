@@ -6,7 +6,7 @@ Colorado,Asian Students,2007,Percent,0.034
 Colorado,Black Students,2007,Number,47936
 Colorado,Black Students,2007,Percent,0.06
 Colorado,Hispanic Students,2007,Number,224250
-Colorado,Hispanic Students,2007,Percent,0.28
+Colorado,Hispanic Students,2007,Percent,0.28    #X = 224250/.28
 Colorado,White Students,2007,Number,493378
 Colorado,White Students,2007,Percent,0.61
 Colorado,American Indian Students,2008,Number,9494

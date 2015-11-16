@@ -28,12 +28,3 @@ class YearRacePercentParser
     strings.zip(symbols).to_h
   end
 end
-
-# ACADEMY 20,All Students,2011,Percent,0.68
-# ACADEMY 20,Asian,2011,Percent,0.8169
-# ACADEMY 20,Black,2011,Percent,0.4246
-# ACADEMY 20,Hawaiian/Pacific Islander,2011,Percent,0.5686
-# ACADEMY 20,Hispanic,2011,Percent,0.5681
-# ACADEMY 20,Native American,2011,Percent,0.6143
-# ACADEMY 20,Two or more,2011,Percent,0.6772
-# ACADEMY 20,White,2011,Percent,0.7065

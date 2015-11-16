@@ -15,22 +15,24 @@ class PostProcessor
     @race = YearRacePercentParser.new
   end
 
-  def get_enrollment_data(options)
+  def get_enrollment_data(opt)
+    e = :enrollment
     data = {
-      kindergarten_participation: get_data(:percent,kdata(options)),
-      high_school_graduation: get_data(:percent,hsdata(options))
+      kindergarten_participation: get_data(:percent,opt[e][:kindergarten]),
+      high_school_graduation: get_data(:percent,opt[e][:high_school_graduation])
     }
     transpose_data(data)
   end
 
-  def get_statewide_testing_data(options)
-    options = nil_key_return_empty_hash(options)
+  def get_statewide_testing_data(opt)
+    sw = :statewide_testing
+    opt = nil_key_return_empty_hash(opt)
     data = {
-      third_grade_proficiency: get_data(:mrw,third_data(options)),
-      eighth_grade_proficiency: get_data(:mrw,eighth_data(options)),
-      math: get_data(:race,math_data(options)),
-      reading: get_data(:race,reading_data(options)),
-      writing: get_data(:race,writing_data(options))
+      third_grade_proficiency: get_data(:mrw,opt[sw][:third_grade]),
+      eighth_grade_proficiency: get_data(:mrw,opt[sw][:eighth_grade]),
+      math: get_data(:race,opt[sw][:math]),
+      reading: get_data(:race,opt[sw][:reading]),
+      writing: get_data(:race,opt[sw][:writing])
     }
     transpose_data(data)
   end
@@ -42,33 +44,5 @@ class PostProcessor
 
   def prep_ruby_rows(file)
     pre.pull_from_csv(file) if file
-  end
-
-  def kdata(options)
-    options[:enrollment][:kindergarten]
-  end
-
-  def hsdata(options)
-    options[:enrollment][:high_school_graduation]
-  end
-
-  def third_data(options)
-    options[:statewide_testing][:third_grade]
-  end
-
-  def eighth_data(options)
-    options[:statewide_testing][:eighth_grade]
-  end
-
-  def math_data(options)
-    options[:statewide_testing][:math]
-  end
-
-  def reading_data(options)
-    options[:statewide_testing][:reading]
-  end
-
-  def writing_data(options)
-    options[:statewide_testing][:writing]
   end
 end
