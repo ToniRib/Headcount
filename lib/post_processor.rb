@@ -63,21 +63,22 @@ class PostProcessor
     options[:statewide_testing][:writing]
   end
 
+  def prep_ruby_rows(file)
+    pre.pull_from_csv(file) if file
+  end
+
   def get_year_percent_data(file)
-    return nil if file.nil?
-    ruby_rows = pre.pull_from_csv(file)
-    percent.parse(ruby_rows)
+    ruby_rows = prep_ruby_rows(file)
+    percent.parse(ruby_rows) if ruby_rows
   end
 
   def get_year_mrw_percent_data(file)
-    return nil if file.nil?
-    ruby_rows = pre.pull_from_csv(file)
-    mrw.parse(ruby_rows)
+    ruby_rows = prep_ruby_rows(file)
+    mrw.parse(ruby_rows) if ruby_rows
   end
 
   def get_year_race_percent_data(file)
-    return nil if file.nil?
-    ruby_rows = pre.pull_from_csv(file)
-    race.parse(ruby_rows)
+    ruby_rows = prep_ruby_rows(file)
+    race.parse(ruby_rows) if ruby_rows
   end
 end
