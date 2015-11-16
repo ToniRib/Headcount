@@ -24,35 +24,28 @@ class YearRaceNumberParserTest < Minitest::Test
     parser = YearRaceNumberParser.new
     ruby_rows = parser_prep
     data = parser.parse(ruby_rows)
-    expected = [2011, 2012, 2013, 2014]
+    expected = [2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]
 
     assert_equal expected, data['Colorado'].keys.sort
   end
 
-  def test_can_find_data_by_location_year_and_subject
+  def test_can_find_data_by_location_race_and_year
     parser = YearRaceNumberParser.new
     ruby_rows = parser_prep
     data = parser.parse(ruby_rows)
     expected = 0.4205
 
-    assert_equal expected, data['ACADEMY 20'][2014][:black]
+    assert_equal 1674.0, data['ACADEMY 20'][2007][:hispanic][:number]
+    assert_equal 0.08, data['ACADEMY 20'][2007][:hispanic][:percent]
   end
 
-  def test_can_find_data_by_location_and_year_expect_na
+  def test_can_find_data_by_location_year_and_race_expect_na
     parser = YearRaceNumberParser.new
     ruby_rows = parser_prep
     data = parser.parse(ruby_rows)
 
-    assert_nil data['ACADEMY 20'][2002]
-  end
-
-  def test_can_find_data_by_location_and_year_expect_na_with_LNE
-    parser = YearRaceNumberParser.new
-    ruby_rows = parser_prep
-    data = parser.parse(ruby_rows)
-    expected = 'N/A'
-
-    assert_equal expected, data['ADAMS COUNTY 14'][2013][:asian]
+    assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:number]
+    assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:percent]
   end
 
   def test_can_find_multiple_pieces_of_data
@@ -62,22 +55,23 @@ class YearRaceNumberParserTest < Minitest::Test
     expected1 = 0.6585
     expected2 = "N/A"
 
-    assert_equal expected1, data['Colorado'][2011][:white]
-    assert_equal expected2, data['ADAMS COUNTY 14'][2011][:pacific_islander]
+    assert_equal 0.01, data['Colorado'][2007][:native_american][:percent]
+    assert_equal 1179, data['ACADEMY 20'][2008][:asian][:number]
   end
 
-  def test_loads_data_correctly
+  def test_loads_data_correctly_random_test
     parser = YearRaceNumberParser.new
     ruby_rows = parser_prep
     data = parser.parse(ruby_rows)
 
     examined = ruby_rows[rand(2..60)]
     location = examined.row_data[:location]
-    race = parser.race_to_sym[examined.row_data[:race_ethnicity]]
+    race = parser.race_to_sym[examined.row_data[:race]]
     year = examined.row_data[:timeframe].to_i
+    data_format = examined.row_data[:dataformat].downcase.to_sym
 
     expected = parser.convert_to_float(examined.row_data[:data])
 
-    assert_equal expected, data[location][year][race]
+    assert_equal expected, data[location][year][race][data_format]
   end
 end
