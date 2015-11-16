@@ -4,7 +4,7 @@ require 'year_race_percent_parser'
 class YearRacePercentParserTest < Minitest::Test
   def parser_prep
     pre = Preprocessor.new
-    pre.pull_from_CSV('./test/fixtures/math_average_proficiency_tester.csv')
+    pre.pull_from_csv('./test/fixtures/math_average_proficiency_tester.csv')
   end
 
   def test_class_exists

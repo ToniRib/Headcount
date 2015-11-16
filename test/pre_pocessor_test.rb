@@ -14,7 +14,7 @@ class PreprocessorTest < Minitest::Test
 
   def test_can_read_in_csv_file
     pre = Preprocessor.new
-    ruby_csv = pre.pull_from_CSV('./test/fixtures/kindergarten_tester.csv')
+    ruby_csv = pre.pull_from_csv('./test/fixtures/kindergarten_tester.csv')
     ruby_csv.each do |row|
 
       assert_equal CSVRow, row.class
