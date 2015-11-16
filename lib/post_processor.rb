@@ -17,8 +17,8 @@ class PostProcessor
 
   def get_enrollment_data(options)
     data = {
-      kindergarten_participation: get_year_percent_data(kdata(options)),
-      high_school_graduation: get_year_percent_data(hsdata(options))
+      kindergarten_participation: get_data(:percent,kdata(options)),
+      high_school_graduation: get_data(:percent,hsdata(options))
     }
     transpose_data(data)
   end
@@ -26,13 +26,18 @@ class PostProcessor
   def get_statewide_testing_data(options)
     options = hash_leaves_go_empty_hashes(options)
     data = {
-      third_grade_proficiency: get_year_mrw_percent_data(third_data(options)),
-      eighth_grade_proficiency: get_year_mrw_percent_data(eighth_data(options)),
-      math: get_year_race_percent_data(math_data(options)),
-      reading: get_year_race_percent_data(reading_data(options)),
-      writing: get_year_race_percent_data(writing_data(options))
+      third_grade_proficiency: get_data(:mrw,third_data(options)),
+      eighth_grade_proficiency: get_data(:mrw,eighth_data(options)),
+      math: get_data(:race,math_data(options)),
+      reading: get_data(:race,reading_data(options)),
+      writing: get_data(:race,writing_data(options))
     }
     transpose_data(data)
+  end
+
+  def get_data(key, file)
+    ruby_rows = prep_ruby_rows(file)
+    eval("#{key}.parse(ruby_rows) if ruby_rows")
   end
 
   def kdata(options)
@@ -67,18 +72,18 @@ class PostProcessor
     pre.pull_from_csv(file) if file
   end
 
-  def get_year_percent_data(file)
-    ruby_rows = prep_ruby_rows(file)
-    percent.parse(ruby_rows) if ruby_rows
-  end
-
-  def get_year_mrw_percent_data(file)
-    ruby_rows = prep_ruby_rows(file)
-    mrw.parse(ruby_rows) if ruby_rows
-  end
-
-  def get_year_race_percent_data(file)
-    ruby_rows = prep_ruby_rows(file)
-    race.parse(ruby_rows) if ruby_rows
-  end
+  # def get_year_percent_data(file)
+  #   ruby_rows = prep_ruby_rows(file)
+  #   percent.parse(ruby_rows) if ruby_rows
+  # end
+  #
+  # def get_year_mrw_percent_data(file)
+  #   ruby_rows = prep_ruby_rows(file)
+  #   mrw.parse(ruby_rows) if ruby_rows
+  # end
+  #
+  # def get_year_race_percent_data(file)
+  #   ruby_rows = prep_ruby_rows(file)
+  #   race.parse(ruby_rows) if ruby_rows
+  # end
 end

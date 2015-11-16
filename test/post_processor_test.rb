@@ -39,7 +39,7 @@ class PostProcessorTest < Minitest::Test
   def test_get_year_returns_nil_if_no_file
     post = PostProcessor.new
 
-    assert_nil post.get_year_percent_data(nil)
+    assert_nil post.get_data(:percent,nil)
   end
 
   def test_inserts_empty_hash_leaves_where_otherwise_nil
@@ -52,7 +52,7 @@ class PostProcessorTest < Minitest::Test
 
   def test_gets_data_from_enrollment_files
     post = PostProcessor.new
-    data = post.get_year_percent_data("./test/fixtures/kindergarten_tester.csv")
+    data = post.get_data(:percent,"./test/fixtures/kindergarten_tester.csv")
     expected = 0.39465
 
     assert_equal expected, data["Colorado"][2007]
@@ -60,7 +60,7 @@ class PostProcessorTest < Minitest::Test
 
   def test_gets_data_from_statewide_test_files
     post = PostProcessor.new
-    data = post.get_year_mrw_percent_data("./test/fixtures/third_grade_tester.csv")
+    data = post.get_data(:mrw,"./test/fixtures/third_grade_tester.csv")
     expected = 0.697
 
     assert_equal expected, data['Colorado'][2008][:math]
@@ -68,7 +68,7 @@ class PostProcessorTest < Minitest::Test
 
   def test_gets_data_from_statewide_test_files_mrw
     post = PostProcessor.new
-    data = post.get_year_mrw_percent_data("./test/fixtures/third_grade_tester.csv")
+    data = post.get_data(:mrw,"./test/fixtures/third_grade_tester.csv")
     expected = 0.697
 
     assert_equal expected, data['Colorado'][2008][:math]
@@ -76,7 +76,7 @@ class PostProcessorTest < Minitest::Test
 
   def test_gets_data_from_statewide_test_files_mrw
     post = PostProcessor.new
-    data = post.get_year_race_percent_data("./test/fixtures/math_average_proficiency_tester.csv")
+    data = post.get_data(:race,"./test/fixtures/math_average_proficiency_tester.csv")
     expected = 0.8169
 
     assert_equal expected, data["ACADEMY 20"][2011][:asian]
