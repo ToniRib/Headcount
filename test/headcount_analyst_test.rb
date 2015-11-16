@@ -33,6 +33,17 @@ class HeadcountAnalystTest < Minitest::Test
     HeadcountAnalyst.new(dr)
   end
 
+  def load_full_kindergarden_and_highschool_repos
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => './data/Kindergartners in full-day program.csv',
+        :high_school_graduation => './data/High school graduation rates.csv'
+      }
+    })
+    HeadcountAnalyst.new(dr)
+  end
+
   def test_class_exists
     assert HeadcountAnalyst
   end
@@ -138,7 +149,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_participation_correlates_with_high_school_graduation_colorado
-    ha = load_long_district_repo
+    ha = load_full_kindergarden_and_highschool_repos
     options = { for: 'STATEWIDE' }
     cor = ha.kindergarten_participation_correlates_with_high_school_graduation(options)
 
