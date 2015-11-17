@@ -188,50 +188,60 @@ class GradeProficiencyTest < Minitest::Test
   end
 
   def test_avg_percentage_growth_calculates_for_floats
-    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
+    data = { 2007 => 1.12, 2008 => 3.32, 2009 => 4.34 }
     expected = 1.6099999999999999
 
-    assert_equal expected, t.average_percentage_growth([1.12, 3.32, 4.34])
+    assert_equal expected, t.average_percentage_growth(data)
   end
 
-  def test_avg_percentage_growth_returns_exception_for_empty_array
-    skip
+  def test_avg_percentage_growth_returns_exception_for_empty_hash
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
-    assert_raises(InsufficientInformationError) { t.average_percentage_growth([]) }
+    assert_raises(InsufficientInformationError) { t.average_percentage_growth({}) }
   end
 
-  def test_avg_percentage_growth_returns_exception_for_single_element_array
-    skip
+  def test_avg_percentage_growth_returns_exception_for_single_element_hash
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
-    assert_raises(InsufficientInformationError) { t.average_percentage_growth([1]) }
+    data = { 2007 => 0.345 }
+
+    assert_raises(InsufficientInformationError) { t.average_percentage_growth(data) }
   end
 
-  def test_avg_percentage_growth_returns_exception_for_array_with_nas
-    skip
+  def test_avg_percentage_growth_returns_exception_for_hash_with_too_many_nas
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
-    assert_raises(InsufficientInformationError) { t.average_percentage_growth(['N/A', 2, 'N/A']) }
+    data = { 2007 => 'N/A', 2008 => 3.32, 2009 => 'N/A' }
+
+    assert_raises(InsufficientInformationError) { t.average_percentage_growth(data) }
   end
 
   def test_avg_percentage_growth_does_not_return_exception_for_array_with_2_elements
-    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
-    assert_equal 1, t.average_percentage_growth([1, 2])
+    data = { 2007 => 1, 2008 => 3 }
+
+    assert_equal 2, t.average_percentage_growth(data)
   end
 
   def test_avg_percentage_growth_removes_nas_when_performing_calculations
-    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
-    values = [0.34, 0.37, 0.41, 'N/A', 0.456]
-    expected = 0.03866666666666666
+    data = { 2007 => 0.34, 2008 => 0.37, 2009 => 0.41, 2010 => 'N/A', 2011 => 0.456 }
+    expected = 0.028999999999999998
 
-    assert_equal expected, t.average_percentage_growth(values)
+    assert_equal expected, t.average_percentage_growth(data)
+  end
+
+  def test_calculates_average_based_on_distance_between_first_and_last_year
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    data = { 2005 => 1, 2008 => 2, 2009 => 3, 2010 => 'N/A', 2011 => 4 }
+    expected = 0.5
+
+    assert_equal expected, t.average_percentage_growth(data)
   end
 
   def test_avg_percentage_growth_can_be_calculated_for_a_subject
