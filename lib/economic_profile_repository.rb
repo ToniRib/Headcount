@@ -1,5 +1,5 @@
 require_relative 'year_percent_parser'
-require_relative 'enrollment'
+require_relative 'economic_profile'
 require_relative 'pre_processor'
 require_relative 'post_processor'
 require 'pry'
