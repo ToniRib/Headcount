@@ -33,11 +33,11 @@ class PostProcessor
     sw = :statewide_testing
     opt = nil_key_return_empty_hash(opt)
     data = {
-      third_grade_proficiency: get_data(:mrw,opt[sw][:third_grade]),
-      eighth_grade_proficiency: get_data(:mrw,opt[sw][:eighth_grade]),
-      math: get_data(:race,opt[sw][:math]),
-      reading: get_data(:race,opt[sw][:reading]),
-      writing: get_data(:race,opt[sw][:writing])
+      third_grade_proficiency: get_data(:mrw, opt[sw][:third_grade]),
+      eighth_grade_proficiency: get_data(:mrw, opt[sw][:eighth_grade]),
+      math: get_data(:race, opt[sw][:math]),
+      reading: get_data(:race, opt[sw][:reading]),
+      writing: get_data(:race, opt[sw][:writing])
     }
     transpose_data(data)
   end
