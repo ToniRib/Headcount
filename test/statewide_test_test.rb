@@ -779,7 +779,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    expected = -0.005
+    expected = -0.013
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
     assert_equal expected, s.avg_growth_by_grade_all_subjects(8, weights)
@@ -792,7 +792,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    expected = -0.005
+    expected = -0.013
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
     assert_equal expected, s.avg_growth_by_grade_all_subjects(3, weights)

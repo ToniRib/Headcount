@@ -72,7 +72,7 @@ class GradeProficiency
       0
     else
       # remove the division & just return the total (truncated)
-      truncate_value(total / weights.values.count { |i| !i.zero? })
+      truncate_value(total)
     end
   end
 

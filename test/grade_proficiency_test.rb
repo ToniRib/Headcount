@@ -246,7 +246,7 @@ class GradeProficiencyTest < Minitest::Test
 
     t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    expected = -0.043
+    expected = -0.127
     weights = {:math => 0.333, :reading => 0.333, :writing => 0.333}
 
     assert_equal expected, t.combined_average_growth(weights)
@@ -259,7 +259,7 @@ class GradeProficiencyTest < Minitest::Test
 
     t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    expected = -0.065
+    expected = -0.129
     weights = {:math => 0.5, :reading => 0.5, :writing => 0.0}
 
     assert_equal expected, t.combined_average_growth(weights)
