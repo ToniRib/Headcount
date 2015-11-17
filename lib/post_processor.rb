@@ -2,11 +2,14 @@ require_relative 'data_formattable'
 require_relative 'year_percent_parser'
 require_relative 'year_mrw_percent_parser'
 require_relative 'year_race_percent_parser'
+require_relative 'year_sort_number_parser'
+require_relative 'range_currency_parser'
+
 
 class PostProcessor
   include DataFormattable
 
-  attr_reader :pre, :percent, :mrw, :race
+  attr_reader :pre, :percent, :mrw, :race, :range, :sort
 
   def initialize
     @pre = Preprocessor.new
@@ -14,7 +17,7 @@ class PostProcessor
     @mrw = YearMRWPercentParser.new
     @race = YearRacePercentParser.new
     @range = RangeCurrencyParser.new
-    
+    @sort = YearSortNumberParser.new
   end
 
   def get_enrollment_data(opt)
@@ -35,6 +38,18 @@ class PostProcessor
       math: get_data(:race,opt[sw][:math]),
       reading: get_data(:race,opt[sw][:reading]),
       writing: get_data(:race,opt[sw][:writing])
+    }
+    transpose_data(data)
+  end
+
+  def get_economic_profile_data(opt)
+    ep = :economic_profile
+    opt = nil_key_return_empty_hash(opt)
+    data = {
+      median_household_income: get_data(:range,opt[ep][:median_household_income]),
+      children_in_poverty: get_data(:sort,opt[ep][:children_in_poverty]),
+      lunch: get_data(:sort,opt[ep][:free_or_reduced_price_lunch]),
+      title_i: get_data(:percent,opt[ep][:title_i])
     }
     transpose_data(data)
   end

@@ -12,6 +12,10 @@ class PostProcessorTest < Minitest::Test
       :statewide_testing => {
         :third_grade => "./test/fixtures/third_grade_tester.csv",
         :math => "./test/fixtures/math_average_proficiency_tester.csv"
+      },
+      :economic_profile => {
+        :median_household_income => "./test/fixtures/median_household_tester.csv",
+        :free_or_reduced_price_lunch => "./fixtures/free_lunch_tester.csv"
       }
     }
   end
