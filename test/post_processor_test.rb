@@ -15,7 +15,8 @@ class PostProcessorTest < Minitest::Test
       },
       :economic_profile => {
         :median_household_income => "./test/fixtures/median_household_tester.csv",
-        :free_or_reduced_price_lunch => "./fixtures/free_lunch_tester.csv"
+        :free_or_reduced_price_lunch => "./test/fixtures/free_lunch_tester.csv",
+        :children_in_poverty => "./test/fixtures/school_aged_children_tester.csv"
       }
     }
   end
@@ -109,5 +110,23 @@ class PostProcessorTest < Minitest::Test
     expected2 = 0.7094
 
     assert_equal expected2, data["Colorado"][:math][2011][:asian]
+  end
+
+
+  def test_gets_economic_profile_from_options
+    post = PostProcessor.new
+    data = post.get_economic_profile_data(full_options)
+    expected1 = [[2005, 2009], [2006, 2010], [2008, 2012],
+                 [2007, 2011], [2009, 2013]]
+
+    assert_equal expected1, data["Colorado"][:median_household_income].keys
+
+    expected2 = 0.032
+
+    assert_equal expected2, data["ACADEMY 20"][:children_in_poverty][1995][:>][:percent]
+
+    expected3 = 735
+
+    assert_equal expected3, data["ADAMS COUNTY 14"][:lunch][2000][:reduced][:number]
   end
 end
