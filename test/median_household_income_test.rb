@@ -33,4 +33,34 @@ class MedianHouseholdIncomeTest < Minitest::Test
     assert_equal 87670, mhi.estimated_median_household_income_in_year(2006)
     assert_equal 88567, mhi.estimated_median_household_income_in_year(2007)
   end
+
+  def test_returns_true_if_year_within_range
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: nil )
+
+    assert mhi.year_in_range([2005, 2008], 2006)
+  end
+
+  def test_returns_true_if_year_at_top_of_range
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: nil )
+
+    assert mhi.year_in_range([2005, 2008], 2008)
+  end
+
+  def test_returns_true_if_year_at_bottom_of_range
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: nil )
+
+    assert mhi.year_in_range([2005, 2008], 2005)
+  end
+
+  def test_returns_false_if_year_below_range
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: nil )
+
+    refute mhi.year_in_range([2005, 2008], 2003)
+  end
+
+  def test_returns_false_if_year_above_range
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: nil )
+
+    refute mhi.year_in_range([2005, 2008], 2010)
+  end
 end
