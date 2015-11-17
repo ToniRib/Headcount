@@ -12,13 +12,7 @@ class MedianHouseholdIncome
     @data = options[:data] || @data = {}
   end
 
-  def income_in_year_range(start_year)
-    truncate_value(data[year])
-  end
+  def estimated_median_household_income_in_year(year)
 
-  def participation_by_year
-    data.to_h.each do |year, value|
-      data[year] = truncate_value(value)
-    end
   end
 end
