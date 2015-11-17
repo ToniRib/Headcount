@@ -244,6 +244,15 @@ class GradeProficiencyTest < Minitest::Test
     assert_equal expected, t.average_percentage_growth(data)
   end
 
+  def test_calculates_correct_average_based_on_only_two_data_points
+    t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
+
+    data = { 2005 => 'N/A', 2008 => 'N/A', 2009 => 2, 2010 => 4, 2011 => 'N/A', 2012 => 'N/A' }
+    expected = 2.0
+
+    assert_equal expected, t.average_percentage_growth(data)
+  end
+
   def test_avg_percentage_growth_can_be_calculated_for_a_subject
     data = { 2007 => { math: 0.857, reading: 0.8473, writing: 0.7889 },
              2008 => { math: 0.47336, reading: 0.473, writing: 0.1234 },
