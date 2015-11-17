@@ -224,7 +224,7 @@ class HeadcountAnalystTest < Minitest::Test
                 ['ADAMS-ARAPAHOE 28J', 0.004],
                 ['AGATE 300', nil],
                 ['AGUILAR REORGANIZED 6', nil],
-                ['AKRON R-1', 0.018]]
+                ['AKRON R-1', 0.015]]
 
     assert_equal expected, ha.growth_by_district(grade: 3, subject: :math)
   end
@@ -265,7 +265,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_gets_top_growth_in_third_grade_math
     ha = load_statewide_testing_repo
 
-    expected = ['AKRON R-1', 0.018]
+    expected = ['AKRON R-1', 0.015]
 
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
   end
@@ -281,7 +281,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_gets_top_three_growth_leaders_in_third_grade_math
     ha = load_statewide_testing_repo
 
-    expected = [['AKRON R-1', 0.018], ['ADAMS-ARAPAHOE 28J', 0.004], ['ACADEMY 20', -0.004]]
+    expected = [['AKRON R-1', 0.015], ['ADAMS-ARAPAHOE 28J', 0.004], ['ACADEMY 20', -0.004]]
 
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math, top: 3)
   end
@@ -289,7 +289,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_returns_top_growth_across_all_subjects_third_grade
     ha = load_statewide_testing_repo
 
-    expected = ['AKRON R-1', 0.029]
+    expected = ['AKRON R-1', 0.024]
     options = { :grade => 3,
                 :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0} }
 
@@ -299,7 +299,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_returns_top_growth_across_all_subjects_third_grade_no_weights_specified
     ha = load_statewide_testing_repo
 
-    expected = ['AKRON R-1', 0.009]
+    expected = ['AKRON R-1', 0.008]
 
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3)
   end
@@ -307,7 +307,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_returns_top_two_growth_acorss_all_subjects_with_weights
     ha = load_statewide_testing_repo
 
-    expected = [['AKRON R-1', 0.024], ['ADAMS-ARAPAHOE 28J', 0.002]]
+    expected = [['AKRON R-1', 0.020], ['ADAMS-ARAPAHOE 28J', 0.002]]
     options = { :grade => 3,
                 :weighting => {:math => 0.7, :reading => 0.3, :writing => 0.0},
                 :top => 2 }
