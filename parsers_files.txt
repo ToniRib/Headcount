@@ -15,12 +15,12 @@ parsers:
 
   year_race_number_parser
     e: Pupil enrollment by race_ethnicity
+    soc: Students qualifying for free lunch
+    soc: school aged children in poverty
 
   year_lunch_percent_parser (VERY similar to year_race_number)
-    soc: Students qualifying for free lunch
 
   year_number_parser (Very similar to year_race_number)
-    soc: school aged children in poverty
 
   range_currency_parser
     soc: Median household income

@@ -11,13 +11,13 @@ class YearRaceNumberParser
     ruby_rows.each do |csv_row|
       data_format = csv_row.row_data[:dataformat].downcase.to_sym
       year = csv_row.row_data[:timeframe].to_i
-      race = race_to_sym[csv_row.row_data[:race]]
+      sort_key = header_sort_key(csv_row)
       row_data = convert_to_float(csv_row.row_data[:data])
 
       data[csv_row.row_data[:location]] ||= {}
       data[csv_row.row_data[:location]][year] ||= {}
-      data[csv_row.row_data[:location]][year][race] ||= {}
-      data[csv_row.row_data[:location]][year][race][data_format] = row_data
+      data[csv_row.row_data[:location]][year][sort_key] ||= {}
+      data[csv_row.row_data[:location]][year][sort_key][data_format] = row_data
     end
 
     data
@@ -26,10 +26,10 @@ class YearRaceNumberParser
   def header_sort_key(csv_row)
     if csv_row.headers.include?(:race)
       race_to_sym[csv_row.row_data[:race]]
-    elsif csv_row.headers.include?(:"poverty level")
-      poverty_to_sym[csv_row.row_data[:"poverty level"]]
+    elsif csv_row.headers.include?(:poverty_level)
+      poverty_to_sym[csv_row.row_data[:poverty_level]]
     else
-      nil
+      :>
     end
   end
 
@@ -44,8 +44,8 @@ class YearRaceNumberParser
   end
 
   def poverty_to_sym
-    symbols = [:free, :reduced]
-    strings = ['Eligible for Free Lunch', 'Eligible for Reduced Price Lunch']
+    symbols = [:free, :reduced, :free_or_reduced]
+    strings = ['Eligible for Free Lunch', 'Eligible for Reduced Price Lunch', 'Eligible for Free or Reduced Lunch']
 
     strings.zip(symbols).to_h
   end
