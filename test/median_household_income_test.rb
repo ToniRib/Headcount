@@ -74,7 +74,7 @@ class MedianHouseholdIncomeTest < Minitest::Test
     assert_equal 87983, mhi.estimated_median_household_income_in_year(2007)
   end
 
-  def test_estimated_income_handles_nas_by_rejecting_them
+  def test_estimated_income_handles_nas_by_rejecting_them_all
     data = { [2005, 2009] => 'N/A', [2006, 2010] => 'N/A', [2007, 2011] => 'N/A' }
 
     mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: data )
@@ -98,4 +98,36 @@ class MedianHouseholdIncomeTest < Minitest::Test
     refute mhi.check_year(2004)
     refute mhi.check_year(2012)
   end
+
+
+  def test_averages_median_values
+    data = { [2005, 2009] => 85604, [2006, 2010] => 89736, [2007, 2011] => 90362 }
+
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: data )
+
+    expected = (85604+89736 + 90362)/3.to_f
+
+    assert_equal expected, mhi.median_household_income_average
+  end
+
+  def test_average_median_handles_nas_by_rejecting_them
+    data = { [2005, 2009] => 85604, [2006, 2010] => 'N/A', [2007, 2011] => 90362 }
+
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: data )
+    expected = (85604+90362)/2
+
+    assert_equal expected, mhi.median_household_income_average
+  end
+
+  def test_average_median_handles_nas_by_rejecting_them_all
+    data = { [2005, 2009] => 'N/A', [2006, 2010] => 'N/A', [2007, 2011] => 'N/A' }
+
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: data )
+
+    assert_raises(InsufficientInformationError) do
+      mhi.median_household_income_average
+    end
+  end
+
+
 end

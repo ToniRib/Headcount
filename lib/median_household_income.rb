@@ -19,7 +19,7 @@ class MedianHouseholdIncome
 
     vals = data.reject { |key,val| !year_in_range(key, year) || na?(val) }
 
-    fail InsufficientInformationError if vals.length == 0
+    check_insufficient_info(vals)
 
     vals.values.reduce(:+) / vals.length
   end
@@ -30,5 +30,17 @@ class MedianHouseholdIncome
 
   def check_year(year)
     data.keys.any? { |range| year_in_range(range, year) }
+  end
+
+  def median_household_income_average
+    num = data.values.reject {|val| na?(val)}
+
+    check_insufficient_info(num)
+    
+    num.reduce(:+).to_f/num.length
+  end
+
+  def check_insufficient_info(arr)
+    fail InsufficientInformationError if arr.length == 0
   end
 end
