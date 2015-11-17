@@ -13,6 +13,8 @@ class PostProcessor
     @percent = YearPercentParser.new
     @mrw = YearMRWPercentParser.new
     @race = YearRacePercentParser.new
+    @range = RangeCurrencyParser.new
+    
   end
 
   def get_enrollment_data(opt)

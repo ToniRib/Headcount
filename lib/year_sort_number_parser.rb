@@ -2,7 +2,7 @@ require 'csv'
 require 'pry'
 require_relative 'data_formattable'
 
-class YearRaceNumberParser
+class YearSortNumberParser
   include DataFormattable
 
   def parse(ruby_rows)
