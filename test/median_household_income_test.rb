@@ -63,4 +63,39 @@ class MedianHouseholdIncomeTest < Minitest::Test
 
     refute mhi.year_in_range([2005, 2008], 2010)
   end
+
+  def test_estimated_income_handles_nas_by_rejecting_them
+    data = { [2005, 2009] => 85604, [2006, 2010] => 'N/A', [2007, 2011] => 90362 }
+
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 85604, mhi.estimated_median_household_income_in_year(2005)
+    assert_equal 85604, mhi.estimated_median_household_income_in_year(2006)
+    assert_equal 87983, mhi.estimated_median_household_income_in_year(2007)
+  end
+
+  def test_estimated_income_handles_nas_by_rejecting_them
+    data = { [2005, 2009] => 'N/A', [2006, 2010] => 'N/A', [2007, 2011] => 'N/A' }
+
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: data )
+
+    assert_raises(InsufficientInformationError) do
+      mhi.estimated_median_household_income_in_year(2005)
+    end
+  end
+
+  def test_raises_unknown_data_error_if_year_does_not_exist
+    data = { [2005, 2009] => 'N/A', [2006, 2010] => 'N/A', [2007, 2011] => 'N/A' }
+
+    mhi = MedianHouseholdIncome.new(name: 'ACADEMY 20', data: data )
+
+    assert_raises(UnknownDataError) do
+      mhi.estimated_median_household_income_in_year(2003)
+      mhi.estimated_median_household_income_in_year(2015)
+    end
+
+    assert mhi.check_year(2007)
+    refute mhi.check_year(2004)
+    refute mhi.check_year(2012)
+  end
 end
