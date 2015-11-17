@@ -18,7 +18,23 @@ class EconomicProfile
   end
 
   def median_household_income_average
+    median.median_household_income_average
+  end
 
+  def estimated_median_household_income_in_year(year)
+    median.estimated_median_household_income_in_year(year)
+  end
+
+  def children_in_poverty_in_year(year)
+    children.children_in_poverty_in_year(year)
+  end
+
+  def free_or_reduced_price_lunch_percentage_in_year(year)
+    lunch.free_or_reduced_price_lunch_percentage_in_year(year)
+  end
+
+  def free_or_reduced_price_lunch_number_in_year(year)
+    lunch.free_or_reduced_price_lunch_number_in_year(year)
   end
 
   def opt(file_key)
