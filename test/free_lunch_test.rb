@@ -36,7 +36,7 @@ class FreeLunchTest < Minitest::Test
     assert_equal expected, f.data
   end
 
-  def test_can_get_a_percentage_for_a_specific_year
+  def test_can_get_a_percentage_of_free_or_reduced_lunch_for_a_specific_year
     data = { 2007 =>
              { :reduced => { :number => 50698.0 },
                :free_or_reduced => { :percent => 0.2437, :number => 195149.0 },
@@ -58,7 +58,7 @@ class FreeLunchTest < Minitest::Test
     assert_equal 0.285, f.free_or_reduced_price_lunch_percentage_in_year(2009)
   end
 
-  def test_raises_unknown_data_error_if_year_does_not_exist
+  def test_percentage_in_year_raises_unknown_data_error_if_year_does_not_exist
     data = { 2007 =>
              { :reduced => { :number => 50698.0 },
                :free_or_reduced => { :percent => 0.27, :number => 195149.0 },
@@ -77,6 +77,94 @@ class FreeLunchTest < Minitest::Test
 
     assert_raises(UnknownDataError) do
       f.free_or_reduced_price_lunch_percentage_in_year(2015)
+    end
+  end
+
+  def test_percentage_in_year_raises_unknown_data_error_if_percent_does_not_exist
+    data = { 2007 =>
+             { :reduced => { :number => 50698.0 },
+               :free_or_reduced => { :number => 195149.0 },
+               :free => { :percent => 0.2, :number => 144451.0 } },
+             2008 =>
+             { :reduced => { :number => 51998.0, :percent => 0.07006 },
+               :free_or_reduced => { :number => 204299.0, :percent => 'N/A' },
+               :free => { :number => 152301.0, :percent => 0.20522 } },
+             2009 =>
+             { :free => { :percent => 0.2196, :number => 'N/A' },
+               :free_or_reduced => { :percent => 0.28509, :number => 214349.0 },
+               :reduced => { :percent => 0.06549} }
+    }
+
+    f = FreeLunch.new(name: 'ACADEMY 20', data: data )
+
+    assert_raises(UnknownDataError) do
+      f.free_or_reduced_price_lunch_percentage_in_year(2007)
+    end
+  end
+
+  def test_can_get_a_number_of_free_or_reduced_lunch_for_specific_year
+    data = { 2007 =>
+             { :reduced => { :number => 50698.0 },
+               :free_or_reduced => { :percent => 0.2437, :number => 195149.0 },
+               :free => { :percent => 0.2, :number => 144451.0 } },
+             2008 =>
+             { :reduced => { :number => 51998.0, :percent => 0.07006 },
+               :free_or_reduced => { :number => 204299.0, :percent => 'N/A' },
+               :free => { :number => 152301.0, :percent => 0.20522 } },
+             2009 =>
+             { :free => { :percent => 0.2196, :number => 'N/A' },
+               :free_or_reduced => { :percent => 0.28509, :number => 214349.0 },
+               :reduced => { :percent => 0.06549} }
+    }
+
+    f = FreeLunch.new(name: 'ACADEMY 20', data: data )
+
+    assert_equal 195149.0, f.free_or_reduced_price_lunch_number_in_year(2007)
+    assert_equal 204299.0, f.free_or_reduced_price_lunch_number_in_year(2008)
+    assert_equal 214349.0, f.free_or_reduced_price_lunch_number_in_year(2009)
+  end
+
+  def test_number_in_year_raises_unknown_data_error_if_year_does_not_exist
+    data = { 2007 =>
+             { :reduced => { :number => 50698.0 },
+               :free_or_reduced => { :percent => 0.27, :number => 195149.0 },
+               :free => { :percent => 0.2, :number => 144451.0 } },
+             2008 =>
+             { :reduced => { :number => 51998.0, :percent => 0.07006 },
+               :free_or_reduced => { :number => 204299.0, :percent => 'N/A' },
+               :free => { :number => 152301.0, :percent => 0.20522 } },
+             2009 =>
+             { :free => { :percent => 0.2196, :number => 'N/A' },
+               :free_or_reduced => { :percent => 0.28509, :number => 214349.0 },
+               :reduced => { :percent => 0.06549} }
+    }
+
+    f = FreeLunch.new(name: 'ACADEMY 20', data: data )
+
+    assert_raises(UnknownDataError) do
+      f.free_or_reduced_price_lunch_number_in_year(2015)
+    end
+  end
+
+  def test_number_in_year_raises_unknown_data_error_if_percent_does_not_exist
+    data = { 2007 =>
+             { :reduced => { :number => 50698.0 },
+               :free_or_reduced => { :number => 195149.0 },
+               :free => { :percent => 0.2, :number => 144451.0 } },
+             2008 =>
+             { :reduced => { :number => 51998.0, :percent => 0.07006 },
+               :free_or_reduced => { :number => 204299.0, :percent => 'N/A' },
+               :free => { :number => 152301.0, :percent => 0.20522 } },
+             2009 =>
+             { :free => { :percent => 0.2196, :number => 'N/A' },
+               :free_or_reduced => { :percent => 0.28509, :number => 214349.0 },
+               :reduced => { :percent => 0.06549} }
+    }
+
+    f = FreeLunch.new(name: 'ACADEMY 20', data: data )
+
+    assert_raises(UnknownDataError) do
+      f.free_or_reduced_price_lunch_number_in_year(2007)
     end
   end
 end

@@ -18,7 +18,17 @@ class FreeLunch
     truncate_value(data[year][:free_or_reduced][:percent])
   end
 
+  def free_or_reduced_price_lunch_number_in_year(year)
+    fail UnknownDataError unless year_and_number_exist(year)
+
+    data[year][:free_or_reduced][:number]
+  end
+
   def year_and_percentage_exist(year)
+    data[year] && data[year][:free_or_reduced][:percent]
+  end
+
+  def year_and_number_exist(year)
     data[year] && data[year][:free_or_reduced][:percent]
   end
 end
