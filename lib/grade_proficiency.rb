@@ -52,7 +52,7 @@ class GradeProficiency
     first_year = data.keys.min
     last_year = data.keys.max
 
-    (data[last_year]) - data[first_year] / (last_year - first_year)
+    (data[last_year].to_f - data[first_year]) / (last_year - first_year)
   end
 
   def avg_percentage_growth_by_subject(subj)

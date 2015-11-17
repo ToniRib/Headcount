@@ -180,10 +180,11 @@ class GradeProficiencyTest < Minitest::Test
   end
 
   def test_avg_percentage_growth_calculates_average_percentage_growth_across_years
-    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
-    assert_equal 1.5, t.average_percentage_growth([1, 3, 4])
+    data = { 2007 => 1, 2008 => 3, 2009 => 4 }
+
+    assert_equal 1.5, t.average_percentage_growth(data)
   end
 
   def test_avg_percentage_growth_calculates_for_floats
