@@ -180,12 +180,14 @@ class GradeProficiencyTest < Minitest::Test
   end
 
   def test_avg_percentage_growth_calculates_average_percentage_growth_across_years
+    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
     assert_equal 1.5, t.average_percentage_growth([1, 3, 4])
   end
 
   def test_avg_percentage_growth_calculates_for_floats
+    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
     expected = 1.6099999999999999
@@ -194,30 +196,35 @@ class GradeProficiencyTest < Minitest::Test
   end
 
   def test_avg_percentage_growth_returns_exception_for_empty_array
+    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
     assert_raises(InsufficientInformationError) { t.average_percentage_growth([]) }
   end
 
   def test_avg_percentage_growth_returns_exception_for_single_element_array
+    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
     assert_raises(InsufficientInformationError) { t.average_percentage_growth([1]) }
   end
 
   def test_avg_percentage_growth_returns_exception_for_array_with_nas
+    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
     assert_raises(InsufficientInformationError) { t.average_percentage_growth(['N/A', 2, 'N/A']) }
   end
 
   def test_avg_percentage_growth_does_not_return_exception_for_array_with_2_elements
+    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
     assert_equal 1, t.average_percentage_growth([1, 2])
   end
 
   def test_avg_percentage_growth_removes_nas_when_performing_calculations
+    skip
     t = GradeProficiency.new(name: 'ACADEMY 20', data: nil )
 
     values = [0.34, 0.37, 0.41, 'N/A', 0.456]

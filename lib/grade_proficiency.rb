@@ -44,17 +44,19 @@ class GradeProficiency
     transpose_data(data)
   end
 
-  def average_percentage_growth(arr)
-    # may need to change this to a hash to subtract time between years
-    arr.reject! { |val| na?(val) }
+  def average_percentage_growth(data)
+    data.reject! { |_, v| na?(v) }
 
-    fail InsufficientInformationError if arr.length < 2
+    fail InsufficientInformationError if data.count < 2
 
-    arr.each_cons(2).map { |a, b| b - a }.reduce(:+) / (arr.length - 1.0)
+    first_year = data.keys.min
+    last_year = data.keys.max
+
+    (data[last_year]) - data[first_year] / (last_year - first_year)
   end
 
   def avg_percentage_growth_by_subject(subj)
-    percent = average_percentage_growth(proficiency_for_subject(subj).values)
+    percent = average_percentage_growth(proficiency_for_subject(subj))
     truncate_value(percent)
   end
 
