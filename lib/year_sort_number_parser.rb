@@ -45,7 +45,8 @@ class YearSortNumberParser
 
   def poverty_to_sym
     symbols = [:free, :reduced, :free_or_reduced]
-    strings = ['Eligible for Free Lunch', 'Eligible for Reduced Price Lunch', 'Eligible for Free or Reduced Lunch']
+    strings = ['Eligible for Free Lunch', 'Eligible for Reduced Price Lunch',
+               'Eligible for Free or Reduced Lunch']
 
     strings.zip(symbols).to_h
   end

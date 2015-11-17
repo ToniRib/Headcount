@@ -13,7 +13,6 @@ class MedianHouseholdIncome
   end
 
   def income_in_year_range(start_year)
-    
     truncate_value(data[year])
   end
 

@@ -25,6 +25,11 @@ class DistrictRepositoryTest < Minitest::Test
         :math => './test/fixtures/math_average_proficiency_tester.csv',
         :reading => './test/fixtures/reading_average_proficiency_tester.csv',
         :writing => './test/fixtures/writing_average_proficiency_tester.csv'
+      },
+      :economic_profile => {
+        :median_household_income => "./test/fixtures/median_household_tester.csv",
+        :free_or_reduced_price_lunch => "./test/fixtures/free_lunch_tester.csv",
+        :children_in_poverty => "./test/fixtures/school_aged_children_tester.csv"
       }
     })
     dr
@@ -37,13 +42,14 @@ class DistrictRepositoryTest < Minitest::Test
   def test_load_data_creates_district_objects
     dr = full_data_test
 
-    assert_equal 3, dr.districts.count
+    assert_equal 6, dr.districts.count
 
     dr.districts.each do |name, value|
       assert value.is_a?(District)
     end
 
-    expected_keys = ['COLORADO', 'ACADEMY 20', 'ADAMS COUNTY 14']
+    expected_keys = ["COLORADO", "ACADEMY 20", "ADAMS COUNTY 14",
+                     "ADAMS-ARAPAHOE 28J", "AGATE 300", "AGUILAR REORGANIZED 6"]
     assert_equal expected_keys, dr.districts.keys
   end
 
@@ -117,12 +123,23 @@ class DistrictRepositoryTest < Minitest::Test
     assert_equal 0.436, kp2010
   end
 
-  def test_can_load_enrollment_and_statewide_test_data
+  def test_can_load_enrollment_statewide_and_economic_data
+    dr = full_data_test
+
+    computed1 = dr.districts["COLORADO"].economic_profile.median.data[[2005,2009]]
+    computed2 = dr.districts["COLORADO"].statewide_test.math.data[2011][:asian]
+    computed3 = dr.districts["ACADEMY 20"].enrollment.hs.data[2010]
+
+    assert_equal 56222.0, computed1
+    assert_equal 0.7094, computed2
+    assert_equal 0.895, computed3
+  end
+
+  def test_can_extract_all_names
     dr = full_data_test
 
     names = dr.district_names_across_repositories
 
-    assert_equal names, dr.enrollment_repo.enrollments.keys
-    assert_equal names, dr.statewide_test_repo.statewide_tests.keys
+    assert_equal names, dr.economic_profile_repo.profiles.keys
   end
 end
