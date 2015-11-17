@@ -128,6 +128,4 @@ class MedianHouseholdIncomeTest < Minitest::Test
       mhi.median_household_income_average
     end
   end
-
-
 end
