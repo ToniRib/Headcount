@@ -9,6 +9,7 @@ class EconomicProfileRepositoryTest < Minitest::Test
       :median_household_income => "./test/fixtures/median_household_tester.csv",
       :free_or_reduced_price_lunch => "./test/fixtures/free_lunch_tester.csv",
       :children_in_poverty => "./test/fixtures/school_aged_children_tester.csv"
+      #title?
     }})
   ep
   end

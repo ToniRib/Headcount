@@ -124,7 +124,7 @@ class DistrictRepositoryTest < Minitest::Test
 
   def test_can_load_enrollment_statewide_and_economic_data
     dr = full_data_test
-    binding.pry
+    # binding.pry
     computed1 = dr.districts["COLORADO"].economic_profile.median.data[[2005,2009]]
     computed2 = dr.districts["COLORADO"].statewide_test.math.data[2011][:asian]
     computed3 = dr.districts["ACADEMY 20"].enrollment.hs.data[2010]
