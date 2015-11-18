@@ -10,13 +10,21 @@ The Headcount Analyst can then query data across districts to answer questions s
 
 ### Available Headcount Analyst Methods
 
+*
 
 #### Examples
 
 The following is an example as run with [pry](https://github.com/pry/pry) from the command line in the base directory of the project:
 
 ```
-
+* __district_names:__ Returns all district names that have been loaded into the District Repository
+* __find_enrollment_by_name(name):__ Returns the Enrollment object for a given District
+* __find_swtest_by_name(name):__ Returns the StatewideTest object for a given District
+* __highschool_graduation_rate_variation(district_name, vs):__
+* __kindergarten_participation_rate_variation_trend(district_name, vs):__
+* __kindergarten_participation_against_high_school_graduation(district_name):__
+* __kindergarten_participation_correlates_with_high_school_graduation(options):__
+* __top_statewide_test_year_over_year_growth(options):__
 ```
 
 ### Test Suite

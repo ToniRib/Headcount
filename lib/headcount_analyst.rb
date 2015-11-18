@@ -108,7 +108,8 @@ class HeadcountAnalyst
   end
 
   def sort_districts_by_growth(districts)
-    districts.select { |d| !d[1].nil? }.sort_by { |_, val| val }.reverse
+    x = districts.select { |d| !d[1].nil? }.sort_by { |_, val| val }.reverse
+    x.map { |k, v| [k, truncate_value(v)] }
   end
 
   def combined_growth_by_district(options)
