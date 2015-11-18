@@ -10,9 +10,6 @@ The Headcount Analyst can then query data across districts to answer questions s
 
 ### Available Headcount Analyst Methods
 
-* __district_names:__ Returns all district names that have been loaded into the District Repository
-* __find_enrollment_by_name(name):__ Returns the Enrollment object for a given District
-* __find_swtest_by_name(name):__ Returns the StatewideTest object for a given District
 * __highschool_graduation_rate_variation(district_name, vs):__ returns the average enrollment for a given district divided by the state average
 * __kindergarten_participation_rate_variation_trend(district_name, vs):__ same as above but broken down year-by-year
 * __kindergarten_participation_against_high_school_graduation(district_name):__ returns the average kindergarten participation divided by the high school graduation rate (for a given district evaluated against the state)
