@@ -300,7 +300,6 @@ class HeadcountAnalystTest < Minitest::Test
     ha = load_statewide_testing_repo
 
     expected = ['AKRON R-1', 0.009]
-    binding.pry
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3)
   end
 
