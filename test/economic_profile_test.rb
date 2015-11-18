@@ -41,4 +41,16 @@ class EconomicProfileTest < Minitest::Test
 
     assert_equal 0.023, ep.free_or_reduced_price_lunch_percentage_in_year(2014)
   end
+
+  def test_calculates_number_of_children_with_free_or_reduced_lunch
+    ep = set_up_economic_profile
+
+    assert_equal 100, ep.free_or_reduced_price_lunch_number_in_year(2014)
+  end
+
+  def test_calculates_title_i_in_year
+    ep = set_up_economic_profile
+
+    assert_equal 0.543, ep.title_i_in_year(2015)
+  end
 end
