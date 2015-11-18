@@ -1,7 +1,7 @@
 module DataFormattable
   def float?(str)
     return false if str.nil?
-    
+
     str.chars[0].to_i.to_s == str.chars[0]
   end
 

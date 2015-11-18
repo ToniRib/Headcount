@@ -37,7 +37,8 @@ if __FILE__ == $PROGRAM_NAME
             :economic_profile => {
               :median_household_income => "Median household income.csv",
               :children_in_poverty => "School-aged children in poverty.csv",
-              :free_or_reduced_price_lunch => "Students qualifying for free or reduced price lunch.csv",
+              :free_or_reduced_price_lunch =>
+                "Students qualifying for free or reduced price lunch.csv",
               :title_i => "Title I students.csv"
             }}
   )
