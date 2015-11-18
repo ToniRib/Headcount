@@ -1,5 +1,6 @@
 require 'minitest'
 require 'range_currency_parser'
+require 'pre_processor'
 
 class RangeCurrencyParserTest < Minitest::Test
   def parser_prep

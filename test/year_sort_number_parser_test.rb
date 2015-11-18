@@ -1,5 +1,6 @@
 require 'minitest'
 require 'year_sort_number_parser'
+require 'pre_processor'
 
 class YearSortNumberParserTest < Minitest::Test
   def parser_prep_lunches
