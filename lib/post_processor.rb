@@ -4,6 +4,7 @@ require_relative 'year_mrw_percent_parser'
 require_relative 'year_race_percent_parser'
 require_relative 'year_sort_number_parser'
 require_relative 'range_currency_parser'
+require_relative 'pre_processor'
 
 class PostProcessor
   include DataFormattable
