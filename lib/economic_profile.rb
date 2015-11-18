@@ -10,7 +10,7 @@ class EconomicProfile
     @data_hash = data_hash
     @name = data_hash[:name]
     @median = MedianHouseholdIncome.new(opt(:median_household_income))
-    @lunch = FreeLunch.new(opt(:lunch))
+    @lunch = FreeLunch.new(opt(:free_or_reduced_price_lunch))
     @children = ChildrenInPoverty.new(opt(:children_in_poverty))
     @title = TitleI.new(opt(:title_i))
   end

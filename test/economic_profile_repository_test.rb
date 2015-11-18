@@ -79,9 +79,7 @@ class EconomicProfileRepositoryTest < Minitest::Test
 
   def test_loaded_econ_profile_has_expected_lunch_data
     ep = load_profile_data
-    expected = {:reduced=>{:percentage=>0.07, :total=>50698.0},
-                :free_or_reduced=>{:percentage=>0.27, :total=>195149.0},
-                :free=>{:percentage=>0.2, :total=>144451.0}}
+    expected = { :percentage=>0.27, :total=>195149.0 }
     data = ep.profiles['COLORADO'].lunch.data[2000]
 
     assert_equal expected, data
