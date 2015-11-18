@@ -114,7 +114,6 @@ class HeadcountAnalyst
 
   def combined_growth_by_district(options)
     options = check_and_set_weights(options)
-
     district_names.map do |name|
       [name, get_weighted_growth(options, name)]
     end
