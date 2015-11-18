@@ -779,7 +779,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    expected = -0.013
+    expected = -0.01277055
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
     assert_equal expected, s.avg_growth_by_grade_all_subjects(8, weights)
@@ -792,7 +792,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    expected = -0.013
+    expected = -0.01277055
     weights = { math: 0.333, reading: 0.333, writing: 0.333 }
 
     assert_equal expected, s.avg_growth_by_grade_all_subjects(3, weights)
@@ -828,7 +828,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    assert_equal -0.032, s.avg_growth_by_grade_for_subject(8, :math)
+    assert_equal -0.031835, s.avg_growth_by_grade_for_subject(8, :math)
   end
 
   def test_calculates_average_percent_growth_for_third_grade_reading
@@ -838,7 +838,7 @@ class StatewideTestTest < Minitest::Test
                               2009 => { :math => 0.824, :reading => 0.8642, :writing => 0.706 },
                               2010 => { :math => 0.8249, :reading => 'N/A', :writing => 0.662 } })
 
-    assert_equal -0.002, s.avg_growth_by_grade_for_subject(3, :reading)
+    assert_equal -0.0018000000000000238, s.avg_growth_by_grade_for_subject(3, :reading)
   end
 
   def test_returns_unknown_data_error_for_average_percentage_for_subject_if_year_unknown

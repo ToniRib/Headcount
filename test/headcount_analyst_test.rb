@@ -219,12 +219,12 @@ class HeadcountAnalystTest < Minitest::Test
   def test_calculates_avg_percentage_growth_for_third_grade_math
     ha = load_statewide_testing_repo
 
-    expected = [['ACADEMY 20', -0.004],
-                ['ADAMS COUNTY 14', -0.008],
-                ['ADAMS-ARAPAHOE 28J', 0.004],
-                ['AGATE 300', nil],
-                ['AGUILAR REORGANIZED 6', nil],
-                ['AKRON R-1', 0.015]]
+    expected = [["ACADEMY 20", -0.0037499999999999942],
+                ["ADAMS COUNTY 14", -0.00793166666666667],
+                ["ADAMS-ARAPAHOE 28J", 0.004365000000000008],
+                ["AGATE 300", nil],
+                ["AGUILAR REORGANIZED 6", nil],
+                ["AKRON R-1", 0.015491666666666662]]
 
     assert_equal expected, ha.growth_by_district(grade: 3, subject: :math)
   end
@@ -232,12 +232,12 @@ class HeadcountAnalystTest < Minitest::Test
   def test_calculates_avg_percentage_growth_for_eighth_grade_reading
     ha = load_statewide_testing_repo
 
-    expected = [['ACADEMY 20', -0.003],
-                ['ADAMS COUNTY 14', -0.001],
-                ['ADAMS-ARAPAHOE 28J', -0.009],
-                ['AGATE 300', nil],
-                ['AGUILAR REORGANIZED 6', nil],
-                ['AKRON R-1', 0.00]]
+    expected = [["ACADEMY 20", -0.002666666666666669],
+                ["ADAMS COUNTY 14", -0.0008250000000000016],
+                ["ADAMS-ARAPAHOE 28J", -0.008666666666666665],
+                ["AGATE 300", nil],
+                ["AGUILAR REORGANIZED 6", nil],
+                ["AKRON R-1", 0.0008883333333333429]]
 
     assert_equal expected, ha.growth_by_district(grade: 8, subject: :reading)
   end
@@ -299,7 +299,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_returns_top_growth_across_all_subjects_third_grade_no_weights_specified
     ha = load_statewide_testing_repo
 
-    expected = ['AKRON R-1', 0.008]
+    expected = ['AKRON R-1', 0.009]
 
     assert_equal expected, ha.top_statewide_test_year_over_year_growth(grade: 3)
   end
@@ -307,7 +307,7 @@ class HeadcountAnalystTest < Minitest::Test
   def test_returns_top_two_growth_acorss_all_subjects_with_weights
     ha = load_statewide_testing_repo
 
-    expected = [['AKRON R-1', 0.020], ['ADAMS-ARAPAHOE 28J', 0.002]]
+    expected = [["AKRON R-1", 0.021], ["ADAMS-ARAPAHOE 28J", 0.002]]
     options = { :grade => 3,
                 :weighting => {:math => 0.7, :reading => 0.3, :writing => 0.0},
                 :top => 2 }

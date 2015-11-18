@@ -260,9 +260,9 @@ class GradeProficiencyTest < Minitest::Test
 
     t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    assert_equal -0.283, t.avg_percentage_growth_by_subject(:math)
-    assert_equal 0.026, t.avg_percentage_growth_by_subject(:reading)
-    assert_equal -0.123, t.avg_percentage_growth_by_subject(:writing)
+    assert_equal -0.28295, t.avg_percentage_growth_by_subject(:math)
+    assert_equal 0.026349999999999985, t.avg_percentage_growth_by_subject(:reading)
+    assert_equal -0.12261500000000003, t.avg_percentage_growth_by_subject(:writing)
     assert_raises(UnknownDataError) { t.avg_percentage_growth_by_subject(:science) }
   end
 
@@ -273,7 +273,7 @@ class GradeProficiencyTest < Minitest::Test
 
     t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    expected = -0.127
+    expected = -0.12627859500000002
     weights = {:math => 0.333, :reading => 0.333, :writing => 0.333}
 
     assert_equal expected, t.combined_average_growth(weights)
@@ -286,7 +286,7 @@ class GradeProficiencyTest < Minitest::Test
 
     t = GradeProficiency.new(name: 'ACADEMY 20', data: data )
 
-    expected = -0.129
+    expected = -0.1283
     weights = {:math => 0.5, :reading => 0.5, :writing => 0.0}
 
     assert_equal expected, t.combined_average_growth(weights)
