@@ -124,11 +124,10 @@ class DistrictRepositoryTest < Minitest::Test
 
   def test_can_load_enrollment_statewide_and_economic_data
     dr = full_data_test
-    # binding.pry
     computed1 = dr.districts["COLORADO"].economic_profile.median.data[[2005,2009]]
     computed2 = dr.districts["COLORADO"].statewide_test.math.data[2011][:asian]
     computed3 = dr.districts["ACADEMY 20"].enrollment.hs.data[2010]
-    computed4 = dr.districts["ACADEMY 20"].economic_profile.lunch.data[2014][:reduced][:number]
+    computed4 = dr.districts["ACADEMY 20"].economic_profile.lunch.data[2014][:reduced][:total]
 
     assert_equal 56222.0, computed1
     assert_equal 0.7094, computed2

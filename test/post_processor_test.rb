@@ -123,10 +123,6 @@ class PostProcessorTest < Minitest::Test
 
     expected2 = 0.032
 
-    assert_equal expected2, data["ACADEMY 20"][:children_in_poverty][1995][:>][:percent]
-
-    expected3 = 735
-
-    assert_equal expected3, data["ADAMS COUNTY 14"][:lunch][2000][:reduced][:number]
+    assert_equal expected2, data["ACADEMY 20"][:children_in_poverty][1995]
   end
 end

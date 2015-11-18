@@ -9,7 +9,7 @@ class YearSortNumberParser
     data = {}
 
     ruby_rows.each do |csv_row|
-      data_format = csv_row.row_data[:dataformat].downcase.to_sym
+      data_format = num_to_total[csv_row.row_data[:dataformat]]
       year = csv_row.row_data[:timeframe].to_i
       sort_key = header_sort_key(csv_row)
       row_data = convert_to_float(csv_row.row_data[:data])
@@ -21,6 +21,10 @@ class YearSortNumberParser
     end
 
     data
+  end
+
+  def num_to_total
+    {"Number" => :total, "Percent" => :percent}
   end
 
   def header_sort_key(csv_row)

@@ -13,14 +13,8 @@ class ChildrenInPoverty
   end
 
   def children_in_poverty_in_year(year)
-    fail UnknownDataError unless year_and_percent_exist(year)
+    fail UnknownDataError unless data[year]
 
-    percent = data[year][:>].fetch(:percent)
-
-    truncate_value(percent)
-  end
-
-  def year_and_percent_exist(year)
-    data.keys.include?(year) && !data[year][:>][:percent].nil?
+    truncate_value(data[year])
   end
 end

@@ -62,7 +62,7 @@ class YearSortNumberParserTest < Minitest::Test
     ruby_rows = parser_prep_enrollment
     data = parser.parse(ruby_rows)
 
-    assert_equal 1674.0, data['ACADEMY 20'][2007][:hispanic][:number]
+    assert_equal 1674.0, data['ACADEMY 20'][2007][:hispanic][:total]
     assert_equal 0.08, data['ACADEMY 20'][2007][:hispanic][:percent]
   end
 
@@ -71,16 +71,16 @@ class YearSortNumberParserTest < Minitest::Test
     ruby_rows = parser_prep_lunches
     data = parser.parse(ruby_rows)
 
-    assert_equal 195149.0, data['Colorado'][2000][:free_or_reduced][:number]
+    assert_equal 195149.0, data['Colorado'][2000][:free_or_reduced][:total]
     assert_equal 0.6179, data['ADAMS COUNTY 14'][2005][:free][:percent]
   end
 
   def test_can_find_data_by_location_school_aged_and_year
-    parser = YearSortNumberParser.new
+    parser = YearPercentParser.new
     ruby_rows = parser_prep_school_aged
+
     data = parser.parse(ruby_rows)
-    assert_equal 0.042, data['ACADEMY 20'][2005][:>][:percent]
-    assert_equal 1910.0, data['ADAMS COUNTY 14'][2010][:>][:number]
+    assert_equal 0.042, data['ACADEMY 20'][2005]
   end
 
   def test_can_find_data_by_location_year_and_race_expect_na
@@ -88,7 +88,7 @@ class YearSortNumberParserTest < Minitest::Test
     ruby_rows = parser_prep_enrollment
     data = parser.parse(ruby_rows)
 
-    assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:number]
+    assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:total]
     assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:percent]
   end
 
@@ -100,22 +100,6 @@ class YearSortNumberParserTest < Minitest::Test
     expected2 = "N/A"
 
     assert_equal 0.01, data['Colorado'][2007][:native_american][:percent]
-    assert_equal 1179, data['ACADEMY 20'][2008][:asian][:number]
-  end
-
-  def test_loads_data_correctly_random_test
-    parser = YearSortNumberParser.new
-    ruby_rows = parser_prep_enrollment
-    data = parser.parse(ruby_rows)
-
-    examined = ruby_rows[rand(2..60)]
-    location = examined.row_data[:location]
-    race = parser.race_to_sym[examined.row_data[:race]]
-    year = examined.row_data[:timeframe].to_i
-    data_format = examined.row_data[:dataformat].downcase.to_sym
-
-    expected = parser.convert_to_float(examined.row_data[:data])
-
-    assert_equal expected, data[location][year][race][data_format]
+    assert_equal 1179, data['ACADEMY 20'][2008][:asian][:total]
   end
 end
