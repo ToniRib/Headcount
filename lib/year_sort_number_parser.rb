@@ -24,7 +24,7 @@ class YearSortNumberParser
   end
 
   def num_to_total
-    {"Number" => :total, "Percent" => :percent}
+    {"Number" => :total, "Percent" => :percentage}
   end
 
   def header_sort_key(csv_row)

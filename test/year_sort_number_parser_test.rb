@@ -63,7 +63,7 @@ class YearSortNumberParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
 
     assert_equal 1674.0, data['ACADEMY 20'][2007][:hispanic][:total]
-    assert_equal 0.08, data['ACADEMY 20'][2007][:hispanic][:percent]
+    assert_equal 0.08, data['ACADEMY 20'][2007][:hispanic][:percentage]
   end
 
   def test_can_find_data_by_location_lunch_and_year
@@ -72,7 +72,7 @@ class YearSortNumberParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
 
     assert_equal 195149.0, data['Colorado'][2000][:free_or_reduced][:total]
-    assert_equal 0.6179, data['ADAMS COUNTY 14'][2005][:free][:percent]
+    assert_equal 0.6179, data['ADAMS COUNTY 14'][2005][:free][:percentage]
   end
 
   def test_can_find_data_by_location_school_aged_and_year
@@ -89,7 +89,7 @@ class YearSortNumberParserTest < Minitest::Test
     data = parser.parse(ruby_rows)
 
     assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:total]
-    assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:percent]
+    assert_equal "N/A", data['ADAMS COUNTY 14'][2007][:pacific_islander][:percentage]
   end
 
   def test_can_find_multiple_pieces_of_data
@@ -99,7 +99,7 @@ class YearSortNumberParserTest < Minitest::Test
     expected1 = 0.6585
     expected2 = "N/A"
 
-    assert_equal 0.01, data['Colorado'][2007][:native_american][:percent]
+    assert_equal 0.01, data['Colorado'][2007][:native_american][:percentage]
     assert_equal 1179, data['ACADEMY 20'][2008][:asian][:total]
   end
 end
