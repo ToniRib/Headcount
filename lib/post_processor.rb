@@ -49,7 +49,7 @@ class PostProcessor
       median_household_income:
         get_data(:range,opt[ep][:median_household_income]),
       children_in_poverty: get_data(:percent,opt[ep][:children_in_poverty]),
-      lunch: get_data(:sort,opt[ep][:free_or_reduced_price_lunch]),
+      free_or_reduced_price_lunch: get_data(:sort,opt[ep][:free_or_reduced_price_lunch]),
       title_i: get_data(:percent,opt[ep][:title_i])
     }
     transpose_data(data)
