@@ -127,13 +127,12 @@ class DistrictRepositoryTest < Minitest::Test
     computed1 = dr.districts["COLORADO"].economic_profile.median.data[[2005,2009]]
     computed2 = dr.districts["COLORADO"].statewide_test.math.data[2011][:asian]
     computed3 = dr.districts["ACADEMY 20"].enrollment.hs.data[2010]
-    computed4 = dr.districts["ACADEMY 20"].economic_profile.lunch.data[2014][:reduced][:total]
+    computed4 = dr.districts["ACADEMY 20"].economic_profile.lunch.data[2014][:total]
 
     assert_equal 56222.0, computed1
     assert_equal 0.7094, computed2
     assert_equal 0.895, computed3
-    assert_equal 976.0, computed4
-
+    assert_equal 3132.0, computed4
   end
 
   def test_can_extract_all_names
