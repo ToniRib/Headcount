@@ -1,5 +1,5 @@
 # Headcount
-## Turing Module 1: Final Projects
+## Turing Module 1: Final Project
 ## Toni Rib & Aaron Greenspan
 
 ### Overview
