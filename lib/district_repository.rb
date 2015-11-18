@@ -3,7 +3,6 @@ require_relative 'enrollment_repository'
 require_relative 'data_formattable'
 require_relative 'statewide_testing_repository'
 require_relative 'economic_profile_repository'
-require 'pry'
 
 class DistrictRepository
   include DataFormattable
@@ -79,16 +78,4 @@ class DistrictRepository
   def find_all_matching(str)
     districts.select { |name, _| name.start_with?(str.upcase) }.values
   end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  dr = DistrictRepository.new
-  dr.load_data(
-    enrollment: {
-      kindergarten: './test/fixtures/kindergarten_tester.csv',
-      high_school_graduation: './test/fixtures/highschool_grad_tester.csv'
-    }
-  )
-
-  p dr.find_by_name('ACADEMY 20')
 end

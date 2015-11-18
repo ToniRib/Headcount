@@ -1,6 +1,5 @@
 require_relative 'data_formattable'
 require_relative 'unknown_data_error'
-require 'pry'
 
 class GradeProficiency
   attr_reader :name, :data
@@ -17,8 +16,6 @@ class GradeProficiency
   end
 
   def truncate_each_subject_value(values)
-    # discuss with aaron: should project change this and others like it
-    # since it is directly modifying data (see map below)
     values.each { |subj, percent| values[subj] = truncate_value(percent) }
   end
 

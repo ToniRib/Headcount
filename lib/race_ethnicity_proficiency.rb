@@ -1,6 +1,5 @@
 require_relative 'data_formattable'
 require_relative 'unknown_data_error'
-require 'pry'
 
 class RaceEthnicityProficiency
   attr_reader :name, :data

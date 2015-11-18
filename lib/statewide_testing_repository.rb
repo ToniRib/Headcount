@@ -1,8 +1,5 @@
-require_relative 'year_percent_parser'
 require_relative 'statewide_test'
-require_relative 'pre_processor'
 require_relative 'post_processor'
-require 'pry'
 
 class StatewideTestRepository
   attr_reader :statewide_tests
@@ -28,13 +25,4 @@ class StatewideTestRepository
   def district_exists?(district_name)
     @statewide_tests.keys.include?(district_name.upcase)
   end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  sw = StatewideTestRepository.new
-  sw.load_data(statewide_testing: {
-                 third_grade: './test/fixtures/third_grade_tester.csv',
-                 eighth_grade: './test/fixtures/eighth_grade_tester.csv'
-               })
-  p sw.find_by_name('ACADEMY 20')
 end

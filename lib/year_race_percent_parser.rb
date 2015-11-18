@@ -1,5 +1,4 @@
 require 'csv'
-require 'pry'
 require_relative 'data_formattable'
 
 class YearRacePercentParser
@@ -7,6 +6,7 @@ class YearRacePercentParser
 
   def parse(ruby_rows)
     data = {}
+
     ruby_rows.each do |csv_row|
       row_data = convert_to_float(csv_row.row_data[:data])
 

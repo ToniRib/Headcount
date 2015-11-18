@@ -1,8 +1,5 @@
-require_relative 'year_percent_parser'
 require_relative 'economic_profile'
-require_relative 'pre_processor'
 require_relative 'post_processor'
-require 'pry'
 
 class EconomicProfileRepository
   attr_reader :profiles
@@ -28,17 +25,4 @@ class EconomicProfileRepository
   def district_exists?(district_name)
     profiles.keys.include?(district_name.upcase)
   end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  ep = EconomicProfileRepository.new
-  ep.load_data(
-                :economic_profile => {
-                :median_household_income => 'Median household income.csv',
-                :children_in_poverty => 'School-aged children in poverty.csv',
-                :free_or_reduced_price_lunch =>
-                  'Students qualifying for free or reduced price lunch.csv',
-                :title_i => 'Title I students.csv' }
-  )
-  p ep.find_by_name('ACADEMY 20')
 end

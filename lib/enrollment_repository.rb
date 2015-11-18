@@ -1,8 +1,5 @@
-require_relative 'year_percent_parser'
 require_relative 'enrollment'
-require_relative 'pre_processor'
 require_relative 'post_processor'
-require 'pry'
 
 class EnrollmentRepository
   attr_reader :enrollments
@@ -28,15 +25,4 @@ class EnrollmentRepository
   def district_exists?(district_name)
     @enrollments.keys.include?(district_name.upcase)
   end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  er = EnrollmentRepository.new
-  er.load_data(
-    enrollment: {
-      kindergarten: './data/Kindergartners in full-day program.csv',
-      high_school_graduation: './data/High school graduation rates.csv'
-    }
-  )
-  p er.find_by_name('ACADEMY 20')
 end

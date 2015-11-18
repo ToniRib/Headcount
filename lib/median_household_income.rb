@@ -1,13 +1,10 @@
 require_relative 'data_formattable'
-require_relative 'data_calculatable'
 require_relative 'unknown_data_error'
-require 'pry'
 
 class MedianHouseholdIncome
   attr_reader :name, :data
 
   include DataFormattable
-  include DataCalculatable
 
   def initialize(options)
     @name = options[:name]
