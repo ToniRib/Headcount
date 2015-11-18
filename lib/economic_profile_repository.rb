@@ -33,14 +33,12 @@ end
 if __FILE__ == $PROGRAM_NAME
   ep = EconomicProfileRepository.new
   ep.load_data(
-            {
-            :economic_profile => {
-              :median_household_income => "Median household income.csv",
-              :children_in_poverty => "School-aged children in poverty.csv",
-              :free_or_reduced_price_lunch =>
-                "Students qualifying for free or reduced price lunch.csv",
-              :title_i => "Title I students.csv"
-            }}
+                :economic_profile => {
+                :median_household_income => 'Median household income.csv',
+                :children_in_poverty => 'School-aged children in poverty.csv',
+                :free_or_reduced_price_lunch =>
+                  'Students qualifying for free or reduced price lunch.csv',
+                :title_i => 'Title I students.csv' }
   )
   p ep.find_by_name('ACADEMY 20')
 end

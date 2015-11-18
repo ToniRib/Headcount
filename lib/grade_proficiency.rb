@@ -44,10 +44,14 @@ class GradeProficiency
     transpose_data(data)
   end
 
+  def not_enough_data(data)
+    data.count < 2
+  end
+
   def average_percentage_growth(data)
     data.reject! { |_, v| na?(v) }
 
-    fail InsufficientInformationError if data.count < 2
+    fail InsufficientInformationError if not_enough_data(data)
 
     first_year = data.keys.min
     last_year = data.keys.max

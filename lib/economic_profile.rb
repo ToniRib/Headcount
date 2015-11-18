@@ -16,7 +16,7 @@ class EconomicProfile
   end
 
   def opt(file_key)
-    {name: name, data: data_hash[file_key]}
+    { name: name, data: data_hash[file_key] }
   end
 
   def median_household_income_average

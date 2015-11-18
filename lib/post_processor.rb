@@ -5,7 +5,6 @@ require_relative 'year_race_percent_parser'
 require_relative 'year_sort_number_parser'
 require_relative 'range_currency_parser'
 
-
 class PostProcessor
   include DataFormattable
 
@@ -23,8 +22,8 @@ class PostProcessor
   def get_enrollment_data(opt)
     e = :enrollment
     data = {
-      kindergarten_participation: get_data(:percent,opt[e][:kindergarten]),
-      high_school_graduation: get_data(:percent,opt[e][:high_school_graduation])
+      kindergarten_participation: get_data(:percent, opt[e][:kindergarten]),
+      high_school_graduation: get_data(:percent, opt[e][:high_school_graduation])
     }
     transpose_data(data)
   end
@@ -47,10 +46,10 @@ class PostProcessor
     opt = nil_key_return_empty_hash(opt)
     data = {
       median_household_income:
-        get_data(:range,opt[ep][:median_household_income]),
-      children_in_poverty: get_data(:percent,opt[ep][:children_in_poverty]),
-      free_or_reduced_price_lunch: get_data(:sort,opt[ep][:free_or_reduced_price_lunch]),
-      title_i: get_data(:percent,opt[ep][:title_i])
+        get_data(:range, opt[ep][:median_household_income]),
+      children_in_poverty: get_data(:percent, opt[ep][:children_in_poverty]),
+      free_or_reduced_price_lunch: get_data(:sort, opt[ep][:free_or_reduced_price_lunch]),
+      title_i: get_data(:percent, opt[ep][:title_i])
     }
     transpose_data(data)
   end

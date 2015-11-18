@@ -17,7 +17,7 @@ class MedianHouseholdIncome
   def estimated_median_household_income_in_year(year)
     fail UnknownDataError unless check_year(year)
 
-    vals = data.reject { |key,val| !year_in_range(key, year) || na?(val) }
+    vals = data.reject { |key, val| !year_in_range(key, year) || na?(val) }
 
     check_insufficient_info(vals)
 
@@ -33,11 +33,11 @@ class MedianHouseholdIncome
   end
 
   def median_household_income_average
-    num = data.values.reject {|val| na?(val)}
+    num = data.values.reject { |val| na?(val) }
 
     check_insufficient_info(num)
 
-    num.reduce(:+).to_f/num.length
+    num.reduce(:+).to_f / num.length
   end
 
   def check_insufficient_info(arr)

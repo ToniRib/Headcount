@@ -9,13 +9,20 @@ class RangeCurrencyParser
     data = {}
 
     ruby_rows.each do |csv_row|
-      year = csv_row.row_data[:timeframe].split("-").map(&:to_i)
       row_data = convert_to_float(csv_row.row_data[:data])
 
-      data[csv_row.row_data[:location]] ||= {}
-      data[csv_row.row_data[:location]][year] = row_data
+      data[location(csv_row)] ||= {}
+      data[location(csv_row)][year_range(csv_row)] = row_data
     end
 
     data
+  end
+
+  def location(csv_row)
+    csv_row.row_data[:location]
+  end
+
+  def year_range(csv_row)
+    csv_row.row_data[:timeframe].split('-').map(&:to_i)
   end
 end
