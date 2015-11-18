@@ -7,6 +7,11 @@ class YearPercentParserTest < Minitest::Test
     pre.pull_from_csv('./test/fixtures/kindergarten_tester.csv')
   end
 
+  def parser_prep_school_aged
+    pre = Preprocessor.new
+    pre.pull_from_csv('./test/fixtures/school_aged_children_tester.csv')
+  end
+
   def test_class_exists
     assert YearPercentParser
   end
@@ -114,5 +119,22 @@ class YearPercentParserTest < Minitest::Test
     expected = 'N/A'
 
     assert_equal expected, data['ADAMS COUNTY 14'][2005]
+  end
+
+  def test_breaks_data_by_school_aged
+    parser = YearPercentParser.new
+    ruby_rows = parser_prep_school_aged
+    data = parser.parse(ruby_rows)
+    expected = ['ACADEMY 20', 'ADAMS COUNTY 14']
+
+    assert_equal expected, data.keys
+  end
+
+  def test_can_find_data_by_location_school_aged_and_year
+    parser = YearPercentParser.new
+    ruby_rows = parser_prep_school_aged
+    data = parser.parse(ruby_rows)
+
+    assert_equal 0.042, data['ACADEMY 20'][2005]
   end
 end

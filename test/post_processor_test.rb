@@ -117,7 +117,6 @@ class PostProcessorTest < Minitest::Test
   def test_gets_economic_profile_from_options
     post = PostProcessor.new
     data = post.get_economic_profile_data(full_options)
-    binding.pry
     expected1 = [[2005, 2009], [2006, 2010], [2008, 2012],
                  [2007, 2011], [2009, 2013]]
 
