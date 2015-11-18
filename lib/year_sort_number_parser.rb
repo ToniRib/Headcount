@@ -9,6 +9,7 @@ class YearSortNumberParser
     data = {}
 
     ruby_rows.each do |csv_row|
+      next if poverty_to_sym[csv_row.row_data[:poverty_level]] != :free_or_reduced
       data_format = num_to_total[csv_row.row_data[:dataformat]]
       year = csv_row.row_data[:timeframe].to_i
       sort_key = header_sort_key(csv_row)
@@ -16,8 +17,7 @@ class YearSortNumberParser
 
       data[csv_row.row_data[:location]] ||= {}
       data[csv_row.row_data[:location]][year] ||= {}
-      data[csv_row.row_data[:location]][year][sort_key] ||= {}
-      data[csv_row.row_data[:location]][year][sort_key][data_format] = row_data
+      data[csv_row.row_data[:location]][year][data_format] ||= row_data
     end
 
     data
