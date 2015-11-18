@@ -15,6 +15,10 @@ class EconomicProfile
     @title = TitleI.new(opt(:title_i))
   end
 
+  def opt(file_key)
+    {name: name, data: data_hash[file_key]}
+  end
+
   def median_household_income_average
     median.median_household_income_average
   end
@@ -35,9 +39,7 @@ class EconomicProfile
     lunch.free_or_reduced_price_lunch_number_in_year(year)
   end
 
-  def opt(file_key)
-    {name: name, data: data_hash[file_key]}
+  def title_i_in_year(year)
+    title.title_i_in_year(year)
   end
-
-
 end

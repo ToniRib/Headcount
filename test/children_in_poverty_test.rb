@@ -55,14 +55,4 @@ class ChildrenInPovertyTest < Minitest::Test
 
     assert_raises(UnknownDataError) { c.children_in_poverty_in_year(2011) }
   end
-
-  def test_children_in_poverty_in_year_returns_exception_if_percent_does_not_exist
-    data = { 2007 => 0.0365,
-             2008 => 0.27435,
-             2009 => 0.2138 }
-
-    c = ChildrenInPoverty.new(name: 'ACADEMY 20', data: data )
-
-    assert_raises(UnknownDataError) { c.children_in_poverty_in_year(2010) }
-  end
 end
