@@ -1,5 +1,5 @@
 require 'minitest'
-require 'enrollment_repository'
+require 'statewide_testing_repository'
 
 class StatewideTestRepositoryTest < Minitest::Test
   def load_statewide_repo

@@ -1,5 +1,6 @@
 require 'minitest'
 require 'year_percent_parser'
+require 'pre_processor'
 
 class YearPercentParserTest < Minitest::Test
   def parser_prep
